@@ -15,8 +15,19 @@ import {
   AlertTriangle,
   Clock,
   Sparkles,
+  Image as ImageIcon,
 } from 'lucide-react';
 import { formatCurrency, formatDate } from '@/lib/utils';
+
+type BannerStyle = 'banner-1' | 'banner-2' | 'banner-3' | 'banner-4' | 'gradient';
+
+const bannerOptions: { id: BannerStyle; label: string; file?: string }[] = [
+  { id: 'banner-1', label: '1. Luxury Villa', file: '/banners/banner-1.jpg' },
+  { id: 'banner-2', label: '2. 3D Geometry', file: '/banners/banner-2.jpg' },
+  { id: 'banner-3', label: '3. City Skyline', file: '/banners/banner-3.jpg' },
+  { id: 'banner-4', label: '4. Minimal Slate', file: '/banners/banner-4.jpg' },
+  { id: 'gradient', label: 'Default Gradient' },
+];
 
 export function OverviewView() {
   const {
@@ -32,6 +43,7 @@ export function OverviewView() {
   } = useWorkspaceStore();
 
   const [activeTaskTab, setActiveTaskTab] = useState<'today' | 'overdue' | 'upcoming'>('overdue');
+  const [selectedBanner, setSelectedBanner] = useState<BannerStyle>('banner-1');
 
   const filteredProjects = selectedClientFilter
     ? projects.filter((p) => p.clientName === selectedClientFilter)
@@ -51,27 +63,70 @@ export function OverviewView() {
       : upcomingTasks;
 
   const pendingApprovals = approvalItems.filter((a) => a.status === 'Pending');
-  const totalSiteVisits = campaigns.reduce((acc, c) => acc + c.siteVisits, 0) + leads.filter((l) => l.stage === 'Visit completed' || l.stage === 'Visit booked').length;
+  const totalSiteVisits =
+    campaigns.reduce((acc, c) => acc + c.siteVisits, 0) +
+    leads.filter((l) => l.stage === 'Visit completed' || l.stage === 'Visit booked').length;
+
+  const activeBannerObj = bannerOptions.find((b) => b.id === selectedBanner);
 
   return (
     <div className="space-y-6 pb-12">
-      {/* Hero Banner */}
-      <div className="relative overflow-hidden bg-gradient-to-r from-[#2a2438] via-[#352c48] to-[#201d2b] rounded-2xl p-7 text-white shadow-sm border border-[#3f3850]">
-        <div className="absolute top-0 right-0 w-96 h-full opacity-10 bg-[radial-gradient(#fff_1px,transparent_1px)] [background-size:16px_16px]" />
-        <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-4">
-          <div>
-            <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-[#a78bfa] mb-2">
-              <Sparkles className="w-4 h-4" />
+      {/* Hero Banner with Custom Background Options */}
+      <div
+        className="relative overflow-hidden rounded-2xl p-7 text-white shadow-lg border border-[#3f3850] transition-all duration-500"
+        style={
+          activeBannerObj?.file
+            ? {
+                backgroundImage: `url('${activeBannerObj.file}')`,
+                backgroundSize: 'cover',
+                backgroundPosition: 'center',
+              }
+            : {
+                background: 'linear-gradient(to right, #2a2438, #352c48, #201d2b)',
+              }
+        }
+      >
+        {/* Dark Scrim Overlay for Crystal-Clear Text Legibility */}
+        <div className="absolute inset-0 bg-gradient-to-r from-black/85 via-black/65 to-black/45 backdrop-blur-[0.5px]" />
+
+        <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
+          <div className="max-w-2xl">
+            <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-[#c4b5fd] mb-2">
+              <Sparkles className="w-4 h-4 text-[#a78bfa]" />
               <span>Saturday, 21 November 2026</span>
             </div>
-            <h1 className="text-2xl md:text-3xl font-extrabold tracking-tight">Agency Overview</h1>
-            <p className="text-sm text-[#c4b5fd]/80 mt-1">
+            <h1 className="text-2xl md:text-3xl font-extrabold tracking-tight drop-shadow-sm">
+              Agency Overview
+            </h1>
+            <p className="text-sm text-white/90 mt-1 font-medium drop-shadow-sm">
               Your real estate projects, team priorities and marketing performance in one connected workspace.
             </p>
+
+            {/* Quick Live Banner Selector */}
+            <div className="flex flex-wrap items-center gap-2 mt-4 pt-3 border-t border-white/15">
+              <span className="text-[11px] text-white/70 font-semibold flex items-center gap-1">
+                <ImageIcon className="w-3.5 h-3.5 text-[#a78bfa]" />
+                <span>Banner Theme:</span>
+              </span>
+              {bannerOptions.map((opt) => (
+                <button
+                  key={opt.id}
+                  onClick={() => setSelectedBanner(opt.id)}
+                  className={`px-2.5 py-1 text-[11px] rounded-lg font-semibold transition-all ${
+                    selectedBanner === opt.id
+                      ? 'bg-[#8b5cf6] text-white shadow-md ring-2 ring-white/30'
+                      : 'bg-black/40 hover:bg-black/60 text-white/80 border border-white/10'
+                  }`}
+                >
+                  {opt.label}
+                </button>
+              ))}
+            </div>
           </div>
+
           <button
             onClick={() => setIsNewProjectModalOpen(true)}
-            className="self-start md:self-auto flex items-center gap-2 px-4 py-2.5 bg-[#8b5cf6] hover:bg-[#7c3aed] text-white text-xs font-bold rounded-xl shadow-lg shadow-[#8b5cf6]/20 transition-all"
+            className="self-start md:self-center flex items-center gap-2 px-5 py-2.5 bg-[#8b5cf6] hover:bg-[#7c3aed] text-white text-xs font-bold rounded-xl shadow-xl shadow-purple-900/40 border border-purple-400/30 transition-all hover:scale-[1.02]"
           >
             <Plus className="w-4 h-4" />
             <span>New project</span>
@@ -238,7 +293,7 @@ export function OverviewView() {
                         <span className="font-semibold text-[#8e91a0]">{task.projectName}</span>
                         <span>•</span>
                         <span className="flex items-center gap-1">
-                          <Clock className="w-3 h-3" />
+                          <Clock className="w-3.5 h-3.5" />
                           {formatDate(task.due)}
                         </span>
                         <span>•</span>
