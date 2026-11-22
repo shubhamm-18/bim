@@ -2,8 +2,11 @@
 
 import React from 'react';
 import { useWorkspaceStore } from '@/store/workspace-store';
-import { Megaphone, DollarSign, TrendingUp, Users, Eye, Target } from 'lucide-react';
 import { formatCurrency } from '@/lib/utils';
+import { Card } from '@/components/ui/Card';
+import { Badge } from '@/components/ui/Badge';
+import { AdvertisingIcon } from '@/components/ui';
+import { AdvertisingAnalytics } from '@/components/features/analytics';
 
 export function AdvertisingView() {
   const { campaigns } = useWorkspaceStore();
@@ -17,48 +20,53 @@ export function AdvertisingView() {
   return (
     <div className="space-y-6 pb-12">
       {/* Header */}
-      <div>
-        <h1 className="text-2xl font-bold text-[#20222c]">Advertising & Performance</h1>
-        <p className="text-xs text-[#8e91a0]">
-          Meta, Google and LinkedIn ad campaigns driving buyer inquiries and verified site visits.
-        </p>
+      <div className="flex items-center gap-3">
+        <div className="w-10 h-10 rounded-xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center shrink-0">
+          <AdvertisingIcon className="w-6 h-6" />
+        </div>
+        <div>
+          <h1 className="text-2xl font-bold text-text-main">Advertising & Performance</h1>
+          <p className="text-xs text-text-subtle">
+            Meta, Google and LinkedIn ad campaigns driving buyer inquiries and verified site visits.
+          </p>
+        </div>
       </div>
 
       {/* Campaign Summary Metrics */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
-        <div className="p-4 bg-white rounded-2xl border border-[#e4e5ec] shadow-sm">
-          <span className="text-xs font-semibold text-[#8e91a0]">Total Ad Budget</span>
-          <div className="text-xl font-extrabold text-[#20222c] mt-1">{formatCurrency(totalBudget)}</div>
-        </div>
-        <div className="p-4 bg-white rounded-2xl border border-[#e4e5ec] shadow-sm">
-          <span className="text-xs font-semibold text-[#8e91a0]">Reported Spend</span>
-          <div className="text-xl font-extrabold text-[#7040cd] mt-1">{formatCurrency(totalSpend)}</div>
-        </div>
-        <div className="p-4 bg-white rounded-2xl border border-[#e4e5ec] shadow-sm">
-          <span className="text-xs font-semibold text-[#8e91a0]">Total Impressions</span>
-          <div className="text-xl font-extrabold text-[#20222c] mt-1">{(totalImpressions / 1000).toFixed(0)}k</div>
-        </div>
-        <div className="p-4 bg-white rounded-2xl border border-[#e4e5ec] shadow-sm">
-          <span className="text-xs font-semibold text-[#8e91a0]">Leads Acquired</span>
-          <div className="text-xl font-extrabold text-[#059669] mt-1">{totalLeads}</div>
-        </div>
-        <div className="p-4 bg-white rounded-2xl border border-[#e4e5ec] shadow-sm">
-          <span className="text-xs font-semibold text-[#8e91a0]">Average CPL</span>
-          <div className="text-xl font-extrabold text-[#ea580c] mt-1">₹{avgCPL}</div>
-        </div>
+        <Card className="p-4">
+          <span className="text-xs font-semibold text-text-subtle">Total Ad Budget</span>
+          <div className="text-xl font-extrabold text-text-main mt-1">{formatCurrency(totalBudget)}</div>
+        </Card>
+        <Card className="p-4">
+          <span className="text-xs font-semibold text-text-subtle">Reported Spend</span>
+          <div className="text-xl font-extrabold text-brand mt-1">{formatCurrency(totalSpend)}</div>
+        </Card>
+        <Card className="p-4">
+          <span className="text-xs font-semibold text-text-subtle">Total Impressions</span>
+          <div className="text-xl font-extrabold text-text-main mt-1">{(totalImpressions / 1000).toFixed(0)}k</div>
+        </Card>
+        <Card className="p-4">
+          <span className="text-xs font-semibold text-text-subtle">Leads Acquired</span>
+          <div className="text-xl font-extrabold text-status-success mt-1">{totalLeads}</div>
+        </Card>
+        <Card className="p-4">
+          <span className="text-xs font-semibold text-text-subtle">Average CPL</span>
+          <div className="text-xl font-extrabold text-status-warning mt-1">₹{avgCPL}</div>
+        </Card>
       </div>
 
       {/* Campaigns Table */}
-      <div className="bg-white rounded-2xl border border-[#e4e5ec] shadow-sm overflow-hidden">
-        <div className="p-5 border-b border-[#f0f1f5] flex items-center justify-between">
-          <h3 className="text-base font-bold text-[#20222c]">Active Ad Campaigns</h3>
-          <span className="text-xs text-[#8e91a0] font-medium">{campaigns.length} campaigns running</span>
+      <Card className="p-0 overflow-hidden">
+        <div className="p-5 border-b border-border-subtle flex items-center justify-between">
+          <h3 className="text-base font-bold text-text-main">Active Ad Campaigns</h3>
+          <span className="text-xs text-text-subtle font-medium">{campaigns.length} campaigns running</span>
         </div>
 
         <div className="overflow-x-auto">
           <table className="w-full text-left text-xs">
             <thead>
-              <tr className="border-b border-[#f0f1f5] text-[#8e91a0] font-semibold uppercase tracking-wider text-[10px] bg-[#f7f8fa]">
+              <tr className="border-b border-border-subtle text-text-subtle font-semibold uppercase tracking-wider text-[10px] bg-surface-subtle">
                 <th className="py-3 px-4">Campaign Name</th>
                 <th className="py-3 px-4">Project</th>
                 <th className="py-3 px-4">Platform</th>
@@ -68,41 +76,34 @@ export function AdvertisingView() {
                 <th className="py-3 px-4">Status</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-[#f0f1f5]">
+            <tbody className="divide-y divide-border-subtle">
               {campaigns.map((cmp) => (
-                <tr key={cmp.id} className="hover:bg-[#fafafc] transition-colors">
-                  <td className="py-3.5 px-4 font-bold text-[#20222c]">{cmp.name}</td>
-                  <td className="py-3.5 px-4 text-[#535767] font-medium">{cmp.projectName}</td>
+                <tr key={cmp.id} className="hover:bg-surface-subtle transition-colors">
+                  <td className="py-3.5 px-4 font-bold text-text-main">{cmp.name}</td>
+                  <td className="py-3.5 px-4 text-text-muted font-medium">{cmp.projectName}</td>
                   <td className="py-3.5 px-4">
-                    <span
-                      className={`px-2 py-0.5 rounded-full font-bold text-[10px] ${
-                        cmp.platform === 'Meta'
-                          ? 'bg-[#dbeafe] text-[#2563eb]'
-                          : cmp.platform === 'Google'
-                          ? 'bg-[#fef3c7] text-[#d97706]'
-                          : 'bg-[#e0e7ff] text-[#4f46e5]'
-                      }`}
-                    >
+                    <Badge variant={cmp.platform === 'Meta' ? 'info' : cmp.platform === 'Google' ? 'warning' : 'brand'}>
                       {cmp.platform}
-                    </span>
+                    </Badge>
                   </td>
-                  <td className="py-3.5 px-4 font-medium text-[#20222c]">
+                  <td className="py-3.5 px-4 font-medium text-text-main">
                     <span>{formatCurrency(cmp.spend)}</span>
-                    <span className="text-[#8e91a0]"> / {formatCurrency(cmp.budget)}</span>
+                    <span className="text-text-subtle"> / {formatCurrency(cmp.budget)}</span>
                   </td>
-                  <td className="py-3.5 px-4 text-[#535767]">{cmp.impressions.toLocaleString()}</td>
-                  <td className="py-3.5 px-4 font-bold text-[#059669]">{cmp.leads}</td>
+                  <td className="py-3.5 px-4 text-text-muted">{cmp.impressions.toLocaleString()}</td>
+                  <td className="py-3.5 px-4 font-bold text-status-success">{cmp.leads}</td>
                   <td className="py-3.5 px-4">
-                    <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-[#d1fae5] text-[#059669]">
-                      {cmp.status}
-                    </span>
+                    <Badge variant="success">{cmp.status}</Badge>
                   </td>
                 </tr>
               ))}
             </tbody>
           </table>
         </div>
-      </div>
+      </Card>
+
+      {/* Embedded Paid Ads Statistical Analytics */}
+      <AdvertisingAnalytics />
     </div>
   );
 }

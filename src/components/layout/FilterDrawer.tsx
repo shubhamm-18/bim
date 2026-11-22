@@ -3,6 +3,7 @@
 import React from 'react';
 import { useWorkspaceStore } from '@/store/workspace-store';
 import { X, Check } from 'lucide-react';
+import { GruhnestIcon } from '@/components/ui';
 
 export function FilterDrawer() {
   const {
@@ -16,55 +17,58 @@ export function FilterDrawer() {
   if (!isFilterOpen) return null;
 
   return (
-    <div className="absolute right-8 top-16 z-30 w-72 bg-white rounded-xl shadow-xl border border-[#e4e5ec] p-4 animate-fade-in">
-      <div className="flex items-center justify-between pb-3 border-b border-[#f0f1f5]">
-        <span className="text-xs font-bold uppercase tracking-wider text-[#20222c]">
+    <div className="absolute right-8 top-16 z-30 w-72 bg-surface-card rounded-card shadow-xl border border-border p-4 animate-fade-in">
+      <div className="flex items-center justify-between pb-3 border-b border-border-subtle">
+        <span className="text-xs font-bold uppercase tracking-wider text-text-main">
           Filter Workspace
         </span>
         <button
           onClick={() => setIsFilterOpen(false)}
-          className="p-1 text-[#8e91a0] hover:text-[#20222c] rounded-md transition-colors"
+          className="p-1 text-text-subtle hover:text-text-main rounded-btn transition-colors"
         >
           <X className="w-4 h-4" />
         </button>
       </div>
 
       <div className="py-3">
-        <label className="block text-xs font-semibold text-[#727583] mb-2">Filter by Client</label>
+        <label className="block text-xs font-semibold text-text-muted mb-2">Filter by Client</label>
         <div className="space-y-1">
           <button
             onClick={() => setSelectedClientFilter(null)}
-            className={`w-full flex items-center justify-between px-3 py-2 text-xs font-medium rounded-lg transition-colors ${
+            className={`w-full flex items-center justify-between px-3 py-2 text-xs font-medium rounded-btn transition-colors ${
               selectedClientFilter === null
-                ? 'bg-[#efeafb] text-[#7040cd] font-semibold'
-                : 'text-[#535767] hover:bg-[#f7f6fa]'
+                ? 'bg-brand-subtle text-brand font-semibold'
+                : 'text-text-muted hover:bg-surface-hover'
             }`}
           >
             <span>All Clients & Projects</span>
-            {selectedClientFilter === null && <Check className="w-3.5 h-3.5 text-[#7040cd]" />}
+            {selectedClientFilter === null && <Check className="w-3.5 h-3.5 text-brand" />}
           </button>
           {clients.map((c) => (
             <button
               key={c.id}
               onClick={() => setSelectedClientFilter(c.name)}
-              className={`w-full flex items-center justify-between px-3 py-2 text-xs font-medium rounded-lg transition-colors ${
+              className={`w-full flex items-center justify-between px-3 py-2 text-xs font-medium rounded-btn transition-colors ${
                 selectedClientFilter === c.name
-                  ? 'bg-[#efeafb] text-[#7040cd] font-semibold'
-                  : 'text-[#535767] hover:bg-[#f7f6fa]'
+                  ? 'bg-brand-subtle text-brand font-semibold'
+                  : 'text-text-muted hover:bg-surface-hover'
               }`}
             >
-              <span>{c.name}</span>
-              {selectedClientFilter === c.name && <Check className="w-3.5 h-3.5 text-[#7040cd]" />}
+              <span className="flex items-center gap-2">
+                {c.name.toLowerCase().includes('gruhnest') && <GruhnestIcon className="w-3.5 h-3.5" />}
+                {c.name}
+              </span>
+              {selectedClientFilter === c.name && <Check className="w-3.5 h-3.5 text-brand" />}
             </button>
           ))}
         </div>
       </div>
 
       {selectedClientFilter && (
-        <div className="pt-2 border-t border-[#f0f1f5]">
+        <div className="pt-2 border-t border-border-subtle">
           <button
             onClick={() => setSelectedClientFilter(null)}
-            className="w-full py-1.5 text-xs text-[#7040cd] hover:underline font-medium text-center"
+            className="w-full py-1.5 text-xs text-brand hover:underline font-semibold text-center"
           >
             Clear active filters
           </button>

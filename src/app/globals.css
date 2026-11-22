@@ -3,17 +3,75 @@
 @tailwind utilities;
 
 :root {
-  --ink: #20222c;
-  --muted: #727583;
-  --edge: #e4e5ec;
-  --brand-violet: #7040cd;
-  --pale-violet: #efeafb;
-  --frame-bg: #f7f8fa;
+  /* ==========================================================================
+     🎨 THEME DESIGN TOKENS
+     Edit these variables directly to change colors, shapes, and styles!
+     ========================================================================== */
+
+  /* Primary Brand Accent (Buttons, Highlights, Active Tabs) */
+  --brand: #cd4055;
+  --brand-hover: #b83245;
+  --brand-subtle: #fde8ea;
+  --brand-foreground: #ffffff;
+
+  /* App Background & Card Surfaces */
+  --bg-app: #faf7f7;
+  --bg-card: #ffffff;
+  --bg-card-subtle: #f7f7f9;
+  --bg-card-hover: #f3f3f6;
+  --bg-input: #ffffff;
+
+  /* Dark Surfaces & Theme Tokens */
+  --bg-dark-hero: #0d0e14;
+  --border-dark-hero: #222533;
+  --bg-dark-panel: #161824;
+  --border-dark-panel: #2d3148;
+  --bg-dark-control: #222538;
+  --border-dark-control: #353952;
+  --bg-dark-card: #0c0d15;
+  --border-dark-card: #232536;
+  --bg-app-subtle: #f8f9fc;
+
+  /* Typography Colors */
+  --text-main: #20222c;
+  --text-muted: #6b6e7b;
+  --text-subtle: #8e91a0;
+  --text-inverse: #ffffff;
+
+  /* Borders & Dividers */
+  --border-default: #e4e5ec;
+  --border-subtle: #f0f1f5;
+  --border-hover: #d3d5df;
+
+  /* Semantic Status Colors (Badges, Alerts, Pipelines) */
+  --success: #059669;
+  --success-subtle: #d1fae5;
+  --warning: #d97706;
+  --warning-subtle: #fef3c7;
+  --danger: #ef4444;
+  --danger-subtle: #fee2e2;
+  --info: #2563eb;
+  --info-subtle: #dbeafe;
+
+  /* Shape & Geometry (Corner Roundness) */
+  --radius-card: 1rem;       /* 16px - Cards & large panels */
+  --radius-button: 0.75rem;  /* 12px - Buttons & clickable pills */
+  --radius-input: 0.75rem;   /* 12px - Text inputs & selects */
+  --radius-badge: 9999px;    /* Full pill roundness */
+
+  /* Shadows */
+  --shadow-card: 0 1px 3px 0 rgb(0 0 0 / 0.05), 0 1px 2px -1px rgb(0 0 0 / 0.05);
+  --shadow-hover: 0 4px 6px -1px rgb(0 0 0 / 0.07), 0 2px 4px -2px rgb(0 0 0 / 0.07);
+
+  /* Layout Dimensions */
+  --sidebar-width: 17.5rem;    /* 280px */
+  --topbar-height: 4.5rem;     /* 72px */
 }
 
+/* Base Body Styles */
 body {
-  color: var(--ink);
-  background: var(--frame-bg);
+  color: var(--text-main);
+  background: var(--bg-app);
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
 }

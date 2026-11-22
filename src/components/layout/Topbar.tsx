@@ -1,43 +1,58 @@
 'use client';
 
 import React from 'react';
+import { usePathname } from 'next/navigation';
 import { useWorkspaceStore } from '@/store/workspace-store';
 import { RoleView } from '@/types';
+import { agencyConfig } from '@/config/agency.config';
+import { navigationConfig } from '@/config/navigation.config';
 import {
   Search,
   Filter,
   Bell,
-  Plus,
   Briefcase,
   ChevronRight,
   UserCheck,
+  Menu,
 } from 'lucide-react';
+import { Button } from '@/components/ui/Button';
+import { Badge } from '@/components/ui/Badge';
+import {
+  OverviewIcon,
+  AnalyticsIcon,
+  ProjectsIcon,
+  CalendarIcon,
+  ApprovalsIcon,
+  ContentIcon,
+  AdvertisingIcon,
+  CrmIcon,
+  GruhnestIcon,
+  CompareIcon,
+  PaymentsIcon,
+  TemplatesIcon,
+} from '@/components/ui';
 
-const roleOptions: RoleView[] = [
-  'Founder',
-  'Project Management',
-  'Content',
-  'Video',
-  'Ads/Performance',
-  'Developer',
-  'Sales',
-];
-
-const viewLabels: Record<string, string> = {
-  overview: 'Overview',
-  projects: 'Client projects',
-  calendar: 'Tasks & calendar',
-  approvals: 'Approval board',
-  content: 'Content studio',
-  advertising: 'Advertising & performance',
-  crm: 'Automation & CRM',
-  gruhnest: 'Gruhnest property media',
-  compare: 'Project comparison',
-  payments: 'Payments & billing',
-  templates: 'Project templates',
+const routeIconMap: Record<string, React.ComponentType<{ className?: string }>> = {
+  overview: OverviewIcon,
+  analytics: AnalyticsIcon,
+  projects: ProjectsIcon,
+  calendar: CalendarIcon,
+  approvals: ApprovalsIcon,
+  content: ContentIcon,
+  advertising: AdvertisingIcon,
+  crm: CrmIcon,
+  gruhnest: GruhnestIcon,
+  compare: CompareIcon,
+  payments: PaymentsIcon,
+  templates: TemplatesIcon,
 };
 
-export function Topbar() {
+interface TopbarProps {
+  onOpenMobileNav?: () => void;
+}
+
+export function Topbar({ onOpenMobileNav }: TopbarProps) {
+  const pathname = usePathname();
   const {
     currentView,
     currentRole,
@@ -46,63 +61,81 @@ export function Topbar() {
     isFilterOpen,
     setIsFilterOpen,
     selectedClientFilter,
-    setIsNewProjectModalOpen,
   } = useWorkspaceStore();
 
+  const currentRoute =
+    navigationConfig.allRoutes.find(
+      (r) => r.href === pathname || (r.href !== '/' && pathname?.startsWith(r.href))
+    ) || navigationConfig.allRoutes.find((r) => r.id === currentView);
+
+  const activeLabel = currentRoute?.label || 'Overview';
+  const activeRouteId = currentRoute?.id || (currentView as string) || 'overview';
+  const RouteIcon = routeIconMap[activeRouteId] || OverviewIcon;
+
   return (
-    <header className="sticky top-0 z-20 h-16 bg-white border-b border-[#e4e5ec] px-8 flex items-center justify-between">
-      {/* Breadcrumb */}
-      <div className="flex items-center gap-2 text-sm text-[#727583]">
-        <Briefcase className="w-4 h-4 text-[#8e91a0]" />
-        <span>Workspace</span>
-        <ChevronRight className="w-3.5 h-3.5 text-[#c3c3ce]" />
-        <span className="font-semibold text-[#20222c]">{viewLabels[currentView] || 'Overview'}</span>
-        {selectedClientFilter && (
-          <span className="ml-2 px-2 py-0.5 text-xs bg-[#efeafb] text-[#7040cd] rounded-full font-medium">
-            Filtered
-          </span>
+    <header className="sticky top-0 z-20 h-topbar bg-surface-card border-b border-border px-4 sm:px-8 flex items-center justify-between gap-4">
+      {/* Left: Mobile Menu & Breadcrumb */}
+      <div className="flex items-center gap-3 min-w-0">
+        {onOpenMobileNav && (
+          <button
+            onClick={onOpenMobileNav}
+            className="md:hidden p-2 text-text-subtle hover:text-text-main hover:bg-surface-subtle rounded-btn"
+            aria-label="Open navigation menu"
+          >
+            <Menu className="w-5 h-5" />
+          </button>
         )}
+
+        <div className="flex items-center gap-2 text-xs sm:text-sm text-text-muted min-w-0 truncate">
+          <Briefcase className="w-4 h-4 text-text-subtle shrink-0 hidden sm:inline" />
+          <span className="hidden sm:inline">Workspace</span>
+          <ChevronRight className="w-3.5 h-3.5 text-text-subtle/50 shrink-0 hidden sm:inline" />
+          <span className="font-bold text-text-main truncate flex items-center gap-1.5">
+            <RouteIcon className="w-4 h-4 shrink-0 inline-block" />
+            <span>{activeLabel}</span>
+          </span>
+          {selectedClientFilter && (
+            <Badge variant="brand" className="ml-1 sm:ml-2 shrink-0">
+              Filtered: {selectedClientFilter}
+            </Badge>
+          )}
+        </div>
       </div>
 
-      {/* Top Actions */}
-      <div className="flex items-center gap-3">
+      {/* Right: Actions */}
+      <div className="flex items-center gap-2 sm:gap-3 shrink-0">
         {/* Search Bar */}
         <button
           onClick={() => setIsSearchOpen(true)}
-          className="flex items-center gap-2.5 px-3 py-1.5 text-xs text-[#727583] bg-[#f7f8fa] hover:bg-[#efeafb] hover:text-[#7040cd] border border-[#e4e5ec] rounded-lg transition-all"
+          className="flex items-center gap-2 px-2.5 py-1.5 text-xs text-text-muted bg-surface-subtle hover:bg-brand-subtle hover:text-brand border border-border rounded-btn transition-all"
         >
-          <Search className="w-3.5 h-3.5 text-[#8e91a0]" />
-          <span>Search workspace...</span>
-          <kbd className="px-1.5 py-0.5 text-[10px] font-mono bg-white border border-[#e4e5ec] rounded text-[#8e91a0]">
+          <Search className="w-3.5 h-3.5 text-text-subtle" />
+          <span className="hidden lg:inline">Search workspace...</span>
+          <kbd className="hidden sm:inline px-1.5 py-0.5 text-[10px] font-mono bg-surface-card border border-border rounded text-text-subtle">
             ⌘ K
           </kbd>
         </button>
 
         {/* Filter Trigger */}
-        <button
+        <Button
+          variant={isFilterOpen || selectedClientFilter ? 'brand' : 'secondary'}
+          size="sm"
           onClick={() => setIsFilterOpen(!isFilterOpen)}
-          className={`flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium border rounded-lg transition-all ${
-            isFilterOpen || selectedClientFilter
-              ? 'bg-[#efeafb] text-[#7040cd] border-[#7040cd]/30'
-              : 'text-[#535767] border-[#e4e5ec] hover:bg-[#f7f6fa]'
-          }`}
         >
           <Filter className="w-3.5 h-3.5" />
-          <span>Filters</span>
-          {selectedClientFilter && <span className="w-2 h-2 rounded-full bg-[#7040cd]"></span>}
-        </button>
-
-        <div className="h-5 w-px bg-[#e4e5ec]" />
-
-        {/* Role Switcher */}
-        <div className="flex items-center gap-1.5 px-2.5 py-1 text-xs border border-[#e4e5ec] rounded-lg bg-white">
-          <UserCheck className="w-3.5 h-3.5 text-[#7040cd]" />
+          <span className="hidden sm:inline">Filters</span>
+          {selectedClientFilter && <span className="w-1.5 h-1.5 rounded-full bg-current"></span>}
+        </Button>
+        
+        {/* Universal Role Switcher */}
+        <div className="hidden md:flex items-center gap-1.5 px-2.5 py-1 text-xs border border-border rounded-btn bg-surface-card">
+          <UserCheck className="w-3.5 h-3.5 text-brand" />
           <select
             value={currentRole}
             onChange={(e) => setCurrentRole(e.target.value as RoleView)}
-            className="text-xs font-semibold text-[#20222c] bg-transparent outline-none cursor-pointer pr-1"
+            className="text-xs font-semibold text-text-main bg-transparent outline-none cursor-pointer pr-1"
           >
-            {roleOptions.map((role) => (
+            {agencyConfig.roles.map((role) => (
               <option key={role} value={role}>
                 {role} view
               </option>
@@ -110,22 +143,13 @@ export function Topbar() {
           </select>
         </div>
 
-        {/* Quick New Project Button */}
-        <button
-          onClick={() => setIsNewProjectModalOpen(true)}
-          className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-white bg-[#7040cd] hover:bg-[#5e35ce] rounded-lg shadow-sm transition-all"
-        >
-          <Plus className="w-3.5 h-3.5" />
-          <span>New project</span>
-        </button>
-
         {/* Notification Bell */}
         <button
           aria-label="Notifications"
-          className="relative p-2 text-[#6b6c79] hover:bg-[#f3f1f8] rounded-lg transition-colors"
+          className="relative p-2 text-text-muted hover:bg-surface-hover rounded-btn transition-colors"
         >
           <Bell className="w-4 h-4" />
-          <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-[#7040cd] rounded-full ring-2 ring-white" />
+          <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-brand rounded-full ring-2 ring-surface-card" />
         </button>
       </div>
     </header>

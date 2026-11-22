@@ -1,9 +1,15 @@
 import type { Metadata } from 'next';
 import './globals.css';
+import { siteConfig } from '@/config/site.config';
+import { AppShell } from '@/components/layout/AppShell';
 
 export const metadata: Metadata = {
-  title: 'Beyond Imagine Media (BIM) — Agency Workspace',
-  description: 'Connected real estate service workspace for agency production, ad campaigns, lead management, and property media.',
+  title: {
+    template: `%s | ${siteConfig.name}`,
+    default: siteConfig.documentTitle,
+  },
+  description: siteConfig.description,
+  authors: [{ name: siteConfig.author.name, url: siteConfig.author.website }],
 };
 
 export default function RootLayout({
@@ -12,9 +18,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
-      <body className="min-h-screen bg-[#f7f8fa] text-[#20222c]">
-        {children}
+    <html lang="en" suppressHydrationWarning>
+      <body className="min-h-screen bg-surface-app text-text-main antialiased selection:bg-brand selection:text-white" suppressHydrationWarning>
+        <AppShell>{children}</AppShell>
       </body>
     </html>
   );

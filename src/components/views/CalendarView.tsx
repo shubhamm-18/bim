@@ -2,9 +2,13 @@
 
 import React, { useState } from 'react';
 import { useWorkspaceStore } from '@/store/workspace-store';
-import { Plus, CheckSquare, Clock, Repeat, Trash2, Calendar as CalIcon } from 'lucide-react';
+import { Plus, CheckSquare, Clock, Repeat, Trash2 } from 'lucide-react';
 import { formatDate } from '@/lib/utils';
-import { TaskStatus, RoleView } from '@/types';
+import { Card } from '@/components/ui/Card';
+import { Button } from '@/components/ui/Button';
+import { Badge } from '@/components/ui/Badge';
+import { CalendarIcon } from '@/components/ui';
+import { CalendarAnalytics } from '@/components/features/analytics';
 
 export function CalendarView() {
   const {
@@ -12,7 +16,6 @@ export function CalendarView() {
     setIsNewTaskModalOpen,
     updateTaskStatus,
     deleteTask,
-    selectedClientFilter,
   } = useWorkspaceStore();
 
   const [roleFilter, setRoleFilter] = useState<string>('All');
@@ -30,29 +33,35 @@ export function CalendarView() {
     <div className="space-y-6 pb-12">
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-        <div>
-          <h1 className="text-2xl font-bold text-[#20222c]">Tasks & Calendar</h1>
-          <p className="text-xs text-[#8e91a0]">
-            Track cross-functional deliverables, shoot schedules, and review milestones.
-          </p>
+        <div className="flex items-center gap-3.5">
+          <div className="w-12 h-12 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center p-2 shadow-xs shrink-0">
+            <CalendarIcon className="w-8 h-8" />
+          </div>
+          <div>
+            <h1 className="text-2xl font-bold text-text-main">Tasks & Calendar</h1>
+            <p className="text-xs text-text-subtle mt-0.5">
+              Track cross-functional deliverables, shoot schedules, and review milestones.
+            </p>
+          </div>
         </div>
-        <button
+        <Button
+          variant="brand"
+          size="md"
           onClick={() => setIsNewTaskModalOpen(true)}
-          className="flex items-center gap-2 px-4 py-2 bg-[#7040cd] hover:bg-[#5e35ce] text-white text-xs font-semibold rounded-xl shadow-sm transition-all"
         >
           <Plus className="w-4 h-4" />
           <span>Add task</span>
-        </button>
+        </Button>
       </div>
 
       {/* Filters Bar */}
-      <div className="flex flex-wrap items-center justify-between gap-3 p-4 bg-white rounded-2xl border border-[#e4e5ec]">
+      <Card className="flex flex-wrap items-center justify-between gap-3 p-4">
         <div className="flex items-center gap-3">
-          <span className="text-xs font-semibold text-[#727583]">Role:</span>
+          <span className="text-xs font-semibold text-text-muted">Role:</span>
           <select
             value={roleFilter}
             onChange={(e) => setRoleFilter(e.target.value)}
-            className="text-xs font-medium border border-[#e4e5ec] rounded-lg px-2.5 py-1.5 bg-white outline-none"
+            className="text-xs font-medium border border-border rounded-btn px-2.5 py-1.5 bg-surface-card outline-none"
           >
             <option value="All">All Roles</option>
             <option value="Founder">Founder</option>
@@ -70,23 +79,23 @@ export function CalendarView() {
             <button
               key={st}
               onClick={() => setStatusFilter(st)}
-              className={`px-3 py-1 text-xs font-semibold rounded-lg transition-colors ${
+              className={`px-3 py-1 text-xs font-semibold rounded-btn transition-colors ${
                 statusFilter === st
-                  ? 'bg-[#efeafb] text-[#7040cd]'
-                  : 'text-[#727583] hover:bg-[#f7f6fa]'
+                  ? 'bg-brand-subtle text-brand'
+                  : 'text-text-muted hover:bg-surface-hover'
               }`}
             >
               {st}
             </button>
           ))}
         </div>
-      </div>
+      </Card>
 
       {/* Task List */}
-      <div className="bg-white rounded-2xl border border-[#e4e5ec] shadow-sm divide-y divide-[#f0f1f5] overflow-hidden">
+      <Card className="divide-y divide-border-subtle p-0 overflow-hidden">
         {filtered.length === 0 ? (
-          <div className="py-12 text-center text-xs text-[#8e91a0]">
-            <CheckSquare className="w-8 h-8 text-[#d8d9e2] mx-auto mb-2" />
+          <div className="py-12 text-center text-xs text-text-subtle">
+            <CheckSquare className="w-8 h-8 text-border mx-auto mb-2" />
             <span>No tasks match the selected filter.</span>
           </div>
         ) : (
@@ -95,7 +104,7 @@ export function CalendarView() {
             return (
               <div
                 key={task.id}
-                className="p-4 flex items-center justify-between hover:bg-[#fafafc] transition-colors group"
+                className="p-4 flex items-center justify-between hover:bg-surface-subtle transition-colors group"
               >
                 <div className="flex items-start gap-3.5 min-w-0">
                   <input
@@ -104,60 +113,56 @@ export function CalendarView() {
                     onChange={() =>
                       updateTaskStatus(task.id, task.status === 'Done' ? 'Open' : 'Done')
                     }
-                    className="mt-1 w-4 h-4 rounded text-[#7040cd] focus:ring-[#7040cd] cursor-pointer"
+                    className="mt-1 w-4 h-4 rounded text-brand focus:ring-brand cursor-pointer"
                   />
                   <div>
                     <h4
                       className={`text-sm font-semibold ${
                         task.status === 'Done'
-                          ? 'line-through text-[#8e91a0]'
-                          : 'text-[#20222c] group-hover:text-[#7040cd]'
+                          ? 'line-through text-text-subtle'
+                          : 'text-text-main group-hover:text-brand'
                       }`}
                     >
                       {task.title}
                     </h4>
-                    <div className="flex flex-wrap items-center gap-2 mt-1.5 text-xs text-[#727583]">
-                      <span className="font-medium text-[#7040cd] bg-[#efeafb] px-2 py-0.5 rounded-md">
-                        {task.projectName}
-                      </span>
+                    <div className="flex flex-wrap items-center gap-2 mt-1.5 text-xs text-text-muted">
+                      <Badge variant="brand">{task.projectName}</Badge>
                       <span>•</span>
                       <span
                         className={`flex items-center gap-1 font-medium ${
-                          isOverdue ? 'text-[#ef4444] font-bold' : 'text-[#727583]'
+                          isOverdue ? 'text-status-danger font-bold' : 'text-text-muted'
                         }`}
                       >
                         <Clock className="w-3.5 h-3.5" />
                         {formatDate(task.due)} {isOverdue && '(Overdue)'}
                       </span>
                       <span>•</span>
-                      <span className="px-2 py-0.5 bg-[#f7f8fa] border border-[#e4e5ec] rounded-md font-medium text-[11px]">
-                        {task.role}
-                      </span>
+                      <Badge variant="outline">{task.role}</Badge>
                       {task.recurrence !== 'None' && (
-                        <span className="flex items-center gap-1 text-[11px] text-[#3b82f6] font-semibold bg-[#dbeafe] px-2 py-0.5 rounded-md">
+                        <Badge variant="info">
                           <Repeat className="w-3 h-3" />
-                          {task.recurrence}
-                        </span>
+                          <span>{task.recurrence}</span>
+                        </Badge>
                       )}
                     </div>
                   </div>
                 </div>
 
                 <div className="flex items-center gap-3 shrink-0 ml-4">
-                  <span
-                    className={`px-2.5 py-1 text-[10px] font-bold rounded-full uppercase tracking-wider ${
+                  <Badge
+                    variant={
                       task.priority === 'Urgent'
-                        ? 'bg-[#fee2e2] text-[#dc2626]'
+                        ? 'danger'
                         : task.priority === 'High'
-                        ? 'bg-[#ffedd5] text-[#ea580c]'
-                        : 'bg-[#f0f1f5] text-[#535767]'
-                    }`}
+                        ? 'warning'
+                        : 'neutral'
+                    }
                   >
                     {task.priority}
-                  </span>
+                  </Badge>
                   <button
                     onClick={() => deleteTask(task.id)}
-                    className="p-1.5 text-[#8e91a0] hover:text-[#ef4444] hover:bg-[#fee2e2] rounded-lg transition-colors"
+                    className="p-1.5 text-text-subtle hover:text-status-danger hover:bg-status-dangerSubtle rounded-btn transition-colors"
                   >
                     <Trash2 className="w-4 h-4" />
                   </button>
@@ -166,7 +171,10 @@ export function CalendarView() {
             );
           })
         )}
-      </div>
+      </Card>
+
+      {/* Embedded Team Throughput & Velocity Analytics */}
+      <CalendarAnalytics />
     </div>
   );
 }
