@@ -77,12 +77,12 @@ export function Sidebar({ onItemClick, className }: SidebarProps) {
       )}
     >
       {/* Brand Header */}
-      <div className="h-topbar px-5 flex items-center border-b border-border-subtle shrink-0">
-        <Link href="/" className="block w-full">
+      <div className="h-topbar px-4 sm:px-5 flex items-center border-b border-border-subtle shrink-0">
+        <Link href="/" className="flex items-center w-full">
           <img
             src="/images/beyond-imagine-logo.png"
             alt="Beyond Imagine Media Solutions"
-            className="h-11 w-auto max-w-full object-contain"
+            className="h-14 sm:h-[60px] w-auto max-w-full object-contain object-left"
           />
         </Link>
       </div>

@@ -229,12 +229,12 @@ export default function PreviewPage() {
         <aside className="w-72 shrink-0 bg-white border-r border-[#e5e7eb] flex flex-col justify-between shadow-xs select-none">
           <div>
             {/* Header / Brand */}
-            <div className="h-20 px-6 border-b border-gray-100 flex items-center">
-              <Link href="/" className="block w-full">
+            <div className="h-20 px-5 sm:px-6 border-b border-gray-100 flex items-center">
+              <Link href="/" className="flex items-center w-full">
                 <img
                   src="/images/beyond-imagine-logo.png"
                   alt="Beyond Imagine Media Solutions"
-                  className="h-11 w-auto max-w-full object-contain"
+                  className="h-14 sm:h-[60px] w-auto max-w-full object-contain object-left"
                 />
               </Link>
             </div>
