@@ -82,7 +82,7 @@ export function Sidebar({ onItemClick, className }: SidebarProps) {
           <img
             src="/images/beyond-imagine-logo.png"
             alt="Beyond Imagine Media Solutions"
-            className="h-14 sm:h-[60px] w-auto max-w-full object-contain object-left"
+            className="w-full h-auto max-h-[78px] object-contain object-left"
           />
         </Link>
       </div>
