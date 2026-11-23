@@ -1,22 +1,21 @@
 import React from 'react';
+import { LucideProps, GitCompare } from 'lucide-react';
 
-export interface CompareIconProps extends React.ImgHTMLAttributes<HTMLImageElement> {
-  size?: number;
-  className?: string;
+export interface CompareIconProps extends LucideProps {
+  alt?: string;
 }
 
 export function CompareIcon({
-  size,
-  className = 'w-4 h-4',
-  alt = 'Project Comparison',
+  className = 'w-5 h-5',
+  strokeWidth = 1.8,
+  alt,
   ...props
 }: CompareIconProps) {
   return (
-    <img
-      src="/icons/compare-icon.png"
-      alt={alt}
-      className={`inline-block object-contain shrink-0 ${className}`}
-      style={size ? { width: size, height: size, ...props.style } : props.style}
+    <GitCompare
+      className={className}
+      strokeWidth={strokeWidth}
+      aria-label={alt || 'Project Comparison'}
       {...props}
     />
   );

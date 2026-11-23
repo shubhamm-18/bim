@@ -145,7 +145,7 @@ export function Sidebar({ onItemClick, className }: SidebarProps) {
                     <div className="flex items-center gap-3.5 min-w-0">
                       <IconComponent
                         className={cn(
-                          'w-6 h-6 shrink-0 transition-colors',
+                          'w-5 h-5 shrink-0 transition-colors',
                           isActive ? 'text-brand' : 'text-text-subtle group-hover:text-text-main'
                         )}
                       />

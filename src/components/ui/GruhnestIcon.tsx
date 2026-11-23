@@ -1,22 +1,21 @@
 import React from 'react';
+import { LucideProps, Building2 } from 'lucide-react';
 
-export interface GruhnestIconProps extends React.ImgHTMLAttributes<HTMLImageElement> {
-  size?: number;
-  className?: string;
+export interface GruhnestIconProps extends LucideProps {
+  alt?: string;
 }
 
 export function GruhnestIcon({
-  size,
-  className = 'w-4 h-4',
-  alt = 'Gruhnest',
+  className = 'w-5 h-5',
+  strokeWidth = 1.8,
+  alt,
   ...props
 }: GruhnestIconProps) {
   return (
-    <img
-      src="/icons/gruhnest-icon.png"
-      alt={alt}
-      className={`inline-block object-contain shrink-0 ${className}`}
-      style={size ? { width: size, height: size, ...props.style } : props.style}
+    <Building2
+      className={className}
+      strokeWidth={strokeWidth}
+      aria-label={alt || 'Gruhnest'}
       {...props}
     />
   );

@@ -1,22 +1,21 @@
 import React from 'react';
+import { LucideProps, Workflow } from 'lucide-react';
 
-export interface CrmIconProps extends React.ImgHTMLAttributes<HTMLImageElement> {
-  size?: number;
-  className?: string;
+export interface CrmIconProps extends LucideProps {
+  alt?: string;
 }
 
 export function CrmIcon({
-  size,
-  className = 'w-4 h-4',
-  alt = 'Automation & CRM',
+  className = 'w-5 h-5',
+  strokeWidth = 1.8,
+  alt,
   ...props
 }: CrmIconProps) {
   return (
-    <img
-      src="/icons/crm-icon.png"
-      alt={alt}
-      className={`inline-block object-contain shrink-0 ${className}`}
-      style={size ? { width: size, height: size, ...props.style } : props.style}
+    <Workflow
+      className={className}
+      strokeWidth={strokeWidth}
+      aria-label={alt || 'Automation & CRM'}
       {...props}
     />
   );

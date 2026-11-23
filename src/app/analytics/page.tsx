@@ -39,7 +39,7 @@ export default function AnalyticsPage() {
       {/* Top Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div className="flex items-center gap-4">
-          <div className="w-14 h-14 rounded-2xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center p-2 shadow-xs shrink-0">
+          <div className="w-14 h-14 rounded-2xl bg-blue-500/10 border border-blue-500/20 text-blue-600 flex items-center justify-center p-2 shadow-xs shrink-0">
             <AnalyticsIcon className="w-10 h-10" />
           </div>
           <div>

@@ -18,7 +18,7 @@ export function PaymentsView() {
     <div className="space-y-6 pb-12">
       {/* Header */}
       <div className="flex items-center gap-3">
-        <div className="w-10 h-10 rounded-xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center shrink-0">
+        <div className="w-10 h-10 rounded-xl bg-blue-500/10 border border-blue-500/20 text-blue-600 flex items-center justify-center shrink-0">
           <PaymentsIcon className="w-6 h-6" />
         </div>
         <div>

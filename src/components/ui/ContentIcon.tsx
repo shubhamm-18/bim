@@ -1,22 +1,21 @@
 import React from 'react';
+import { LucideProps, Clapperboard } from 'lucide-react';
 
-export interface ContentIconProps extends React.ImgHTMLAttributes<HTMLImageElement> {
-  size?: number;
-  className?: string;
+export interface ContentIconProps extends LucideProps {
+  alt?: string;
 }
 
 export function ContentIcon({
-  size,
-  className = 'w-4 h-4',
-  alt = 'Content Studio',
+  className = 'w-5 h-5',
+  strokeWidth = 1.8,
+  alt,
   ...props
 }: ContentIconProps) {
   return (
-    <img
-      src="/icons/content-icon.png"
-      alt={alt}
-      className={`inline-block object-contain shrink-0 ${className}`}
-      style={size ? { width: size, height: size, ...props.style } : props.style}
+    <Clapperboard
+      className={className}
+      strokeWidth={strokeWidth}
+      aria-label={alt || 'Content Studio'}
       {...props}
     />
   );

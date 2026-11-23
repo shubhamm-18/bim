@@ -18,21 +18,11 @@ export function OverviewHero() {
         {/* LEFT SIDE: Text, Badges, Headline & Button */}
         <div className="lg:col-span-7 p-6 sm:p-10 lg:p-12 flex flex-col justify-center relative z-10">
           <div>
-            {/* Eyebrow Badge: Frosted Glass Capsule with Gold Trim */}
-            <div className="inline-flex items-center gap-3 px-4 sm:px-4.5 py-2 rounded-full bg-black/60 border border-amber-500/70 shadow-lg shadow-black/40 backdrop-blur-md mb-6">
-              <img
-                src="/images/beyond-imagine-logo-dark.png"
-                alt="Beyond Imagine Media"
-                className="h-5 sm:h-5.5 w-auto object-contain"
-              />
-              <span className="text-xs sm:text-[12px] font-bold tracking-wider text-amber-300 uppercase whitespace-nowrap">
-                • {getHeroDateFormatted()}
-              </span>
-            </div>
+            
 
             {/* Main Hero Headline */}
             <h1 className="text-3xl sm:text-5xl font-black tracking-tight text-white leading-[1.1] mb-2">
-              Agency Overview.
+              Agency Overview
             </h1>
 
             {/* Subtitle Description */}

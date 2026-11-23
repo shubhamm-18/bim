@@ -1,22 +1,21 @@
 import React from 'react';
+import { LucideProps, CalendarDays } from 'lucide-react';
 
-export interface CalendarIconProps extends React.ImgHTMLAttributes<HTMLImageElement> {
-  size?: number;
-  className?: string;
+export interface CalendarIconProps extends LucideProps {
+  alt?: string;
 }
 
 export function CalendarIcon({
-  size,
-  className = 'w-4 h-4',
-  alt = 'Tasks & Calendar',
+  className = 'w-5 h-5',
+  strokeWidth = 1.8,
+  alt,
   ...props
 }: CalendarIconProps) {
   return (
-    <img
-      src="/icons/calendar-icon.png"
-      alt={alt}
-      className={`inline-block object-contain shrink-0 ${className}`}
-      style={size ? { width: size, height: size, ...props.style } : props.style}
+    <CalendarDays
+      className={className}
+      strokeWidth={strokeWidth}
+      aria-label={alt || 'Tasks & Calendar'}
       {...props}
     />
   );

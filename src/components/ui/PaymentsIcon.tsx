@@ -1,22 +1,21 @@
 import React from 'react';
+import { LucideProps, CreditCard } from 'lucide-react';
 
-export interface PaymentsIconProps extends React.ImgHTMLAttributes<HTMLImageElement> {
-  size?: number;
-  className?: string;
+export interface PaymentsIconProps extends LucideProps {
+  alt?: string;
 }
 
 export function PaymentsIcon({
-  size,
-  className = 'w-4 h-4',
-  alt = 'Payments & Billing',
+  className = 'w-5 h-5',
+  strokeWidth = 1.8,
+  alt,
   ...props
 }: PaymentsIconProps) {
   return (
-    <img
-      src="/icons/payments-icon.png"
-      alt={alt}
-      className={`inline-block object-contain shrink-0 ${className}`}
-      style={size ? { width: size, height: size, ...props.style } : props.style}
+    <CreditCard
+      className={className}
+      strokeWidth={strokeWidth}
+      aria-label={alt || 'Payments'}
       {...props}
     />
   );

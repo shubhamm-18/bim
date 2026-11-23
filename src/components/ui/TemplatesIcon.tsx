@@ -1,22 +1,21 @@
 import React from 'react';
+import { LucideProps, Layers } from 'lucide-react';
 
-export interface TemplatesIconProps extends React.ImgHTMLAttributes<HTMLImageElement> {
-  size?: number;
-  className?: string;
+export interface TemplatesIconProps extends LucideProps {
+  alt?: string;
 }
 
 export function TemplatesIcon({
-  size,
-  className = 'w-4 h-4',
-  alt = 'Templates',
+  className = 'w-5 h-5',
+  strokeWidth = 1.8,
+  alt,
   ...props
 }: TemplatesIconProps) {
   return (
-    <img
-      src="/icons/templates-icon.png"
-      alt={alt}
-      className={`inline-block object-contain shrink-0 ${className}`}
-      style={size ? { width: size, height: size, ...props.style } : props.style}
+    <Layers
+      className={className}
+      strokeWidth={strokeWidth}
+      aria-label={alt || 'Templates'}
       {...props}
     />
   );
