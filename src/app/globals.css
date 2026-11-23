@@ -43,13 +43,13 @@
   --border-subtle: #f4f4f5;
   --border-hover: #d4d4d8;
 
-  /* Semantic Status Colors (Monochrome Grayscale - No rainbow accents) */
-  --success: #18181b;
-  --success-subtle: #f4f4f5;
-  --warning: #27272a;
-  --warning-subtle: #f4f4f5;
-  --danger: #18181b;
-  --danger-subtle: #f4f4f5;
+  /* Semantic Status Colors (Minimal and Blending) */
+  --success: #166534;
+  --success-subtle: rgba(16, 185, 129, 0.08);
+  --warning: #854d0e;
+  --warning-subtle: rgba(245, 158, 11, 0.08);
+  --danger: #7f1d1d;
+  --danger-subtle: rgba(239, 68, 68, 0.1);
   --info: #27272a;
   --info-subtle: #f4f4f5;
 

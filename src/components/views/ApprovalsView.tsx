@@ -37,7 +37,7 @@ export function ApprovalsView() {
           <div className="flex items-center gap-2">
             <h1 className="text-2xl font-bold text-text-main">Approval Board</h1>
             {pendingItems.length > 0 && (
-              <Badge variant="warning">{pendingItems.length} Awaiting Sign-off</Badge>
+              <Badge variant="pending">{pendingItems.length} Awaiting Sign-off</Badge>
             )}
           </div>
           <p className="text-xs text-text-subtle mt-0.5">
@@ -126,7 +126,7 @@ export function ApprovalsView() {
                   <h5 className="font-bold text-text-main">{item.title}</h5>
                   <span className="text-text-subtle">{item.projectName}</span>
                 </div>
-                <Badge variant={item.status === 'Approved' ? 'success' : 'danger'}>
+                <Badge variant={item.status === 'Approved' ? 'completed' : 'urgent'}>
                   {item.status}
                 </Badge>
               </div>

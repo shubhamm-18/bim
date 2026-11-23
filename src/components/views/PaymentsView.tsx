@@ -84,10 +84,10 @@ export function PaymentsView() {
                     <Badge
                       variant={
                         pay.status === 'Paid'
-                          ? 'success'
-                          : pay.status === 'Part paid'
-                          ? 'warning'
-                          : 'danger'
+                          ? 'completed'
+                          : pay.status === 'Part paid' || pay.status === 'Pending'
+                          ? 'pending'
+                          : 'urgent'
                       }
                     >
                       {pay.status}

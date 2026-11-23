@@ -149,17 +149,21 @@ export function CalendarView() {
                 </div>
 
                 <div className="flex items-center gap-3 shrink-0 ml-4">
-                  <Badge
-                    variant={
-                      task.priority === 'Urgent'
-                        ? 'danger'
-                        : task.priority === 'High'
-                        ? 'warning'
-                        : 'neutral'
-                    }
-                  >
-                    {task.priority}
-                  </Badge>
+                  {task.status === 'Done' ? (
+                    <Badge variant="completed">Completed</Badge>
+                  ) : (
+                    <Badge
+                      variant={
+                        task.priority === 'Urgent'
+                          ? 'urgent'
+                          : task.priority === 'High'
+                          ? 'pending'
+                          : 'neutral'
+                      }
+                    >
+                      {task.priority}
+                    </Badge>
+                  )}
                   <button
                     onClick={() => deleteTask(task.id)}
                     className="p-1.5 text-text-subtle hover:text-text-main hover:bg-surface-hover rounded-btn transition-colors"

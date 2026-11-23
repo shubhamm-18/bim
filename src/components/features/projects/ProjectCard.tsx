@@ -48,7 +48,7 @@ export function ProjectCard({ project, onViewDetails }: ProjectCardProps) {
             </div>
           </div>
 
-          <Badge variant={project.status === 'Active' ? 'success' : 'info'}>
+          <Badge variant={project.status === 'Active' ? 'completed' : 'pending'}>
             {project.status}
           </Badge>
         </div>
@@ -87,7 +87,7 @@ export function ProjectCard({ project, onViewDetails }: ProjectCardProps) {
       </div>
 
       <div className="pt-4 mt-3 border-t border-border-subtle flex items-center justify-between">
-        <Badge variant="warning">{project.infoStatus}</Badge>
+        <Badge variant={project.infoStatus === 'Verified' ? 'brand' : 'pending'}>{project.infoStatus}</Badge>
         <button
           onClick={() => onViewDetails?.(project)}
           className="text-xs font-semibold text-brand hover:underline"

@@ -61,7 +61,7 @@ export function TaskPrioritySection() {
           }`}
         >
           <span>Overdue</span>
-          <Badge variant="danger" className="px-1.5 py-0">
+          <Badge variant="urgent" className="px-1.5 py-0">
             {overdueTasks.length}
           </Badge>
         </button>
@@ -121,18 +121,24 @@ export function TaskPrioritySection() {
                 </div>
               </div>
 
-              <Badge
-                variant={
-                  task.priority === 'Urgent'
-                    ? 'danger'
-                    : task.priority === 'High'
-                    ? 'warning'
-                    : 'neutral'
-                }
-                className="shrink-0 ml-2"
-              >
-                {task.priority}
-              </Badge>
+              {task.status === 'Done' ? (
+                <Badge variant="completed" className="shrink-0 ml-2">
+                  Completed
+                </Badge>
+              ) : (
+                <Badge
+                  variant={
+                    task.priority === 'Urgent'
+                      ? 'urgent'
+                      : task.priority === 'High'
+                      ? 'pending'
+                      : 'neutral'
+                  }
+                  className="shrink-0 ml-2"
+                >
+                  {task.priority}
+                </Badge>
+              )}
             </div>
           ))
         )}

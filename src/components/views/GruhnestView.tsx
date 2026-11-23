@@ -80,14 +80,14 @@ export function GruhnestView() {
                       <Video className="w-3.5 h-3.5 text-text-muted" />
                       <span>Video Walkthrough</span>
                     </span>
-                    <Badge variant="success">{prop.walkthroughAssetStatus}</Badge>
+                    <Badge variant="completed">{prop.walkthroughAssetStatus}</Badge>
                   </div>
                   <div className="flex items-center justify-between p-2 rounded-btn bg-surface-card border border-border-subtle">
                     <span className="flex items-center gap-1.5 text-text-muted">
                       <FileText className="w-3.5 h-3.5 text-text-muted" />
                       <span>Location Explainer</span>
                     </span>
-                    <Badge variant="warning">{prop.explainerAssetStatus}</Badge>
+                    <Badge variant="pending">{prop.explainerAssetStatus}</Badge>
                   </div>
                 </div>
               </div>
