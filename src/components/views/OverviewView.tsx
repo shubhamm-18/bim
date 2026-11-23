@@ -25,7 +25,7 @@ export function OverviewView() {
             <OverviewIcon className="w-5 h-5" />
           </div>
           <div>
-            <h1 className="text-2xl font-bold text-text-main">Agency Overview</h1>
+            <h1 className="text-2xl font-bold text-text-main">Beyond Imagine</h1>
             <p className="text-xs text-text-subtle">
               {agencyConfig.brand.tagline}
             </p>
