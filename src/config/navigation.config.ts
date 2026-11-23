@@ -36,7 +36,7 @@ export const navigationConfig: {
         {
           id: 'overview',
           href: '/',
-          label: 'Overview',
+          label: 'Dashboard',
           iconName: 'OverviewIcon',
           group: 'workspace',
           description: 'Agency key performance indicators, active projects, and urgent action items.',

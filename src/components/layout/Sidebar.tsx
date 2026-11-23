@@ -97,7 +97,7 @@ export function Sidebar({ onItemClick, className }: SidebarProps) {
             <div className="space-y-0.5">
               {group.items.map((item) => {
                 const IconComponent =
-                  item.id === 'overview'
+                  item.id === 'overview' || item.id === 'dashboard'
                     ? OverviewIcon
                     : item.id === 'gruhnest'
                     ? GruhnestIcon

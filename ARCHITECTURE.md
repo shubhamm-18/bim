@@ -13,7 +13,7 @@ src/
 │   ├── globals.css             # CSS design tokens, CSS variables & resets
 │   ├── error.tsx               # Production error boundary
 │   ├── not-found.tsx           # 404 Not Found screen
-│   ├── page.tsx                # / (Agency Overview Dashboard)
+│   ├── page.tsx                # / (Agency Dashboard)
 │   ├── projects/page.tsx       # /projects (Client Projects)
 │   ├── calendar/page.tsx       # /calendar (Tasks & Calendar)
 │   ├── approvals/page.tsx      # /approvals (Creative Approval Board)
@@ -73,7 +73,7 @@ src/
 │   │   ├── overview/           # OverviewHero, OverviewMetrics, TaskPrioritySection
 │   │   └── projects/           # ProjectCard, ClientAccountCard
 │   └── views/                  # Primary View Assemblies
-│       ├── OverviewView.tsx
+│       ├── DashboardView.tsx
 │       ├── ProjectsView.tsx
 │       ├── CalendarView.tsx
 │       ├── ApprovalsView.tsx
