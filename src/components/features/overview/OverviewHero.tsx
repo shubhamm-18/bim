@@ -4,19 +4,18 @@ import React from 'react';
 import { ArrowRight } from 'lucide-react';
 import { agencyConfig } from '@/config/agency.config';
 import { useWorkspaceStore } from '@/store/workspace-store';
-import { getHeroDateFormatted } from '@/lib/utils';
 
 export function OverviewHero() {
   const { setIsNewProjectModalOpen } = useWorkspaceStore();
 
   return (
     <div className="relative overflow-hidden rounded-3xl bg-surface-darkHero border border-border-darkHero shadow-2xl text-white">
-      {/* Ambient Glow */}
-      <div className="absolute -top-32 -left-32 w-80 h-80 bg-brand/20 rounded-full blur-3xl pointer-events-none" />
+      {/* Subtle Ambient Brand Glow */}
+      <div className="absolute -top-32 -left-32 w-80 h-80 bg-brand/15 rounded-full blur-3xl pointer-events-none" />
 
-      <div className="grid grid-cols-1 lg:grid-cols-12 min-h-hero items-stretch">
-        {/* LEFT SIDE: Text, Badges, Headline & Button */}
-        <div className="lg:col-span-6 p-6 sm:p-10 lg:p-12 flex flex-col justify-center relative z-10">
+      <div className="grid grid-cols-1 lg:grid-cols-12 min-h-hero items-center">
+        {/* LEFT SIDE: Text, Headline & Button */}
+        <div className="lg:col-span-7 p-6 sm:p-10 lg:p-12 flex flex-col justify-center relative z-10">
           <div>
             {/* Main Hero Headline */}
             <h1 className="text-3xl sm:text-5xl font-black tracking-tight text-white leading-[1.1] mb-2">
@@ -28,7 +27,7 @@ export function OverviewHero() {
               {agencyConfig.brand.tagline}
             </p>
 
-            {/* Primary Action Pill Button (Left Side) */}
+            {/* Primary Action Pill Button */}
             <div className="mt-8">
               <button
                 onClick={() => setIsNewProjectModalOpen(true)}
@@ -42,11 +41,25 @@ export function OverviewHero() {
           </div>
         </div>
 
-        {/* RIGHT SIDE: Cosmic Infinity Symbol (Full Visibility without Dark Fade) */}
-        <div
-          className="lg:col-span-6 relative min-h-heroMedia lg:min-h-full overflow-hidden bg-cover sm:bg-contain bg-center sm:bg-right bg-no-repeat"
-          style={{ backgroundImage: "url('/banners/hero banner.jpg')" }}
-        />
+        {/* RIGHT SIDE: Cute, Seamlessly Blended Infinity Logo */}
+        <div className="lg:col-span-5 flex items-center justify-center p-6 sm:p-8 relative">
+          {/* Soft ambient cosmic glow behind the infinity */}
+          <div className="absolute w-56 h-56 bg-white/5 rounded-full blur-2xl pointer-events-none" />
+
+          {/* 
+            mix-blend-screen: Image ke pure black background ko 100% transparent bana deta hai!
+            radial-gradient mask: Charo taraf ke edges ko feather karke background me seamlessly blend kar deta hai!
+          */}
+          <img
+            src="/banners/hero banner.jpg"
+            alt="Beyond Imagine Infinity Logo"
+            className="w-full max-w-xs sm:max-w-sm h-auto object-contain select-none pointer-events-none mix-blend-screen transition-all"
+            style={{
+              maskImage: 'radial-gradient(ellipse at center, rgba(0,0,0,1) 50%, rgba(0,0,0,0) 75%)',
+              WebkitMaskImage: 'radial-gradient(ellipse at center, rgba(0,0,0,1) 50%, rgba(0,0,0,0) 75%)',
+            }}
+          />
+        </div>
       </div>
     </div>
   );
