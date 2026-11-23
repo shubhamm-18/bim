@@ -22,7 +22,7 @@ export function GruhnestView() {
         <div>
           <div className="flex items-center gap-2">
             <h1 className="text-2xl font-bold text-text-main">Gruhnest Property Media & Listings</h1>
-            <span className="text-[10px] px-2 py-0.5 rounded-full font-bold uppercase bg-emerald-500/15 text-emerald-700 border border-emerald-500/30">
+            <span className="text-[10px] px-2 py-0.5 rounded-full font-bold uppercase bg-surface-subtle text-text-muted border border-border">
               3D Pro
             </span>
           </div>
@@ -39,12 +39,12 @@ export function GruhnestView() {
           return (
             <Card
               key={prop.id}
-              className="hover:border-status-success/40 hover:shadow-cardHover flex flex-col justify-between"
+              className="hover:border-border-hover hover:shadow-cardHover flex flex-col justify-between"
             >
               <div>
                 <div className="flex items-start justify-between">
                   <div>
-                    <span className="text-[10px] font-bold uppercase tracking-wider text-status-success">
+                    <span className="text-[10px] font-bold uppercase tracking-wider text-text-subtle">
                       {prop.developer}
                     </span>
                     <h3 className="text-base font-bold text-text-main mt-0.5">{prop.projectName}</h3>
@@ -77,14 +77,14 @@ export function GruhnestView() {
                 <div className="space-y-1.5 text-xs">
                   <div className="flex items-center justify-between p-2 rounded-btn bg-surface-card border border-border-subtle">
                     <span className="flex items-center gap-1.5 text-text-muted">
-                      <Video className="w-3.5 h-3.5 text-brand" />
+                      <Video className="w-3.5 h-3.5 text-text-muted" />
                       <span>Video Walkthrough</span>
                     </span>
                     <Badge variant="success">{prop.walkthroughAssetStatus}</Badge>
                   </div>
                   <div className="flex items-center justify-between p-2 rounded-btn bg-surface-card border border-border-subtle">
                     <span className="flex items-center gap-1.5 text-text-muted">
-                      <FileText className="w-3.5 h-3.5 text-status-info" />
+                      <FileText className="w-3.5 h-3.5 text-text-muted" />
                       <span>Location Explainer</span>
                     </span>
                     <Badge variant="warning">{prop.explainerAssetStatus}</Badge>
@@ -98,11 +98,11 @@ export function GruhnestView() {
                   <span className="text-[10px] text-text-subtle block">
                     Commission ({prop.commissionRatePercent}%)
                   </span>
-                  <strong className="text-xs font-bold text-status-success">
+                  <strong className="text-xs font-bold text-text-main">
                     {formatCurrency(estimatedCommission)} / deal
                   </strong>
                 </div>
-                <button className="text-xs font-semibold text-brand hover:underline">
+                <button className="text-xs font-semibold text-text-main hover:underline">
                   View Media Assets →
                 </button>
               </div>

@@ -18,11 +18,11 @@ export function ClientAccountCard({ client, projectsCount }: ClientAccountCardPr
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2.5">
             {isGruhnest ? (
-              <div className="w-8 h-8 rounded-btn bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center p-1.5 shadow-xs shrink-0">
+              <div className="w-8 h-8 rounded-btn bg-surface-subtle border border-border flex items-center justify-center p-1.5 shadow-xs shrink-0 text-text-muted">
                 <GruhnestIcon className="w-full h-full" />
               </div>
             ) : (
-              <span className="w-8 h-8 rounded-btn bg-brand-subtle text-brand font-bold text-xs flex items-center justify-center">
+              <span className="w-8 h-8 rounded-btn bg-surface-subtle text-text-main border border-border font-bold text-xs flex items-center justify-center">
                 {client.tag.toUpperCase()}
               </span>
             )}

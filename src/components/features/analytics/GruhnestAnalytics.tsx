@@ -13,7 +13,7 @@ export function GruhnestAnalytics() {
       {/* Section Divider */}
       <div className="flex items-center gap-3">
         <div className="h-px bg-border flex-1"></div>
-        <div className="px-4 py-1.5 rounded-full bg-status-successSubtle border border-status-success/20 text-xs font-bold uppercase tracking-wider text-status-success flex items-center gap-2">
+        <div className="px-4 py-1.5 rounded-full bg-surface-subtle border border-border text-xs font-bold uppercase tracking-wider text-text-main flex items-center gap-2">
           <GruhnestIcon className="w-4 h-4" />
           <span>Gruhnest Inventory Turnover & Media Asset Yield</span>
         </div>
@@ -26,7 +26,7 @@ export function GruhnestAnalytics() {
             <div className="pb-3 border-b border-border-subtle mb-4">
               <h3 className="text-sm font-bold text-text-main">Marketplace Inventory Balance</h3>
               <div className="text-3xl font-black text-text-main mt-2">300 Units</div>
-              <p className="text-xs text-status-success font-semibold mt-1">115 Units Remaining Available (38.3%)</p>
+              <p className="text-xs text-text-muted font-medium mt-1">115 Units Remaining Available (38.3%)</p>
             </div>
 
             <div className="space-y-2 text-xs">
@@ -50,28 +50,28 @@ export function GruhnestAnalytics() {
           <div>
             <div className="pb-3 border-b border-border-subtle mb-4">
               <h3 className="text-sm font-bold text-text-main">Media Asset Production Readiness</h3>
-              <div className="text-3xl font-black text-status-info mt-2">{readiness.percent}</div>
-              <p className="text-xs text-status-info font-semibold mt-1">4K Walkthroughs & Explainer Films</p>
+              <div className="text-3xl font-black text-text-main mt-2">{readiness.percent}</div>
+              <p className="text-xs text-text-muted font-medium mt-1">4K Walkthroughs & Explainer Films</p>
             </div>
 
             <div className="space-y-3">
               <div>
                 <div className="flex justify-between text-xs text-text-muted mb-1 font-semibold">
                   <span>Sample Flat 4K Walkthroughs</span>
-                  <span className="text-status-success font-bold">{readiness.sampleFlatDelivered}</span>
+                  <span className="text-text-main font-bold">{readiness.sampleFlatDelivered}</span>
                 </div>
                 <div className="w-full bg-surface-subtle h-2 rounded-full overflow-hidden">
-                  <div className="bg-status-success h-full rounded-full" style={{ width: readiness.sampleFlatWidth }}></div>
+                  <div className="bg-zinc-800 h-full rounded-full" style={{ width: readiness.sampleFlatWidth }}></div>
                 </div>
               </div>
 
               <div>
                 <div className="flex justify-between text-xs text-text-muted mb-1 font-semibold">
                   <span>Location Infrastructure Explainers</span>
-                  <span className="text-status-warning font-bold">{readiness.locationExplainerScheduled}</span>
+                  <span className="text-text-muted font-bold">{readiness.locationExplainerScheduled}</span>
                 </div>
                 <div className="w-full bg-surface-subtle h-2 rounded-full overflow-hidden">
-                  <div className="bg-status-warning h-full rounded-full" style={{ width: readiness.locationExplainerWidth }}></div>
+                  <div className="bg-zinc-500 h-full rounded-full" style={{ width: readiness.locationExplainerWidth }}></div>
                 </div>
               </div>
             </div>
@@ -85,7 +85,7 @@ export function GruhnestAnalytics() {
           <div>
             <div className="pb-3 border-b border-border-subtle mb-4">
               <h3 className="text-sm font-bold text-text-main">Expected Deal Commission Pool</h3>
-              <div className="text-3xl font-black text-status-warning mt-2">{dealPool.amount}</div>
+              <div className="text-3xl font-black text-text-main mt-2">{dealPool.amount}</div>
               <p className="text-xs text-text-subtle mt-1">{dealPool.subtext}</p>
             </div>
 
@@ -94,7 +94,7 @@ export function GruhnestAnalytics() {
               <strong className="text-text-main block mt-0.5">{dealPool.fastestCategory}</strong>
             </div>
           </div>
-          <div className="mt-4 pt-3 border-t border-border-subtle text-xs text-status-success font-semibold">
+          <div className="mt-4 pt-3 border-t border-border-subtle text-xs text-text-muted font-semibold">
             {dealPool.exclusivityNote}
           </div>
         </Card>

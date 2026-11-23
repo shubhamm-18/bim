@@ -21,15 +21,8 @@ export function CrmAnalytics() {
     }
   };
 
-  const getStatusTextColor = (status: 'success' | 'warning' | 'danger') => {
-    switch (status) {
-      case 'success':
-        return 'text-status-success';
-      case 'warning':
-        return 'text-status-warning';
-      default:
-        return 'text-status-danger';
-    }
+  const getStatusTextColor = (_status: 'success' | 'warning' | 'danger') => {
+    return 'text-text-main';
   };
 
   return (
@@ -37,7 +30,7 @@ export function CrmAnalytics() {
       {/* Section Divider */}
       <div className="flex items-center gap-3">
         <div className="h-px bg-border flex-1"></div>
-        <div className="px-4 py-1.5 rounded-full bg-status-infoSubtle border border-status-info/20 text-xs font-bold uppercase tracking-wider text-status-info flex items-center gap-2">
+        <div className="px-4 py-1.5 rounded-full bg-surface-subtle border border-border text-xs font-bold uppercase tracking-wider text-text-main flex items-center gap-2">
           <CrmIcon className="w-4 h-4" />
           <span>Lead Velocity & 6-Stage Conversion Funnel</span>
         </div>
@@ -53,7 +46,7 @@ export function CrmAnalytics() {
                 <h3 className="text-sm font-bold text-text-main">Stage-by-Stage Attrition Funnel</h3>
                 <p className="text-xs text-text-subtle">Cumulative retention probabilities across 511 total leads</p>
               </div>
-              <Badge variant="success" className="font-mono font-bold">
+              <Badge variant="neutral" className="font-mono font-bold">
                 17.6% Visit→Closure
               </Badge>
             </div>
@@ -63,7 +56,7 @@ export function CrmAnalytics() {
                 <div key={st.step}>
                   <div className="flex justify-between text-xs mb-1 font-semibold">
                     <span className="text-text-main">{st.step}</span>
-                    <span className={st.highlight ? 'font-mono font-bold text-status-success' : 'font-mono text-text-subtle'}>
+                    <span className={st.highlight ? 'font-mono font-bold text-text-main' : 'font-mono text-text-subtle'}>
                       {st.count}
                     </span>
                   </div>
@@ -75,7 +68,7 @@ export function CrmAnalytics() {
                       </span>
                     )}
                     {st.highlight && (
-                      <span className="absolute right-2 top-1 text-[10px] text-status-success font-bold">
+                      <span className="absolute right-2 top-1 text-[10px] text-text-main font-bold">
                         {st.highlight}
                       </span>
                     )}
@@ -87,7 +80,7 @@ export function CrmAnalytics() {
 
           <div className="mt-4 pt-3 border-t border-border-subtle flex items-center justify-between text-xs">
             <span className="text-text-muted">Primary Conversion Choke Point:</span>
-            <span className="font-semibold text-status-danger bg-status-dangerSubtle px-2 py-0.5 rounded-full text-[11px]">
+            <span className="font-semibold text-text-main bg-surface-subtle border border-border px-2 py-0.5 rounded-full text-[11px]">
               Contacted → Qualified (-49.5% Attrition)
             </span>
           </div>
@@ -117,8 +110,8 @@ export function CrmAnalytics() {
             </div>
           </div>
 
-          <div className="p-3 bg-status-infoSubtle rounded-btn border border-status-info/20 mt-4">
-            <span className="text-xs font-bold text-status-info block">WhatsApp Automation Active</span>
+          <div className="p-3 bg-surface-subtle rounded-btn border border-border mt-4">
+            <span className="text-xs font-bold text-text-main block">WhatsApp Automation Active</span>
             <p className="text-[11px] text-text-muted mt-0.5">
               Average automated brochure dispatch time: <strong>42 seconds</strong>.
             </p>

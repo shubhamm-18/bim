@@ -56,7 +56,7 @@ export function TaskPrioritySection() {
           onClick={() => setActiveTaskTab('overdue')}
           className={`flex items-center gap-1.5 px-3 py-1.5 rounded-btn text-xs font-semibold transition-all ${
             activeTaskTab === 'overdue'
-              ? 'bg-surface-card text-status-danger shadow-sm'
+              ? 'bg-surface-card text-text-main font-bold shadow-sm'
               : 'text-text-muted hover:text-text-main'
           }`}
         >

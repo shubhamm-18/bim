@@ -59,7 +59,7 @@ export function TemplatesView() {
                 <div className="grid grid-cols-2 gap-2 text-xs">
                   {tmpl.features.map((feat) => (
                     <div key={feat} className="flex items-center gap-1.5 text-text-muted">
-                      <CheckCircle2 className="w-3.5 h-3.5 text-status-success" />
+                      <CheckCircle2 className="w-3.5 h-3.5 text-text-muted" />
                       <span>{feat}</span>
                     </div>
                   ))}

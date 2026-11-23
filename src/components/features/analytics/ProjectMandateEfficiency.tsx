@@ -20,7 +20,7 @@ export function ProjectMandateEfficiency() {
             <div key={m.name}>
               <div className="flex justify-between text-xs mb-1 font-semibold">
                 <span className="text-text-main">{m.name}</span>
-                <span className="text-status-success font-mono font-bold">{m.roas}</span>
+                <span className="text-text-main font-mono font-bold">{m.roas}</span>
               </div>
               <div className="w-full bg-surface-subtle h-2.5 rounded-full overflow-hidden">
                 <div className={`${m.barColor} h-full rounded-full`} style={{ width: m.width }}></div>
@@ -34,8 +34,8 @@ export function ProjectMandateEfficiency() {
         </div>
       </div>
 
-      <div className="p-3 bg-brand-subtle rounded-btn border border-brand/20 mt-4">
-        <span className="text-[11px] text-brand font-bold block">💡 Growth Recommendation:</span>
+      <div className="p-3 bg-surface-subtle rounded-btn border border-border mt-4">
+        <span className="text-[11px] text-text-main font-bold block">💡 Growth Recommendation:</span>
         <p className="text-[11px] text-text-muted mt-0.5">
           {growthRecommendation}
         </p>

@@ -130,7 +130,7 @@ export function CalendarView() {
                       <span>•</span>
                       <span
                         className={`flex items-center gap-1 font-medium ${
-                          isOverdue ? 'text-status-danger font-bold' : 'text-text-muted'
+                          isOverdue ? 'text-text-main font-bold underline' : 'text-text-muted'
                         }`}
                       >
                         <Clock className="w-3.5 h-3.5" />
@@ -162,7 +162,7 @@ export function CalendarView() {
                   </Badge>
                   <button
                     onClick={() => deleteTask(task.id)}
-                    className="p-1.5 text-text-subtle hover:text-status-danger hover:bg-status-dangerSubtle rounded-btn transition-colors"
+                    className="p-1.5 text-text-subtle hover:text-text-main hover:bg-surface-hover rounded-btn transition-colors"
                   >
                     <Trash2 className="w-4 h-4" />
                   </button>

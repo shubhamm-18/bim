@@ -138,7 +138,7 @@ export function Sidebar({ onItemClick, className }: SidebarProps) {
                     className={cn(
                       'w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-sm font-semibold transition-all group',
                       isActive
-                        ? 'bg-brand-subtle text-brand'
+                        ? 'bg-zinc-900 text-white shadow-xs'
                         : 'text-text-muted hover:bg-surface-hover hover:text-text-main'
                     )}
                   >
@@ -146,7 +146,7 @@ export function Sidebar({ onItemClick, className }: SidebarProps) {
                       <IconComponent
                         className={cn(
                           'w-5 h-5 shrink-0 transition-colors',
-                          isActive ? 'text-brand' : 'text-text-subtle group-hover:text-text-main'
+                          isActive ? 'text-white' : 'text-text-subtle group-hover:text-text-main'
                         )}
                       />
                       <span className="truncate">{item.label}</span>

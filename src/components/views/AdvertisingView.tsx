@@ -48,11 +48,11 @@ export function AdvertisingView() {
         </Card>
         <Card className="p-4">
           <span className="text-xs font-semibold text-text-subtle">Leads Acquired</span>
-          <div className="text-xl font-extrabold text-status-success mt-1">{totalLeads}</div>
+          <div className="text-xl font-extrabold text-text-main mt-1">{totalLeads}</div>
         </Card>
         <Card className="p-4">
           <span className="text-xs font-semibold text-text-subtle">Average CPL</span>
-          <div className="text-xl font-extrabold text-status-warning mt-1">₹{avgCPL}</div>
+          <div className="text-xl font-extrabold text-text-main mt-1">₹{avgCPL}</div>
         </Card>
       </div>
 
@@ -91,7 +91,7 @@ export function AdvertisingView() {
                     <span className="text-text-subtle"> / {formatCurrency(cmp.budget)}</span>
                   </td>
                   <td className="py-3.5 px-4 text-text-muted">{cmp.impressions.toLocaleString()}</td>
-                  <td className="py-3.5 px-4 font-bold text-status-success">{cmp.leads}</td>
+                  <td className="py-3.5 px-4 font-bold text-text-main">{cmp.leads}</td>
                   <td className="py-3.5 px-4">
                     <Badge variant="success">{cmp.status}</Badge>
                   </td>

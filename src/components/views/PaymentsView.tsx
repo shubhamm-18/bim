@@ -39,13 +39,13 @@ export function PaymentsView() {
         </Card>
         <Card className="p-5">
           <span className="text-xs font-semibold text-text-subtle">Disbursed / Received</span>
-          <div className="text-2xl font-extrabold text-status-success mt-1">
+          <div className="text-2xl font-extrabold text-text-main mt-1">
             {formatCurrency(totalReceived)}
           </div>
         </Card>
         <Card className="p-5">
           <span className="text-xs font-semibold text-text-subtle">Outstanding Pending</span>
-          <div className="text-2xl font-extrabold text-status-warning mt-1">
+          <div className="text-2xl font-extrabold text-text-main mt-1">
             {formatCurrency(totalPending)}
           </div>
         </Card>
@@ -74,11 +74,11 @@ export function PaymentsView() {
             <tbody className="divide-y divide-border-subtle">
               {payments.map((pay) => (
                 <tr key={pay.id} className="hover:bg-surface-subtle transition-colors">
-                  <td className="py-3.5 px-4 font-mono font-bold text-brand">{pay.invoiceNo}</td>
+                  <td className="py-3.5 px-4 font-mono font-bold text-text-main">{pay.invoiceNo}</td>
                   <td className="py-3.5 px-4 font-bold text-text-main">{pay.projectName}</td>
                   <td className="py-3.5 px-4 text-text-muted">{pay.description}</td>
                   <td className="py-3.5 px-4 font-bold text-text-main">{formatCurrency(pay.amount)}</td>
-                  <td className="py-3.5 px-4 font-bold text-status-success">{formatCurrency(pay.paidAmount)}</td>
+                  <td className="py-3.5 px-4 font-bold text-text-main">{formatCurrency(pay.paidAmount)}</td>
                   <td className="py-3.5 px-4 text-text-subtle">{formatDate(pay.dueDate)}</td>
                   <td className="py-3.5 px-4">
                     <Badge

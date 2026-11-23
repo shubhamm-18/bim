@@ -34,7 +34,7 @@ export function OverviewMetrics() {
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
       {/* KPI 1 */}
       <Link href="/projects" onClick={() => setCurrentView('projects')}>
-        <Card className="hover:border-brand/40 hover:shadow-cardHover cursor-pointer text-left group h-full">
+        <Card className="hover:border-border-hover hover:shadow-cardHover cursor-pointer text-left group h-full">
           <div className="flex items-center justify-between">
             <span className="text-xs font-semibold text-text-muted">Client projects</span>
             <div className="w-11 h-11 rounded-xl bg-surface-subtle border border-border text-text-muted group-hover:text-text-main group-hover:border-border-hover group-hover:scale-105 transition-all flex items-center justify-center">
@@ -52,7 +52,7 @@ export function OverviewMetrics() {
 
       {/* KPI 2 */}
       <Link href="/calendar" onClick={() => setCurrentView('calendar')}>
-        <Card className="hover:border-status-info/40 hover:shadow-cardHover cursor-pointer text-left group h-full">
+        <Card className="hover:border-border-hover hover:shadow-cardHover cursor-pointer text-left group h-full">
           <div className="flex items-center justify-between">
             <span className="text-xs font-semibold text-text-muted">Tasks due today</span>
             <div className="w-11 h-11 rounded-xl bg-surface-subtle border border-border text-text-muted group-hover:text-text-main group-hover:border-border-hover group-hover:scale-105 transition-all flex items-center justify-center">
@@ -60,7 +60,7 @@ export function OverviewMetrics() {
             </div>
           </div>
           <div className="text-3xl lg:text-4xl font-black text-text-main mt-3">{todayTasks.length}</div>
-          <span className="text-xs font-semibold text-status-danger mt-1 block">
+          <span className="text-xs font-semibold text-text-muted mt-1 block">
             {overdueTasks.length} overdue tasks
           </span>
         </Card>
@@ -68,7 +68,7 @@ export function OverviewMetrics() {
 
       {/* KPI 3 */}
       <Link href="/approvals" onClick={() => setCurrentView('approvals')}>
-        <Card className="hover:border-status-warning/40 hover:shadow-cardHover cursor-pointer text-left group h-full">
+        <Card className="hover:border-border-hover hover:shadow-cardHover cursor-pointer text-left group h-full">
           <div className="flex items-center justify-between">
             <span className="text-xs font-semibold text-text-muted">Pending approvals</span>
             <div className="w-11 h-11 rounded-xl bg-surface-subtle border border-border text-text-muted group-hover:text-text-main group-hover:border-border-hover group-hover:scale-105 transition-all flex items-center justify-center">
@@ -84,7 +84,7 @@ export function OverviewMetrics() {
 
       {/* KPI 4 */}
       <Link href="/advertising" onClick={() => setCurrentView('advertising')}>
-        <Card className="hover:border-status-success/40 hover:shadow-cardHover cursor-pointer text-left group h-full">
+        <Card className="hover:border-border-hover hover:shadow-cardHover cursor-pointer text-left group h-full">
           <div className="flex items-center justify-between">
             <span className="text-xs font-semibold text-text-muted">Reported site visits</span>
             <div className="w-11 h-11 rounded-xl bg-surface-subtle border border-border text-text-muted group-hover:text-text-main group-hover:border-border-hover group-hover:scale-105 transition-all flex items-center justify-center">

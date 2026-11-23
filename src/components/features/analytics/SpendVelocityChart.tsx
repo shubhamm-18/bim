@@ -40,12 +40,12 @@ export function SpendVelocityChart() {
           <svg className="w-full h-44 overflow-visible relative z-10" viewBox="0 0 600 180">
             <defs>
               <linearGradient id="brandAreaGrad" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0%" stopColor="var(--brand)" stopOpacity="0.35" />
-                <stop offset="100%" stopColor="var(--brand)" stopOpacity="0.0" />
+                <stop offset="0%" stopColor="#18181b" stopOpacity="0.2" />
+                <stop offset="100%" stopColor="#18181b" stopOpacity="0.0" />
               </linearGradient>
               <linearGradient id="infoAreaGrad" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0%" stopColor="var(--info)" stopOpacity="0.25" />
-                <stop offset="100%" stopColor="var(--info)" stopOpacity="0.0" />
+                <stop offset="0%" stopColor="#71717a" stopOpacity="0.15" />
+                <stop offset="100%" stopColor="#71717a" stopOpacity="0.0" />
               </linearGradient>
             </defs>
 
@@ -57,8 +57,8 @@ export function SpendVelocityChart() {
             <polyline
               points="40,140 140,110 240,80 340,95 440,40 540,55"
               fill="none"
-              stroke="var(--brand)"
-              strokeWidth="3.5"
+              stroke="#18181b"
+              strokeWidth="3"
               strokeLinecap="round"
             />
 
@@ -70,19 +70,19 @@ export function SpendVelocityChart() {
             <polyline
               points="40,155 140,130 240,105 340,120 440,65 540,75"
               fill="none"
-              stroke="var(--info)"
-              strokeWidth="2.5"
+              stroke="#71717a"
+              strokeWidth="2"
               strokeLinecap="round"
               strokeDasharray="4 4"
             />
 
             {/* Nodes */}
-            <circle cx="40" cy="140" r="5" fill="var(--brand)" stroke="#fff" strokeWidth="2" />
-            <circle cx="140" cy="110" r="5" fill="var(--brand)" stroke="#fff" strokeWidth="2" />
-            <circle cx="240" cy="80" r="5" fill="var(--brand)" stroke="#fff" strokeWidth="2" />
-            <circle cx="340" cy="95" r="5" fill="var(--brand)" stroke="#fff" strokeWidth="2" />
-            <circle cx="440" cy="40" r="6" fill="var(--brand)" stroke="#fff" strokeWidth="2.5" />
-            <circle cx="540" cy="55" r="5" fill="var(--brand)" stroke="#fff" strokeWidth="2" />
+            <circle cx="40" cy="140" r="4.5" fill="#18181b" stroke="#fff" strokeWidth="2" />
+            <circle cx="140" cy="110" r="4.5" fill="#18181b" stroke="#fff" strokeWidth="2" />
+            <circle cx="240" cy="80" r="4.5" fill="#18181b" stroke="#fff" strokeWidth="2" />
+            <circle cx="340" cy="95" r="4.5" fill="#18181b" stroke="#fff" strokeWidth="2" />
+            <circle cx="440" cy="40" r="5.5" fill="#18181b" stroke="#fff" strokeWidth="2" />
+            <circle cx="540" cy="55" r="4.5" fill="#18181b" stroke="#fff" strokeWidth="2" />
           </svg>
         </div>
 
@@ -99,13 +99,13 @@ export function SpendVelocityChart() {
       <div className="flex items-center justify-between text-xs pt-3 mt-3 border-t border-border-subtle">
         <div className="flex items-center gap-3">
           <span className="flex items-center gap-1.5 text-xs text-text-muted">
-            <span className="w-2.5 h-2.5 rounded-full bg-brand"></span> Ad Spend (₹)
+            <span className="w-2.5 h-2.5 rounded-full bg-zinc-900"></span> Ad Spend (₹)
           </span>
           <span className="flex items-center gap-1.5 text-xs text-text-muted">
-            <span className="w-2.5 h-2.5 rounded-full bg-status-info"></span> Leads Generated
+            <span className="w-2.5 h-2.5 rounded-full bg-zinc-500"></span> Leads Generated
           </span>
         </div>
-        <span className="text-status-success font-semibold text-xs">
+        <span className="text-text-muted font-semibold text-xs">
           Peak Efficiency: Week 1 Nov (₹980 CPL)
         </span>
       </div>

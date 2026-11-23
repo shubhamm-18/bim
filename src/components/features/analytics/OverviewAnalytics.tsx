@@ -19,7 +19,7 @@ export function OverviewAnalytics() {
       {/* Section Divider */}
       <div className="flex items-center gap-3">
         <div className="h-px bg-border flex-1"></div>
-        <div className="px-4 py-1.5 rounded-full bg-brand-subtle border border-brand/20 text-xs font-bold uppercase tracking-wider text-brand flex items-center gap-2">
+        <div className="px-4 py-1.5 rounded-full bg-surface-subtle border border-border text-xs font-bold uppercase tracking-wider text-text-main flex items-center gap-2">
           <AnalyticsIcon className="w-4 h-4" />
           <span>Macro Statistical Intelligence & Forecasting</span>
         </div>

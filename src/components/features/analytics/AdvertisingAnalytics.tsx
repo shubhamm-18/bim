@@ -21,7 +21,7 @@ export function AdvertisingAnalytics() {
       {/* Section Divider */}
       <div className="flex items-center gap-3">
         <div className="h-px bg-border flex-1"></div>
-        <div className="px-4 py-1.5 rounded-full bg-status-warningSubtle border border-status-warning/20 text-xs font-bold uppercase tracking-wider text-status-warning flex items-center gap-2">
+        <div className="px-4 py-1.5 rounded-full bg-surface-subtle border border-border text-xs font-bold uppercase tracking-wider text-text-main flex items-center gap-2">
           <AdvertisingIcon className="w-4 h-4" />
           <span>Paid Ad Campaign Analytics & Statistical Attribution</span>
         </div>
@@ -84,8 +84,8 @@ export function AdvertisingAnalytics() {
             </div>
           </div>
 
-          <div className="flex items-center gap-2 p-2.5 bg-status-dangerSubtle text-status-danger rounded-btn text-xs font-semibold mt-6">
-            <AlertTriangle className="w-4 h-4 shrink-0" />
+          <div className="flex items-center gap-2 p-2.5 bg-surface-subtle text-text-muted border border-border rounded-btn text-xs font-medium mt-6">
+            <AlertTriangle className="w-4 h-4 shrink-0 text-text-muted" />
             <span>{creativeFatigueNotice}</span>
           </div>
         </Card>

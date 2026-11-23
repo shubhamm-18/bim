@@ -81,7 +81,7 @@ export function ProjectCard({ project, onViewDetails }: ProjectCardProps) {
           </div>
           <div>
             <span className="text-[10px] text-text-subtle block">Bookings</span>
-            <strong className="text-status-success">{project.bookingsCount || 0}</strong>
+            <strong className="text-text-main">{project.bookingsCount || 0}</strong>
           </div>
         </div>
       </div>

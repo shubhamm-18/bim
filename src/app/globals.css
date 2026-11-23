@@ -4,54 +4,54 @@
 
 :root {
   /* ==========================================================================
-     🎨 THEME DESIGN TOKENS
-     Edit these variables directly to change colors, shapes, and styles!
+     🎨 THEME DESIGN TOKENS (100% CLEAN MONOCHROME SYSTEM)
+     Pure neutral zinc, white, and dark tones. Zero rainbow colors.
      ========================================================================== */
 
   /* Primary Brand Accent (Buttons, Highlights, Active Tabs) */
-  --brand: #cd4055;
-  --brand-hover: #b83245;
-  --brand-subtle: #fde8ea;
+  --brand: #18181b;
+  --brand-hover: #27272a;
+  --brand-subtle: #f4f4f5;
   --brand-foreground: #ffffff;
 
   /* App Background & Card Surfaces */
-  --bg-app: #faf7f7;
+  --bg-app: #fafafa;
   --bg-card: #ffffff;
-  --bg-card-subtle: #f7f7f9;
-  --bg-card-hover: #f3f3f6;
+  --bg-card-subtle: #f4f4f5;
+  --bg-card-hover: #f4f4f5;
   --bg-input: #ffffff;
 
   /* Dark Surfaces & Theme Tokens */
-  --bg-dark-hero: #0d0e14;
-  --border-dark-hero: #222533;
-  --bg-dark-panel: #161824;
-  --border-dark-panel: #2d3148;
-  --bg-dark-control: #222538;
-  --border-dark-control: #353952;
-  --bg-dark-card: #0c0d15;
-  --border-dark-card: #232536;
-  --bg-app-subtle: #f8f9fc;
+  --bg-dark-hero: #09090b;
+  --border-dark-hero: #27272a;
+  --bg-dark-panel: #18181b;
+  --border-dark-panel: #27272a;
+  --bg-dark-control: #27272a;
+  --border-dark-control: #3f3f46;
+  --bg-dark-card: #09090b;
+  --border-dark-card: #27272a;
+  --bg-app-subtle: #f4f4f5;
 
   /* Typography Colors */
-  --text-main: #20222c;
-  --text-muted: #6b6e7b;
-  --text-subtle: #8e91a0;
+  --text-main: #09090b;
+  --text-muted: #52525b;
+  --text-subtle: #71717a;
   --text-inverse: #ffffff;
 
   /* Borders & Dividers */
-  --border-default: #e4e5ec;
-  --border-subtle: #f0f1f5;
-  --border-hover: #d3d5df;
+  --border-default: #e4e4e7;
+  --border-subtle: #f4f4f5;
+  --border-hover: #d4d4d8;
 
-  /* Semantic Status Colors (Badges, Alerts, Pipelines) */
-  --success: #059669;
-  --success-subtle: #d1fae5;
-  --warning: #d97706;
-  --warning-subtle: #fef3c7;
-  --danger: #ef4444;
-  --danger-subtle: #fee2e2;
-  --info: #2563eb;
-  --info-subtle: #dbeafe;
+  /* Semantic Status Colors (Monochrome Grayscale - No rainbow accents) */
+  --success: #18181b;
+  --success-subtle: #f4f4f5;
+  --warning: #27272a;
+  --warning-subtle: #f4f4f5;
+  --danger: #18181b;
+  --danger-subtle: #f4f4f5;
+  --info: #27272a;
+  --info-subtle: #f4f4f5;
 
   /* Shape & Geometry (Corner Roundness) */
   --radius-card: 1rem;       /* 16px - Cards & large panels */

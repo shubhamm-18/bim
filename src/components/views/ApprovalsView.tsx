@@ -18,11 +18,11 @@ export function ApprovalsView() {
   const getKindIcon = (kind: string) => {
     switch (kind) {
       case 'Video Cut':
-        return <Video className="w-4 h-4 text-brand" />;
+        return <Video className="w-4 h-4 text-text-muted" />;
       case 'Ad Creative':
         return <AdvertisingIcon className="w-4 h-4" />;
       default:
-        return <FileText className="w-4 h-4 text-status-info" />;
+        return <FileText className="w-4 h-4 text-text-muted" />;
     }
   };
 

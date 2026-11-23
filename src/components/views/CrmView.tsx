@@ -68,7 +68,7 @@ export function CrmView() {
                 {stageLeads.map((lead) => (
                   <Card
                     key={lead.id}
-                    className="p-3 hover:border-status-success/40 shadow-sm flex flex-col justify-between"
+                    className="p-3 hover:border-border-hover shadow-sm flex flex-col justify-between"
                   >
                     <div>
                       <div className="flex items-center justify-between">
@@ -81,7 +81,7 @@ export function CrmView() {
                         <Phone className="w-3 h-3 text-text-subtle" />
                         <span>{lead.phone}</span>
                       </div>
-                      <p className="text-[11px] font-semibold text-brand mt-1">
+                      <p className="text-[11px] font-semibold text-text-main mt-1">
                         {lead.projectName}
                       </p>
                       {lead.notes && (
@@ -98,7 +98,7 @@ export function CrmView() {
                       <select
                         value={lead.stage}
                         onChange={(e) => updateLeadStage(lead.id, e.target.value as LeadStage)}
-                        className="text-[10px] font-semibold text-status-success bg-status-successSubtle border border-status-success/30 rounded-btn px-1.5 py-0.5 outline-none cursor-pointer"
+                        className="text-[10px] font-semibold text-text-main bg-surface-subtle border border-border rounded-btn px-1.5 py-0.5 outline-none cursor-pointer"
                       >
                         {leadStages.map((st) => (
                           <option key={st} value={st}>

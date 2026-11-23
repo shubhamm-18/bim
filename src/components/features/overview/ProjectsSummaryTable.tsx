@@ -21,7 +21,7 @@ export function ProjectsSummaryTable() {
     <Card>
       <CardHeader>
         <div className="flex items-center gap-3">
-          <div className="w-9 h-9 rounded-lg bg-amber-500/10 border border-amber-500/20 flex items-center justify-center shrink-0">
+          <div className="w-9 h-9 rounded-lg bg-surface-subtle border border-border flex items-center justify-center shrink-0 text-text-muted">
             <ProjectsIcon className="w-5 h-5" />
           </div>
           <div>
@@ -32,7 +32,7 @@ export function ProjectsSummaryTable() {
         <Link
           href="/projects"
           onClick={() => setCurrentView('projects')}
-          className="text-xs font-semibold text-brand hover:underline"
+          className="text-xs font-semibold text-text-main hover:underline"
         >
           View all ({filteredProjects.length}) →
         </Link>

@@ -14,7 +14,7 @@ export function ContentAnalytics() {
       {/* Section Divider */}
       <div className="flex items-center gap-3">
         <div className="h-px bg-border flex-1"></div>
-        <div className="px-4 py-1.5 rounded-full bg-brand-subtle border border-brand/20 text-xs font-bold uppercase tracking-wider text-brand flex items-center gap-2">
+        <div className="px-4 py-1.5 rounded-full bg-surface-subtle border border-border text-xs font-bold uppercase tracking-wider text-text-main flex items-center gap-2">
           <ContentIcon className="w-4 h-4" />
           <span>Content Production Velocity & Organic Reach Metrics</span>
         </div>
@@ -57,11 +57,11 @@ export function ContentAnalytics() {
             </div>
 
             <div className="p-3 bg-surface-subtle rounded-btn border border-border text-xs">
-              <span className="text-brand font-bold block">{turnaround.fastestLabel}</span>
+              <span className="text-text-main font-bold block">{turnaround.fastestLabel}</span>
               <span className="text-text-main block mt-0.5">{turnaround.fastestAsset}</span>
             </div>
           </div>
-          <div className="mt-4 pt-3 border-t border-border-subtle text-xs text-status-success font-semibold">
+          <div className="mt-4 pt-3 border-t border-border-subtle text-xs text-text-muted font-semibold">
             {turnaround.revisionNote}
           </div>
         </Card>
@@ -70,12 +70,12 @@ export function ContentAnalytics() {
           <div>
             <div className="pb-3 border-b border-border-subtle mb-4">
               <h3 className="text-sm font-bold text-text-main">Estimated Organic Video Views</h3>
-              <div className="text-3xl font-black text-status-success mt-2">{organicViews.total}</div>
+              <div className="text-3xl font-black text-text-main mt-2">{organicViews.total}</div>
               <p className="text-xs text-text-subtle mt-1">{organicViews.subtitle}</p>
             </div>
 
-            <div className="p-3 bg-status-successSubtle rounded-btn border border-status-success/20 text-xs text-status-success font-semibold flex items-center gap-2">
-              <Sparkles className="w-4 h-4 shrink-0" />
+            <div className="p-3 bg-surface-subtle rounded-btn border border-border text-xs text-text-muted font-semibold flex items-center gap-2">
+              <Sparkles className="w-4 h-4 shrink-0 text-text-muted" />
               <span>{organicViews.highlight}</span>
             </div>
           </div>

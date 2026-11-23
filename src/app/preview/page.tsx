@@ -98,8 +98,8 @@ export default function PreviewPage() {
       {/* Floating Preview Control Bar */}
       <div className="sticky top-0 z-50 bg-surface-darkPanel text-white px-6 py-3 shadow-xl border-b border-border-darkPanel flex flex-wrap items-center justify-between gap-4">
         <div className="flex items-center gap-3">
-          <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse" />
-          <span className="text-xs font-black uppercase tracking-wider text-emerald-400">
+          <span className="w-2.5 h-2.5 rounded-full bg-zinc-400 animate-pulse" />
+          <span className="text-xs font-black uppercase tracking-wider text-zinc-300">
             UI Scale & Layout Preview
           </span>
           <span className="text-xs text-gray-400 hidden sm:inline">|</span>
@@ -114,15 +114,15 @@ export default function PreviewPage() {
             <button
               onClick={() => setEyebrowStyle('white-gold')}
               className={`px-3 py-1 rounded-md font-semibold transition-all ${
-                eyebrowStyle === 'white-gold' ? 'bg-amber-500 text-black font-bold shadow-xs' : 'text-gray-400 hover:text-white'
+                eyebrowStyle === 'white-gold' ? 'bg-zinc-100 text-black font-bold shadow-xs' : 'text-gray-400 hover:text-white'
               }`}
             >
-              Badge A: Gold Capsule ★
+              Badge A: White Capsule ★
             </button>
             <button
               onClick={() => setEyebrowStyle('emblem')}
               className={`px-3 py-1 rounded-md font-semibold transition-all ${
-                eyebrowStyle === 'emblem' ? 'bg-amber-500 text-black font-bold shadow-xs' : 'text-gray-400 hover:text-white'
+                eyebrowStyle === 'emblem' ? 'bg-zinc-100 text-black font-bold shadow-xs' : 'text-gray-400 hover:text-white'
               }`}
             >
               Badge B: Emblem
@@ -130,7 +130,7 @@ export default function PreviewPage() {
             <button
               onClick={() => setEyebrowStyle('frosted')}
               className={`px-3 py-1 rounded-md font-semibold transition-all ${
-                eyebrowStyle === 'frosted' ? 'bg-amber-500 text-black font-bold shadow-xs' : 'text-gray-400 hover:text-white'
+                eyebrowStyle === 'frosted' ? 'bg-zinc-100 text-black font-bold shadow-xs' : 'text-gray-400 hover:text-white'
               }`}
             >
               Badge C: Frosted Glass
@@ -142,7 +142,7 @@ export default function PreviewPage() {
             <button
               onClick={() => setHeroOption('architectural')}
               className={`px-3 py-1 rounded-md font-semibold transition-all ${
-                heroOption === 'architectural' ? 'bg-amber-600 text-white shadow-xs' : 'text-gray-400 hover:text-white'
+                heroOption === 'architectural' ? 'bg-zinc-700 text-white shadow-xs' : 'text-gray-400 hover:text-white'
               }`}
             >
               Architectural Hero (Live)
@@ -150,10 +150,10 @@ export default function PreviewPage() {
             <button
               onClick={() => setHeroOption('wave')}
               className={`px-3 py-1 rounded-md font-semibold transition-all ${
-                heroOption === 'wave' ? 'bg-purple-600 text-white shadow-xs' : 'text-gray-400 hover:text-white'
+                heroOption === 'wave' ? 'bg-zinc-700 text-white shadow-xs' : 'text-gray-400 hover:text-white'
               }`}
             >
-              Purple Wave Hero
+              Dark Wave Hero
             </button>
           </div>
 
@@ -162,7 +162,7 @@ export default function PreviewPage() {
             <button
               onClick={() => setScaleMode('scaled')}
               className={`px-3 py-1 rounded-md font-semibold transition-all ${
-                scaleMode === 'scaled' ? 'bg-purple-600 text-white' : 'text-gray-400 hover:text-white'
+                scaleMode === 'scaled' ? 'bg-zinc-700 text-white' : 'text-gray-400 hover:text-white'
               }`}
             >
               Full Preview
@@ -170,7 +170,7 @@ export default function PreviewPage() {
             <button
               onClick={() => setScaleMode('split')}
               className={`px-3 py-1 rounded-md font-semibold transition-all ${
-                scaleMode === 'split' ? 'bg-purple-600 text-white' : 'text-gray-400 hover:text-white'
+                scaleMode === 'split' ? 'bg-zinc-700 text-white' : 'text-gray-400 hover:text-white'
               }`}
             >
               Compare with Reference
@@ -192,7 +192,7 @@ export default function PreviewPage() {
           <div className="bg-white rounded-2xl p-4 shadow-md border border-gray-200">
             <div className="flex items-center justify-between pb-3 mb-3 border-b border-gray-100">
               <h3 className="text-sm font-bold text-gray-800">User Reference Screenshot</h3>
-              <span className="text-[11px] font-semibold text-purple-600 bg-purple-50 px-2 py-0.5 rounded-full">
+              <span className="text-[11px] font-semibold text-zinc-700 bg-zinc-100 px-2 py-0.5 rounded-full">
                 Target Reference
               </span>
             </div>
@@ -207,7 +207,7 @@ export default function PreviewPage() {
           <div className="bg-white rounded-2xl p-4 shadow-md border border-gray-200">
             <div className="flex items-center justify-between pb-3 mb-3 border-b border-gray-100">
               <h3 className="text-sm font-bold text-gray-800">Proposed Scaled-Up Implementation</h3>
-              <span className="text-[11px] font-semibold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-full">
+              <span className="text-[11px] font-semibold text-zinc-700 bg-zinc-100 px-2 py-0.5 rounded-full">
                 Live Interactive Mock
               </span>
             </div>
@@ -255,7 +255,7 @@ export default function PreviewPage() {
                           key={item.id}
                           className={`w-full flex items-center justify-between ${sidebarPadding} rounded-xl ${sidebarTextClass} font-semibold transition-all cursor-pointer ${
                             isActive
-                              ? 'bg-purple-50 text-purple-700 shadow-xs'
+                              ? 'bg-zinc-900 text-white shadow-xs'
                               : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'
                           }`}
                         >
@@ -266,7 +266,7 @@ export default function PreviewPage() {
                           {item.badge !== undefined && (
                             <span
                               className={`text-[11px] font-bold px-2 py-0.5 rounded-full ${
-                                isActive ? 'bg-purple-200 text-purple-800' : 'bg-gray-100 text-gray-600'
+                                isActive ? 'bg-zinc-800 text-white' : 'bg-gray-100 text-gray-600'
                               }`}
                             >
                               {item.badge}
@@ -283,7 +283,7 @@ export default function PreviewPage() {
 
           {/* User Profile Footer */}
           <div className="p-5 border-t border-gray-100 flex items-center gap-3.5 bg-gray-50/60">
-            <div className="w-10 h-10 rounded-full bg-purple-100 text-purple-700 font-extrabold text-xs flex items-center justify-center border border-purple-200 shrink-0">
+            <div className="w-10 h-10 rounded-full bg-zinc-100 text-zinc-900 font-extrabold text-xs flex items-center justify-center border border-zinc-200 shrink-0">
               RS
             </div>
             <div className="min-w-0 flex-1">
@@ -345,42 +345,42 @@ export default function PreviewPage() {
                   <div className="lg:col-span-7 p-6 sm:p-10 lg:p-12 flex flex-col justify-center relative z-10">
                     <div>
                       {eyebrowStyle === 'white-gold' && (
-                        <div className="inline-flex items-center gap-3 px-4 sm:px-4.5 py-2 rounded-full bg-black/60 border border-amber-500/70 shadow-lg shadow-black/40 backdrop-blur-md mb-6">
+                        <div className="inline-flex items-center gap-3 px-4 sm:px-4.5 py-2 rounded-full bg-black/60 border border-zinc-500/70 shadow-lg shadow-black/40 backdrop-blur-md mb-6">
                           <img
                             src="/images/beyond-imagine-logo-dark.png"
                             alt="Beyond Imagine Media"
                             className="h-5 sm:h-5.5 w-auto object-contain"
                           />
-                          <span className="text-xs sm:text-[12px] font-bold tracking-wider text-amber-300 uppercase whitespace-nowrap">
+                          <span className="text-xs sm:text-[12px] font-bold tracking-wider text-zinc-300 uppercase whitespace-nowrap">
                             • {getHeroDateFormatted()}
                           </span>
                         </div>
                       )}
                       {eyebrowStyle === 'emblem' && (
-                        <div className="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-xl bg-white/[0.04] border border-amber-500/30 backdrop-blur-sm mb-6">
+                        <div className="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-xl bg-white/[0.04] border border-zinc-500/30 backdrop-blur-sm mb-6">
                           <img
                             src="/images/beyond-imagine-emblem.png"
                             alt="B"
                             className="h-5 w-auto object-contain"
                           />
                           <span className="text-xs font-black tracking-wide text-white uppercase">Beyond Imagine</span>
-                          <span className="w-1 h-1 rounded-full bg-amber-400" />
-                          <span className="text-[11px] font-semibold text-amber-300/90 uppercase tracking-wider">
+                          <span className="w-1 h-1 rounded-full bg-zinc-400" />
+                          <span className="text-[11px] font-semibold text-zinc-300/90 uppercase tracking-wider">
                             {getTodayFormatted()}
                           </span>
                         </div>
                       )}
                       {eyebrowStyle === 'frosted' && (
                         <div className="inline-flex items-center gap-3 mb-6">
-                          <div className="px-3.5 py-1 rounded-full bg-white border border-amber-400/70 shadow-md flex items-center">
+                          <div className="px-3.5 py-1 rounded-full bg-white border border-zinc-400/70 shadow-md flex items-center">
                             <img
                               src="/images/beyond-imagine-logo.png"
                               alt="Beyond Imagine Media"
                               className="h-4.5 w-auto object-contain"
                             />
                           </div>
-                          <span className="w-1.5 h-1.5 rounded-full bg-amber-400" />
-                          <span className="text-[11px] font-bold tracking-wider text-amber-300 uppercase">
+                          <span className="w-1.5 h-1.5 rounded-full bg-zinc-400" />
+                          <span className="text-[11px] font-bold tracking-wider text-zinc-300 uppercase">
                             {getTodayFormatted()}
                           </span>
                         </div>
@@ -418,8 +418,8 @@ export default function PreviewPage() {
                   style={{ backgroundImage: "url('/banners/purple-wave-banner.svg')" }}
                 />
                 <div className="relative z-10 p-8 sm:p-12 max-w-xl">
-                  <div className="flex items-center gap-2 text-[11px] font-bold tracking-widest uppercase text-purple-300/80 mb-4">
-                    <span className="w-2 h-2 rounded-full bg-purple-500" />
+                  <div className="flex items-center gap-2 text-[11px] font-bold tracking-widest uppercase text-zinc-400 mb-4">
+                    <span className="w-2 h-2 rounded-full bg-zinc-500" />
                     <span>SUNDAY, 22 NOVEMBER 2026</span>
                   </div>
                   <h1 className="text-3xl sm:text-5xl font-black tracking-tight text-white leading-tight">
@@ -509,7 +509,7 @@ export default function PreviewPage() {
                 <div>
                   <div className="flex items-center justify-between pb-4 border-b border-gray-100">
                     <h3 className="text-base font-bold text-gray-900">Priority tasks</h3>
-                    <Link href="/calendar" className="text-xs font-bold text-purple-600 hover:underline">
+                    <Link href="/calendar" className="text-xs font-bold text-zinc-900 hover:underline">
                       View all
                     </Link>
                   </div>
@@ -520,7 +520,7 @@ export default function PreviewPage() {
                       onClick={() => setActiveTaskTab('today')}
                       className={`px-3 py-1 rounded-full text-xs font-bold transition-all ${
                         activeTaskTab === 'today'
-                          ? 'bg-purple-100 text-purple-700'
+                          ? 'bg-zinc-900 text-white'
                           : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
                       }`}
                     >
@@ -530,7 +530,7 @@ export default function PreviewPage() {
                       onClick={() => setActiveTaskTab('overdue')}
                       className={`px-3 py-1 rounded-full text-xs font-bold transition-all ${
                         activeTaskTab === 'overdue'
-                          ? 'bg-purple-100 text-purple-700'
+                          ? 'bg-zinc-900 text-white'
                           : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
                       }`}
                     >
@@ -540,7 +540,7 @@ export default function PreviewPage() {
                       onClick={() => setActiveTaskTab('upcoming')}
                       className={`px-3 py-1 rounded-full text-xs font-bold transition-all ${
                         activeTaskTab === 'upcoming'
-                          ? 'bg-purple-100 text-purple-700'
+                          ? 'bg-zinc-900 text-white'
                           : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
                       }`}
                     >
@@ -550,11 +550,11 @@ export default function PreviewPage() {
 
                   {/* Task Item Row */}
                   <div className="mt-5 space-y-3">
-                    <div className="p-4 rounded-xl border border-gray-200/70 hover:border-purple-300 transition-all flex items-start justify-between gap-4 bg-gray-50/40">
+                    <div className="p-4 rounded-xl border border-gray-200/70 hover:border-zinc-400 transition-all flex items-start justify-between gap-4 bg-gray-50/40">
                       <div className="flex items-start gap-3.5">
                         <input
                           type="checkbox"
-                          className="w-4 h-4 mt-1 rounded border-gray-300 text-purple-600 focus:ring-purple-500"
+                          className="w-4 h-4 mt-1 rounded border-gray-300 text-zinc-900 focus:ring-zinc-500"
                         />
                         <div>
                           <h4 className="text-sm font-bold text-gray-900 leading-snug">
@@ -567,16 +567,16 @@ export default function PreviewPage() {
                           </div>
                         </div>
                       </div>
-                      <span className="text-[11px] font-bold px-2.5 py-1 rounded-full bg-amber-50 border border-amber-200/80 text-amber-700 shrink-0">
+                      <span className="text-[11px] font-bold px-2.5 py-1 rounded-full bg-zinc-100 border border-zinc-200 text-zinc-700 shrink-0">
                         • Medium
                       </span>
                     </div>
 
-                    <div className="p-4 rounded-xl border border-gray-200/70 hover:border-purple-300 transition-all flex items-start justify-between gap-4 bg-gray-50/40">
+                    <div className="p-4 rounded-xl border border-gray-200/70 hover:border-zinc-400 transition-all flex items-start justify-between gap-4 bg-gray-50/40">
                       <div className="flex items-start gap-3.5">
                         <input
                           type="checkbox"
-                          className="w-4 h-4 mt-1 rounded border-gray-300 text-purple-600 focus:ring-purple-500"
+                          className="w-4 h-4 mt-1 rounded border-gray-300 text-zinc-900 focus:ring-zinc-500"
                         />
                         <div>
                           <h4 className="text-sm font-bold text-gray-900 leading-snug">
@@ -589,7 +589,7 @@ export default function PreviewPage() {
                           </div>
                         </div>
                       </div>
-                      <span className="text-[11px] font-bold px-2.5 py-1 rounded-full bg-rose-50 border border-rose-200/80 text-rose-700 shrink-0">
+                      <span className="text-[11px] font-bold px-2.5 py-1 rounded-full bg-zinc-900 border border-zinc-900 text-white shrink-0">
                         • Urgent
                       </span>
                     </div>
@@ -602,7 +602,7 @@ export default function PreviewPage() {
                 <div>
                   <div className="flex items-center justify-between pb-4 border-b border-gray-100">
                     <h3 className="text-base font-bold text-gray-900">Service modules</h3>
-                    <span className="text-[11px] font-bold uppercase tracking-wider text-purple-700 bg-purple-50 px-2.5 py-1 rounded-full border border-purple-200/60">
+                    <span className="text-[11px] font-bold uppercase tracking-wider text-zinc-800 bg-zinc-100 px-2.5 py-1 rounded-full border border-zinc-200">
                       360° model
                     </span>
                   </div>
@@ -613,22 +613,22 @@ export default function PreviewPage() {
                       return (
                         <div
                           key={svc.id}
-                          className="p-3.5 rounded-xl border border-gray-100 hover:border-purple-200 hover:bg-purple-50/30 transition-all flex items-center justify-between group cursor-pointer"
+                          className="p-3.5 rounded-xl border border-gray-100 hover:border-zinc-300 hover:bg-zinc-50 transition-all flex items-center justify-between group cursor-pointer"
                         >
                           <div className="flex items-center gap-3.5 min-w-0">
                             <div
-                              className={`w-11 h-11 rounded-xl flex items-center justify-center border shrink-0 ${svc.previewBg}`}
+                              className="w-11 h-11 rounded-xl flex items-center justify-center border shrink-0 bg-zinc-100 border-zinc-200 text-zinc-700"
                             >
                               <Icon className="w-6 h-6" />
                             </div>
                             <div className="min-w-0">
-                              <h4 className="text-sm font-bold text-gray-900 group-hover:text-purple-700 transition-colors truncate">
+                              <h4 className="text-sm font-bold text-gray-900 group-hover:text-zinc-900 transition-colors truncate">
                                 {svc.title}
                               </h4>
                               <p className="text-xs text-gray-400 truncate">{svc.description}</p>
                             </div>
                           </div>
-                          <ChevronRight className="w-4 h-4 text-gray-300 group-hover:text-purple-600 transition-colors shrink-0" />
+                          <ChevronRight className="w-4 h-4 text-gray-300 group-hover:text-zinc-600 transition-colors shrink-0" />
                         </div>
                       );
                     })}
@@ -641,12 +641,12 @@ export default function PreviewPage() {
             <div className="bg-white rounded-2xl p-6 border border-gray-200/80 shadow-xs">
               <div className="flex items-center justify-between pb-4 border-b border-gray-100 mb-4">
                 <div className="flex items-center gap-2">
-                  <div className="w-8 h-8 rounded-lg bg-amber-500/10 border border-amber-500/20 flex items-center justify-center">
+                  <div className="w-8 h-8 rounded-lg bg-zinc-100 border border-zinc-200 flex items-center justify-center text-zinc-700">
                     <ProjectsIcon className="w-5 h-5" />
                   </div>
                   <h3 className="text-base font-bold text-gray-900">Client projects</h3>
                 </div>
-                <Link href="/projects" className="text-xs font-bold text-purple-600 hover:underline">
+                <Link href="/projects" className="text-xs font-bold text-zinc-900 hover:underline">
                   View all
                 </Link>
               </div>
@@ -682,12 +682,12 @@ export default function PreviewPage() {
                         </td>
                         <td className="py-3.5 px-4 text-gray-500">{proj.city}</td>
                         <td className="py-3.5 px-4">
-                          <span className="px-2.5 py-1 rounded-full text-[11px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200">
+                          <span className="px-2.5 py-1 rounded-full text-[11px] font-bold bg-zinc-100 text-zinc-800 border border-zinc-200">
                             {proj.status}
                           </span>
                         </td>
                         <td className="py-3.5 px-4">
-                          <span className="px-2.5 py-1 rounded-full text-[11px] font-bold bg-purple-50 text-purple-700 border border-purple-200">
+                          <span className="px-2.5 py-1 rounded-full text-[11px] font-bold bg-zinc-100 text-zinc-800 border border-zinc-200">
                             {proj.infoStatus}
                           </span>
                         </td>

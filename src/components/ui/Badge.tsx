@@ -12,13 +12,13 @@ export function Badge({
   ...props
 }: BadgeProps) {
   const variantStyles = {
-    brand: 'bg-brand-subtle text-brand',
-    success: 'bg-status-successSubtle text-status-success',
-    warning: 'bg-status-warningSubtle text-status-warning',
-    danger: 'bg-status-dangerSubtle text-status-danger',
-    info: 'bg-status-infoSubtle text-status-info',
-    neutral: 'bg-surface-subtle text-text-muted border border-border-subtle',
-    outline: 'bg-transparent text-text-muted border border-border',
+    brand: 'bg-zinc-900 text-white',
+    success: 'bg-zinc-100 text-zinc-900 border border-zinc-200',
+    warning: 'bg-zinc-100 text-zinc-800 border border-zinc-200',
+    danger: 'bg-zinc-900 text-white',
+    info: 'bg-zinc-100 text-zinc-800 border border-zinc-200',
+    neutral: 'bg-zinc-100 text-zinc-600 border border-zinc-200',
+    outline: 'bg-transparent text-zinc-700 border border-zinc-300',
   };
 
   return (

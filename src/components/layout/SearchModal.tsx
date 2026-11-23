@@ -129,7 +129,7 @@ export function SearchModal() {
                     className="w-full flex items-center justify-between px-3 py-2 text-left text-sm rounded-btn hover:bg-surface-hover group transition-colors"
                   >
                     <div className="flex items-center gap-2.5">
-                      <CheckSquare className="w-4 h-4 text-status-info" />
+                      <CheckSquare className="w-4 h-4 text-text-muted" />
                       <span className="text-text-main truncate">{t.title}</span>
                     </div>
                     <span className="text-xs text-text-subtle">{t.due}</span>
@@ -156,7 +156,7 @@ export function SearchModal() {
                     className="w-full flex items-center justify-between px-3 py-2 text-left text-sm rounded-btn hover:bg-surface-hover group transition-colors"
                   >
                     <div className="flex items-center gap-2.5">
-                      <Users className="w-4 h-4 text-status-success" />
+                      <Users className="w-4 h-4 text-text-muted" />
                       <span className="font-medium text-text-main">{l.name}</span>
                       <span className="text-xs text-text-muted">({l.projectName})</span>
                     </div>

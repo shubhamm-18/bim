@@ -74,7 +74,7 @@ export function CompareView() {
               <tr>
                 <td className="py-3.5 px-4 font-semibold text-text-muted">Site Visits Completed</td>
                 {projects.map((p) => (
-                  <td key={p.id} className="py-3.5 px-4 font-bold text-status-success">
+                  <td key={p.id} className="py-3.5 px-4 font-bold text-text-main">
                     {p.siteVisitsCount || 0}
                   </td>
                 ))}
@@ -82,7 +82,7 @@ export function CompareView() {
               <tr>
                 <td className="py-3.5 px-4 font-semibold text-text-muted">Confirmed Bookings</td>
                 {projects.map((p) => (
-                  <td key={p.id} className="py-3.5 px-4 font-bold text-status-info">
+                  <td key={p.id} className="py-3.5 px-4 font-bold text-text-main">
                     {p.bookingsCount || 0}
                   </td>
                 ))}

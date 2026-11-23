@@ -92,7 +92,7 @@ export const useWorkspaceStore = create<WorkspaceState>()(
       setCurrentRole: (role) => set({ currentRole: role }),
 
       // Theme Preset
-      activeThemePreset: 'crimson',
+      activeThemePreset: 'monochrome',
       setActiveThemePreset: (presetId) => set({ activeThemePreset: presetId }),
 
       // Modal Defaults

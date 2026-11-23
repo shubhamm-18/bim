@@ -24,12 +24,7 @@ export function StatCard({
   variant = 'default',
   className,
 }: StatCardProps) {
-  const valueColor = {
-    default: 'text-text-main',
-    brand: 'text-brand',
-    success: 'text-status-success',
-    warning: 'text-status-warning',
-  }[variant];
+  const valueColor = 'text-text-main';
 
   return (
     <Card className={cn('p-5 transition-all hover:shadow-cardHover', className)}>
@@ -53,9 +48,9 @@ export function StatCard({
             className={cn(
               'inline-flex items-center text-[11px] font-bold px-1.5 py-0.5 rounded-full',
               trend === 'up'
-                ? 'bg-status-successSubtle text-status-success'
+                ? 'bg-surface-subtle text-text-main border border-border font-semibold'
                 : trend === 'down'
-                ? 'bg-status-dangerSubtle text-status-danger'
+                ? 'bg-surface-subtle text-text-muted border border-border font-medium'
                 : 'bg-surface-subtle text-text-subtle'
             )}
           >

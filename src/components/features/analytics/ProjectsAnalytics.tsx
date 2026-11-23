@@ -14,7 +14,7 @@ export function ProjectsAnalytics() {
       {/* Section Divider */}
       <div className="flex items-center gap-3">
         <div className="h-px bg-border flex-1"></div>
-        <div className="px-4 py-1.5 rounded-full bg-brand-subtle border border-brand/20 text-xs font-bold uppercase tracking-wider text-brand flex items-center gap-2">
+        <div className="px-4 py-1.5 rounded-full bg-surface-subtle border border-border text-xs font-bold uppercase tracking-wider text-text-main flex items-center gap-2">
           <ProjectsIcon className="w-4 h-4" />
           <span>Portfolio Budget Runway & Developer Delivery Health</span>
         </div>
@@ -65,8 +65,8 @@ export function ProjectsAnalytics() {
             </div>
           </div>
 
-          <div className="mt-4 p-3 bg-status-successSubtle rounded-btn border border-status-success/20 text-xs text-status-success font-semibold flex items-center gap-2">
-            <CheckCircle2 className="w-4 h-4 shrink-0" />
+          <div className="mt-4 p-3 bg-surface-subtle rounded-btn border border-border text-xs text-text-muted font-medium flex items-center gap-2">
+            <CheckCircle2 className="w-4 h-4 shrink-0 text-text-muted" />
             <span>100% of October milestone invoices disbursed with zero disputes.</span>
           </div>
         </Card>

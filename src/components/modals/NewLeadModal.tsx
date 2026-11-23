@@ -58,7 +58,7 @@ export function NewLeadModal() {
       onClose={() => setIsNewLeadModalOpen(false)}
       title="Log New Property Lead"
       description="Track prospective home buyer inquiry & site visit"
-      icon={<UserPlus className="w-5 h-5 text-status-success" />}
+      icon={<UserPlus className="w-5 h-5 text-text-muted" />}
     >
       <form onSubmit={handleSubmit} className="p-6 space-y-4">
         <div className="grid grid-cols-2 gap-4">
