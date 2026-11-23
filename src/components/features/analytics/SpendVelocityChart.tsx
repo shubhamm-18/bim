@@ -20,7 +20,7 @@ export function SpendVelocityChart() {
               Multi-series growth curves across active developer mandates
             </p>
           </div>
-          <Badge variant="brand" className="font-mono font-bold">
+          <Badge variant="outline" className="font-mono font-bold">
             r = 0.89 Correlation
           </Badge>
         </div>

@@ -31,9 +31,9 @@ export function ClientAccountCard({ client, projectsCount }: ClientAccountCardPr
               <span className="text-[10px] text-text-subtle">{client.owner}</span>
             </div>
           </div>
-          <Badge variant="brand">
+          <span className="text-xs font-semibold text-text-muted">
             {projectsCount} {projectsCount === 1 ? 'proj' : 'projs'}
-          </Badge>
+          </span>
         </div>
         <p className="text-xs text-text-muted mt-3">{client.scope}</p>
       </div>

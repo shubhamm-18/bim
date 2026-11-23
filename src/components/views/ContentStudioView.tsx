@@ -148,9 +148,9 @@ export function ContentStudioView() {
               <div key={st} className="bg-surface-subtle p-3 rounded-card border border-border min-w-[200px] flex flex-col">
                 <div className="flex items-center justify-between pb-2 mb-2 border-b border-border">
                   <span className="text-xs font-bold text-text-main">{st}</span>
-                  <Badge variant="brand" className="px-1.5 py-0">
-                    {itemsInStage.length}
-                  </Badge>
+                  <span className="text-xs font-mono text-text-subtle font-medium">
+                    ({itemsInStage.length})
+                  </span>
                 </div>
 
                 <div className="space-y-2 flex-1">

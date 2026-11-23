@@ -66,7 +66,7 @@ export function ApprovalsView() {
               >
                 <div>
                   <div className="flex items-center justify-between">
-                    <Badge variant="brand">
+                    <Badge variant="outline">
                       {getKindIcon(item.kind)}
                       <span>{item.kind}</span>
                     </Badge>
@@ -90,7 +90,7 @@ export function ApprovalsView() {
 
                   <div className="flex items-center gap-2">
                     <Button
-                      variant="danger"
+                      variant="outline"
                       size="sm"
                       onClick={() => updateApprovalStatus(item.id, 'Changes Requested')}
                     >
@@ -98,7 +98,7 @@ export function ApprovalsView() {
                       <span>Request Changes</span>
                     </Button>
                     <Button
-                      variant="success"
+                      variant="secondary"
                       size="sm"
                       onClick={() => updateApprovalStatus(item.id, 'Approved')}
                     >

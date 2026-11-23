@@ -126,7 +126,7 @@ export function CalendarView() {
                       {task.title}
                     </h4>
                     <div className="flex flex-wrap items-center gap-2 mt-1.5 text-xs text-text-muted">
-                      <Badge variant="brand">{task.projectName}</Badge>
+                      <span className="font-semibold text-text-muted">{task.projectName}</span>
                       <span>•</span>
                       <span
                         className={`flex items-center gap-1 font-medium ${

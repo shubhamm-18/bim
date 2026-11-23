@@ -24,7 +24,7 @@ export function ServiceModulesSection() {
       <div>
         <CardHeader>
           <CardTitle>Service modules</CardTitle>
-          <Badge variant="brand">360° Model</Badge>
+          <Badge variant="outline">360° Model</Badge>
         </CardHeader>
 
         <div className="space-y-2.5 mt-2">

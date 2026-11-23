@@ -95,7 +95,7 @@ export function Topbar({ onOpenMobileNav }: TopbarProps) {
             <span>{activeLabel}</span>
           </span>
           {selectedClientFilter && (
-            <Badge variant="brand" className="ml-1 sm:ml-2 shrink-0">
+            <Badge variant="outline" className="ml-1 sm:ml-2 shrink-0">
               Filtered: {selectedClientFilter}
             </Badge>
           )}

@@ -43,7 +43,7 @@ export function Badge({
   }
 
   const variantStyles: Record<string, string> = {
-    brand: 'bg-zinc-900 text-white shadow-xs',
+    brand: 'bg-transparent text-text-main border border-border font-semibold',
     urgent: 'bg-red-900 text-white border border-red-800 shadow-xs font-bold',
     danger: 'bg-red-900 text-white border border-red-800 shadow-xs font-bold',
     pending: 'bg-amber-500/10 text-amber-800 border border-amber-500/20 font-semibold',
@@ -51,9 +51,9 @@ export function Badge({
     completing: 'bg-emerald-500/10 text-emerald-800 border border-emerald-500/20 font-semibold',
     completed: 'bg-emerald-500/10 text-emerald-800 border border-emerald-500/20 font-semibold',
     success: 'bg-emerald-500/10 text-emerald-800 border border-emerald-500/20 font-semibold',
-    info: 'bg-zinc-100 text-zinc-800 border border-zinc-200',
-    neutral: 'bg-zinc-100 text-zinc-600 border border-zinc-200',
-    outline: 'bg-transparent text-zinc-700 border border-zinc-300',
+    info: 'bg-transparent text-text-muted border border-border font-medium',
+    neutral: 'bg-transparent text-text-muted border border-border font-medium',
+    outline: 'bg-transparent text-text-main border border-border font-medium',
   };
 
   return (

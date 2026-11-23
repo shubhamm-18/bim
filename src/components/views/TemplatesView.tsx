@@ -35,7 +35,7 @@ export function TemplatesView() {
           >
             <div>
               <div className="flex items-center justify-between">
-                <Badge variant="brand">{tmpl.category}</Badge>
+                <Badge variant="outline">{tmpl.category}</Badge>
               </div>
               <h3 className="text-lg font-bold text-text-main mt-3 flex items-center gap-2">
                 {tmpl.name.toLowerCase().includes('gruhnest') ? (
