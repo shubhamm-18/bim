@@ -16,10 +16,8 @@ export function OverviewHero() {
 
       <div className="grid grid-cols-1 lg:grid-cols-12 min-h-hero items-stretch">
         {/* LEFT SIDE: Text, Badges, Headline & Button */}
-        <div className="lg:col-span-7 p-6 sm:p-10 lg:p-12 flex flex-col justify-center relative z-10">
+        <div className="lg:col-span-6 p-6 sm:p-10 lg:p-12 flex flex-col justify-center relative z-10">
           <div>
-            
-
             {/* Main Hero Headline */}
             <h1 className="text-3xl sm:text-5xl font-black tracking-tight text-white leading-[1.1] mb-2">
               Agency Overview
@@ -44,14 +42,11 @@ export function OverviewHero() {
           </div>
         </div>
 
-        {/* RIGHT SIDE: Clean Architectural Photograph with Smooth Gradient Bleed */}
+        {/* RIGHT SIDE: Cosmic Infinity Symbol (Full Visibility without Dark Fade) */}
         <div
-          className="lg:col-span-5 relative min-h-heroMedia lg:min-h-full overflow-hidden bg-cover bg-center"
-          style={{ backgroundImage: "url('/banners/nova-architectural-hero.jpg')" }}
-        >
-          {/* Smooth Gradient Bleed into Left Dark Area */}
-          <div className="absolute inset-0 bg-gradient-to-t lg:bg-gradient-to-r from-surface-darkHero via-surface-darkHero/30 to-transparent" />
-        </div>
+          className="lg:col-span-6 relative min-h-heroMedia lg:min-h-full overflow-hidden bg-cover sm:bg-contain bg-center sm:bg-right bg-no-repeat"
+          style={{ backgroundImage: "url('/banners/hero banner.jpg')" }}
+        />
       </div>
     </div>
   );
