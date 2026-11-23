@@ -9,10 +9,10 @@
      ========================================================================== */
 
   /* Primary Brand Accent (Buttons, Highlights, Active Tabs) */
-  --brand: #18181b;
-  --brand-hover: #27272a;
+  --brand: #27272a;
+  --brand-hover: #3f3f46;
   --brand-subtle: #f4f4f5;
-  --brand-foreground: #ffffff;
+  --brand-foreground: #09090b;
 
   /* App Background & Card Surfaces */
   --bg-app: #fafafa;
@@ -21,15 +21,15 @@
   --bg-card-hover: #f4f4f5;
   --bg-input: #ffffff;
 
-  /* Dark Surfaces & Theme Tokens */
-  --bg-dark-hero: #09090b;
-  --border-dark-hero: #27272a;
-  --bg-dark-panel: #18181b;
-  --border-dark-panel: #27272a;
-  --bg-dark-control: #27272a;
-  --border-dark-control: #3f3f46;
-  --bg-dark-card: #09090b;
-  --border-dark-card: #27272a;
+  /* Neutral Surfaces & Tokens (No Black Backgrounds) */
+  --bg-dark-hero: #f4f4f5;
+  --border-dark-hero: #e4e4e7;
+  --bg-dark-panel: #ffffff;
+  --border-dark-panel: #e4e4e7;
+  --bg-dark-control: #f4f4f5;
+  --border-dark-control: #e4e4e7;
+  --bg-dark-card: #ffffff;
+  --border-dark-card: #e4e4e7;
   --bg-app-subtle: #f4f4f5;
 
   /* Typography Colors */

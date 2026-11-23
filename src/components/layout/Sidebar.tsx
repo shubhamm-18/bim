@@ -138,15 +138,15 @@ export function Sidebar({ onItemClick, className }: SidebarProps) {
                     className={cn(
                       'w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-sm font-semibold transition-all group',
                       isActive
-                        ? 'bg-zinc-900 text-white shadow-xs'
-                        : 'text-text-muted hover:bg-surface-hover hover:text-text-main'
+                        ? 'bg-surface-subtle text-text-main border border-border font-bold shadow-xs'
+                        : 'text-text-muted hover:bg-surface-hover hover:text-text-main border border-transparent'
                     )}
                   >
                     <div className="flex items-center gap-3.5 min-w-0">
                       <IconComponent
                         className={cn(
                           'w-5 h-5 shrink-0 transition-colors',
-                          isActive ? 'text-white' : 'text-text-subtle group-hover:text-text-main'
+                          isActive ? 'text-text-main' : 'text-text-subtle group-hover:text-text-main'
                         )}
                       />
                       <span className="truncate">{item.label}</span>

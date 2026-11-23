@@ -57,8 +57,8 @@ export function SpendVelocityChart() {
             <polyline
               points="40,140 140,110 240,80 340,95 440,40 540,55"
               fill="none"
-              stroke="#18181b"
-              strokeWidth="3"
+              stroke="#71717a"
+              strokeWidth="2.5"
               strokeLinecap="round"
             />
 
@@ -70,19 +70,19 @@ export function SpendVelocityChart() {
             <polyline
               points="40,155 140,130 240,105 340,120 440,65 540,75"
               fill="none"
-              stroke="#71717a"
+              stroke="#a1a1aa"
               strokeWidth="2"
               strokeLinecap="round"
               strokeDasharray="4 4"
             />
 
             {/* Nodes */}
-            <circle cx="40" cy="140" r="4.5" fill="#18181b" stroke="#fff" strokeWidth="2" />
-            <circle cx="140" cy="110" r="4.5" fill="#18181b" stroke="#fff" strokeWidth="2" />
-            <circle cx="240" cy="80" r="4.5" fill="#18181b" stroke="#fff" strokeWidth="2" />
-            <circle cx="340" cy="95" r="4.5" fill="#18181b" stroke="#fff" strokeWidth="2" />
-            <circle cx="440" cy="40" r="5.5" fill="#18181b" stroke="#fff" strokeWidth="2" />
-            <circle cx="540" cy="55" r="4.5" fill="#18181b" stroke="#fff" strokeWidth="2" />
+            <circle cx="40" cy="140" r="4.5" fill="#71717a" stroke="#fff" strokeWidth="2" />
+            <circle cx="140" cy="110" r="4.5" fill="#71717a" stroke="#fff" strokeWidth="2" />
+            <circle cx="240" cy="80" r="4.5" fill="#71717a" stroke="#fff" strokeWidth="2" />
+            <circle cx="340" cy="95" r="4.5" fill="#71717a" stroke="#fff" strokeWidth="2" />
+            <circle cx="440" cy="40" r="5.5" fill="#71717a" stroke="#fff" strokeWidth="2" />
+            <circle cx="540" cy="55" r="4.5" fill="#71717a" stroke="#fff" strokeWidth="2" />
           </svg>
         </div>
 
@@ -99,10 +99,10 @@ export function SpendVelocityChart() {
       <div className="flex items-center justify-between text-xs pt-3 mt-3 border-t border-border-subtle">
         <div className="flex items-center gap-3">
           <span className="flex items-center gap-1.5 text-xs text-text-muted">
-            <span className="w-2.5 h-2.5 rounded-full bg-zinc-900"></span> Ad Spend (₹)
+            <span className="w-2.5 h-2.5 rounded-full bg-zinc-400"></span> Ad Spend (₹)
           </span>
           <span className="flex items-center gap-1.5 text-xs text-text-muted">
-            <span className="w-2.5 h-2.5 rounded-full bg-zinc-500"></span> Leads Generated
+            <span className="w-2.5 h-2.5 rounded-full bg-zinc-300"></span> Leads Generated
           </span>
         </div>
         <span className="text-text-muted font-semibold text-xs">

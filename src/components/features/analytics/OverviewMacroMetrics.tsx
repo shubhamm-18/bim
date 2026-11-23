@@ -27,7 +27,7 @@ export function OverviewMacroMetrics({ blendedCpl }: OverviewMacroMetricsProps) 
           <span className="font-mono font-bold text-text-main">{pipeline.range}</span>
         </div>
         <div className="w-full bg-surface-subtle h-1.5 rounded-full mt-3 overflow-hidden">
-          <div className="bg-zinc-800 h-full rounded-full" style={{ width: pipeline.fillWidth }}></div>
+          <div className="bg-zinc-400 h-full rounded-full" style={{ width: pipeline.fillWidth }}></div>
         </div>
       </Card>
 
@@ -47,7 +47,7 @@ export function OverviewMacroMetrics({ blendedCpl }: OverviewMacroMetricsProps) 
           <span className="font-mono text-text-subtle">{cpl.benchmark}</span>
         </div>
         <div className="w-full bg-surface-subtle h-1.5 rounded-full mt-3 overflow-hidden">
-          <div className="bg-zinc-700 h-full rounded-full" style={{ width: '85%' }}></div>
+          <div className="bg-zinc-400 h-full rounded-full" style={{ width: '85%' }}></div>
         </div>
       </Card>
 
@@ -65,7 +65,7 @@ export function OverviewMacroMetrics({ blendedCpl }: OverviewMacroMetricsProps) 
           <span className="font-mono font-bold text-text-main">{visitConversion.booked}</span>
         </div>
         <div className="w-full bg-surface-subtle h-1.5 rounded-full mt-3 overflow-hidden">
-          <div className="bg-zinc-600 h-full rounded-full" style={{ width: visitConversion.fillWidth }}></div>
+          <div className="bg-zinc-400 h-full rounded-full" style={{ width: visitConversion.fillWidth }}></div>
         </div>
       </Card>
 
@@ -83,7 +83,7 @@ export function OverviewMacroMetrics({ blendedCpl }: OverviewMacroMetricsProps) 
           <span className="font-mono font-bold text-text-main">{q4Retainers.commission}</span>
         </div>
         <div className="w-full bg-surface-subtle h-1.5 rounded-full mt-3 overflow-hidden">
-          <div className="bg-zinc-500 h-full rounded-full" style={{ width: q4Retainers.fillWidth }}></div>
+          <div className="bg-zinc-400 h-full rounded-full" style={{ width: q4Retainers.fillWidth }}></div>
         </div>
       </Card>
     </div>

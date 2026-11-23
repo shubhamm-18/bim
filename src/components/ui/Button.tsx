@@ -11,12 +11,12 @@ export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElemen
 export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   ({ className, variant = 'brand', size = 'md', children, ...props }, ref) => {
     const variantStyles = {
-      brand: 'bg-zinc-900 hover:bg-zinc-800 text-white shadow-sm font-semibold',
+      brand: 'bg-surface-subtle hover:bg-surface-hover text-text-main border border-border font-semibold shadow-xs',
       secondary: 'bg-surface-subtle hover:bg-surface-hover text-text-main border border-border font-semibold',
       outline: 'bg-transparent hover:bg-surface-hover text-text-main border border-border hover:border-zinc-400 font-semibold',
       ghost: 'bg-transparent hover:bg-surface-hover text-text-muted hover:text-text-main font-medium',
-      danger: 'bg-zinc-900 hover:bg-zinc-800 text-white font-semibold transition-colors',
-      success: 'bg-zinc-900 hover:bg-zinc-800 text-white font-semibold transition-colors',
+      danger: 'bg-red-800 hover:bg-red-900 text-white font-semibold transition-colors',
+      success: 'bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border border-emerald-300 font-semibold transition-colors',
     };
 
     const sizeStyles = {

@@ -29,7 +29,7 @@ export function CalendarAnalytics() {
               <p className="text-xs text-text-subtle mt-1">{sla.detail}</p>
             </div>
             <div className="w-full bg-surface-subtle h-3 rounded-full overflow-hidden">
-              <div className="bg-zinc-800 h-full rounded-full" style={{ width: sla.rate }}></div>
+              <div className="bg-zinc-400 h-full rounded-full" style={{ width: sla.rate }}></div>
             </div>
           </div>
           <div className="mt-4 pt-3 border-t border-border-subtle text-xs text-text-subtle">

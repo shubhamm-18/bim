@@ -61,7 +61,7 @@ export function GruhnestAnalytics() {
                   <span className="text-text-main font-bold">{readiness.sampleFlatDelivered}</span>
                 </div>
                 <div className="w-full bg-surface-subtle h-2 rounded-full overflow-hidden">
-                  <div className="bg-zinc-800 h-full rounded-full" style={{ width: readiness.sampleFlatWidth }}></div>
+                  <div className="bg-zinc-400 h-full rounded-full" style={{ width: readiness.sampleFlatWidth }}></div>
                 </div>
               </div>
 
@@ -71,7 +71,7 @@ export function GruhnestAnalytics() {
                   <span className="text-text-muted font-bold">{readiness.locationExplainerScheduled}</span>
                 </div>
                 <div className="w-full bg-surface-subtle h-2 rounded-full overflow-hidden">
-                  <div className="bg-zinc-500 h-full rounded-full" style={{ width: readiness.locationExplainerWidth }}></div>
+                  <div className="bg-zinc-300 h-full rounded-full" style={{ width: readiness.locationExplainerWidth }}></div>
                 </div>
               </div>
             </div>

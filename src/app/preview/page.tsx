@@ -96,25 +96,25 @@ export default function PreviewPage() {
   return (
     <div className="min-h-screen bg-surface-appSubtle text-[#1e2029]">
       {/* Floating Preview Control Bar */}
-      <div className="sticky top-0 z-50 bg-surface-darkPanel text-white px-6 py-3 shadow-xl border-b border-border-darkPanel flex flex-wrap items-center justify-between gap-4">
+      <div className="sticky top-0 z-50 bg-white text-text-main px-6 py-3 shadow-sm border-b border-border flex flex-wrap items-center justify-between gap-4">
         <div className="flex items-center gap-3">
           <span className="w-2.5 h-2.5 rounded-full bg-zinc-400 animate-pulse" />
-          <span className="text-xs font-black uppercase tracking-wider text-zinc-300">
+          <span className="text-xs font-black uppercase tracking-wider text-text-main">
             UI Scale & Layout Preview
           </span>
-          <span className="text-xs text-gray-400 hidden sm:inline">|</span>
-          <span className="text-xs text-gray-300 hidden sm:inline">
+          <span className="text-xs text-text-subtle hidden sm:inline">|</span>
+          <span className="text-xs text-text-muted hidden sm:inline">
             Horizontally & Vertically Scaled Layout
           </span>
         </div>
 
         <div className="flex items-center gap-2">
           {/* Eyebrow Logo Switcher */}
-          <div className="flex items-center bg-surface-darkControl p-1 rounded-lg border border-border-darkControl text-xs">
+          <div className="flex items-center bg-surface-subtle p-1 rounded-lg border border-border text-xs">
             <button
               onClick={() => setEyebrowStyle('white-gold')}
               className={`px-3 py-1 rounded-md font-semibold transition-all ${
-                eyebrowStyle === 'white-gold' ? 'bg-zinc-100 text-black font-bold shadow-xs' : 'text-gray-400 hover:text-white'
+                eyebrowStyle === 'white-gold' ? 'bg-white text-text-main font-bold shadow-xs border border-border' : 'text-text-muted hover:text-text-main'
               }`}
             >
               Badge A: White Capsule ★
@@ -122,7 +122,7 @@ export default function PreviewPage() {
             <button
               onClick={() => setEyebrowStyle('emblem')}
               className={`px-3 py-1 rounded-md font-semibold transition-all ${
-                eyebrowStyle === 'emblem' ? 'bg-zinc-100 text-black font-bold shadow-xs' : 'text-gray-400 hover:text-white'
+                eyebrowStyle === 'emblem' ? 'bg-white text-text-main font-bold shadow-xs border border-border' : 'text-text-muted hover:text-text-main'
               }`}
             >
               Badge B: Emblem
@@ -130,7 +130,7 @@ export default function PreviewPage() {
             <button
               onClick={() => setEyebrowStyle('frosted')}
               className={`px-3 py-1 rounded-md font-semibold transition-all ${
-                eyebrowStyle === 'frosted' ? 'bg-zinc-100 text-black font-bold shadow-xs' : 'text-gray-400 hover:text-white'
+                eyebrowStyle === 'frosted' ? 'bg-white text-text-main font-bold shadow-xs border border-border' : 'text-text-muted hover:text-text-main'
               }`}
             >
               Badge C: Frosted Glass
@@ -138,11 +138,11 @@ export default function PreviewPage() {
           </div>
 
           {/* Hero Banner Style Switcher */}
-          <div className="flex items-center bg-surface-darkControl p-1 rounded-lg border border-border-darkControl text-xs">
+          <div className="flex items-center bg-surface-subtle p-1 rounded-lg border border-border text-xs">
             <button
               onClick={() => setHeroOption('architectural')}
               className={`px-3 py-1 rounded-md font-semibold transition-all ${
-                heroOption === 'architectural' ? 'bg-zinc-700 text-white shadow-xs' : 'text-gray-400 hover:text-white'
+                heroOption === 'architectural' ? 'bg-white text-text-main font-bold shadow-xs border border-border' : 'text-text-muted hover:text-text-main'
               }`}
             >
               Architectural Hero (Live)
@@ -150,19 +150,19 @@ export default function PreviewPage() {
             <button
               onClick={() => setHeroOption('wave')}
               className={`px-3 py-1 rounded-md font-semibold transition-all ${
-                heroOption === 'wave' ? 'bg-zinc-700 text-white shadow-xs' : 'text-gray-400 hover:text-white'
+                heroOption === 'wave' ? 'bg-white text-text-main font-bold shadow-xs border border-border' : 'text-text-muted hover:text-text-main'
               }`}
             >
-              Dark Wave Hero
+              Wave Hero
             </button>
           </div>
 
           {/* Scale / Compare Switcher */}
-          <div className="flex items-center bg-surface-darkControl p-1 rounded-lg border border-border-darkControl text-xs">
+          <div className="flex items-center bg-surface-subtle p-1 rounded-lg border border-border text-xs">
             <button
               onClick={() => setScaleMode('scaled')}
               className={`px-3 py-1 rounded-md font-semibold transition-all ${
-                scaleMode === 'scaled' ? 'bg-zinc-700 text-white' : 'text-gray-400 hover:text-white'
+                scaleMode === 'scaled' ? 'bg-white text-text-main font-bold shadow-xs border border-border' : 'text-text-muted hover:text-text-main'
               }`}
             >
               Full Preview
@@ -170,7 +170,7 @@ export default function PreviewPage() {
             <button
               onClick={() => setScaleMode('split')}
               className={`px-3 py-1 rounded-md font-semibold transition-all ${
-                scaleMode === 'split' ? 'bg-zinc-700 text-white' : 'text-gray-400 hover:text-white'
+                scaleMode === 'split' ? 'bg-white text-text-main font-bold shadow-xs border border-border' : 'text-text-muted hover:text-text-main'
               }`}
             >
               Compare with Reference
@@ -179,7 +179,7 @@ export default function PreviewPage() {
 
           <Link
             href="/"
-            className="px-3 py-1 bg-white/10 hover:bg-white/20 text-white text-xs font-semibold rounded-lg transition-all"
+            className="px-3 py-1 bg-surface-subtle hover:bg-surface-hover text-text-main border border-border text-xs font-semibold rounded-lg transition-all"
           >
             ← Back to App
           </Link>
@@ -255,7 +255,7 @@ export default function PreviewPage() {
                           key={item.id}
                           className={`w-full flex items-center justify-between ${sidebarPadding} rounded-xl ${sidebarTextClass} font-semibold transition-all cursor-pointer ${
                             isActive
-                              ? 'bg-zinc-900 text-white shadow-xs'
+                              ? 'bg-surface-subtle text-text-main font-bold border border-border shadow-xs'
                               : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'
                           }`}
                         >
@@ -266,7 +266,7 @@ export default function PreviewPage() {
                           {item.badge !== undefined && (
                             <span
                               className={`text-[11px] font-bold px-2 py-0.5 rounded-full ${
-                                isActive ? 'bg-zinc-800 text-white' : 'bg-gray-100 text-gray-600'
+                                isActive ? 'bg-surface-subtle text-text-main border border-border' : 'bg-gray-100 text-gray-600'
                               }`}
                             >
                               {item.badge}
@@ -345,13 +345,13 @@ export default function PreviewPage() {
                   <div className="lg:col-span-7 p-6 sm:p-10 lg:p-12 flex flex-col justify-center relative z-10">
                     <div>
                       {eyebrowStyle === 'white-gold' && (
-                        <div className="inline-flex items-center gap-3 px-4 sm:px-4.5 py-2 rounded-full bg-black/60 border border-zinc-500/70 shadow-lg shadow-black/40 backdrop-blur-md mb-6">
+                        <div className="inline-flex items-center gap-3 px-4 sm:px-4.5 py-2 rounded-full bg-white text-text-main border border-border shadow-sm mb-6">
                           <img
-                            src="/images/beyond-imagine-logo-dark.png"
+                            src="/images/beyond-imagine-logo.png"
                             alt="Beyond Imagine Media"
                             className="h-5 sm:h-5.5 w-auto object-contain"
                           />
-                          <span className="text-xs sm:text-[12px] font-bold tracking-wider text-zinc-300 uppercase whitespace-nowrap">
+                          <span className="text-xs sm:text-[12px] font-bold tracking-wider text-text-muted uppercase whitespace-nowrap">
                             • {getHeroDateFormatted()}
                           </span>
                         </div>
@@ -394,7 +394,7 @@ export default function PreviewPage() {
                       <div className="mt-8">
                         <button
                           onClick={() => setIsNewProjectModalOpen(true)}
-                          className="group inline-flex items-center gap-3 px-6 py-3 rounded-full bg-white text-black font-bold text-xs hover:bg-brand hover:text-white transition-all shadow-xl hover:scale-105 active:scale-95"
+                          className="group inline-flex items-center gap-3 px-6 py-3 rounded-full bg-surface-subtle text-text-main border border-border font-bold text-xs hover:bg-surface-hover transition-all shadow-sm hover:scale-105 active:scale-95"
                         >
                           <span className="text-base leading-none font-black">+</span>
                           <span>New project</span>
@@ -431,7 +431,7 @@ export default function PreviewPage() {
                   <div className="mt-6">
                     <button
                       onClick={() => setIsNewProjectModalOpen(true)}
-                      className="inline-flex items-center gap-2.5 px-6 py-2.5 rounded-full bg-white text-black font-extrabold text-xs hover:bg-gray-100 transition-all shadow-lg hover:scale-105 active:scale-95"
+                      className="inline-flex items-center gap-2.5 px-6 py-2.5 rounded-full bg-surface-subtle text-text-main border border-border font-extrabold text-xs hover:bg-surface-hover transition-all shadow-sm hover:scale-105 active:scale-95"
                     >
                       <span className="text-base leading-none font-black">+</span>
                       <span>New project</span>
@@ -520,7 +520,7 @@ export default function PreviewPage() {
                       onClick={() => setActiveTaskTab('today')}
                       className={`px-3 py-1 rounded-full text-xs font-bold transition-all ${
                         activeTaskTab === 'today'
-                          ? 'bg-zinc-900 text-white'
+                          ? 'bg-surface-subtle text-text-main font-bold border border-border'
                           : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
                       }`}
                     >
@@ -530,7 +530,7 @@ export default function PreviewPage() {
                       onClick={() => setActiveTaskTab('overdue')}
                       className={`px-3 py-1 rounded-full text-xs font-bold transition-all ${
                         activeTaskTab === 'overdue'
-                          ? 'bg-zinc-900 text-white'
+                          ? 'bg-surface-subtle text-text-main font-bold border border-border'
                           : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
                       }`}
                     >
@@ -540,7 +540,7 @@ export default function PreviewPage() {
                       onClick={() => setActiveTaskTab('upcoming')}
                       className={`px-3 py-1 rounded-full text-xs font-bold transition-all ${
                         activeTaskTab === 'upcoming'
-                          ? 'bg-zinc-900 text-white'
+                          ? 'bg-surface-subtle text-text-main font-bold border border-border'
                           : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
                       }`}
                     >
@@ -589,7 +589,7 @@ export default function PreviewPage() {
                           </div>
                         </div>
                       </div>
-                      <span className="text-[11px] font-bold px-2.5 py-1 rounded-full bg-zinc-900 border border-zinc-900 text-white shrink-0">
+                      <span className="text-[11px] font-bold px-2.5 py-1 rounded-full bg-surface-subtle border border-border text-text-main shrink-0">
                         • Urgent
                       </span>
                     </div>

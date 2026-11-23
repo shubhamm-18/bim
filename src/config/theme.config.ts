@@ -18,18 +18,18 @@ export const themePresets: ThemePreset[] = [
   {
     id: 'monochrome',
     name: 'Minimal Monochrome',
-    brandColor: '#18181b',
-    brandHover: '#27272a',
+    brandColor: '#27272a',
+    brandHover: '#3f3f46',
     brandSubtle: '#f4f4f5',
-    previewBg: 'bg-zinc-900',
+    previewBg: 'bg-zinc-200',
   },
   {
     id: 'slate',
     name: 'Slate Executive',
-    brandColor: '#27272a',
-    brandHover: '#18181b',
+    brandColor: '#3f3f46',
+    brandHover: '#27272a',
     brandSubtle: '#f4f4f5',
-    previewBg: 'bg-zinc-800',
+    previewBg: 'bg-zinc-300',
   },
 ];
 
