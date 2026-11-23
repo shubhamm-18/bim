@@ -30,7 +30,7 @@ export function ApprovalsView() {
     <div className="space-y-6 pb-12">
       {/* Header */}
       <div className="flex items-center gap-3.5">
-        <div className="w-12 h-12 rounded-2xl bg-amber-500/10 border border-amber-500/20 text-amber-600 flex items-center justify-center p-2 shadow-xs shrink-0">
+        <div className="w-12 h-12 rounded-2xl bg-surface-subtle border border-border text-text-muted flex items-center justify-center p-2 shadow-xs shrink-0">
           <ApprovalsIcon className="w-8 h-8" />
         </div>
         <div>

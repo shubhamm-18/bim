@@ -34,7 +34,7 @@ export function CalendarView() {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div className="flex items-center gap-3.5">
-          <div className="w-12 h-12 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-600 flex items-center justify-center p-2 shadow-xs shrink-0">
+          <div className="w-12 h-12 rounded-2xl bg-surface-subtle border border-border text-text-muted flex items-center justify-center p-2 shadow-xs shrink-0">
             <CalendarIcon className="w-8 h-8" />
           </div>
           <div>
