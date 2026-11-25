@@ -19,5 +19,6 @@ export * from './AdvertisingIcon';
 export * from './CrmIcon';
 export * from './CompareIcon';
 export * from './PaymentsIcon';
+export * from './FinanceIcon';
 export * from './TemplatesIcon';
 export * from './OverviewIcon';

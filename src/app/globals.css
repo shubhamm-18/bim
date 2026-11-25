@@ -4,54 +4,63 @@
 
 :root {
   /* ==========================================================================
-     🎨 THEME DESIGN TOKENS (EXECUTIVE PROPTECH SLATE & COBALT PALETTE)
-     Refined cool slate-mist canvas, crisp white cards, and royal cobalt/indigo accents.
+     🎨 THEME DESIGN TOKENS (FOREST EMERALD & SAGE MIST PALETTE)
+     Matches reference dashboard: dark forest sidebar, #EDF3EE sage-mist canvas,
+     #102F27 deep emerald ink, and #1D563B forest-emerald accents.
      ========================================================================== */
+  --ink: #102F27;
+  --muted: #4F6A5C;
+  --bg: #EDF3EE;
+  --card: #FFFFFF;
+  --line: #DCE7DF;
+  --emerald-dark: #10241A;
+  --emerald-accent: #1D563B;
+  --emerald-soft: #E3EDE6;
 
   /* Primary Brand Accent (Buttons, Highlights, Active Tabs) */
-  --brand: #1e40af;
-  --brand-hover: #1d4ed8;
-  --brand-subtle: #eef2ff;
-  --brand-foreground: #1e3a8a;
+  --brand: #1D563B;
+  --brand-hover: #2D6A4F;
+  --brand-subtle: #E3EDE6;
+  --brand-foreground: #102F27;
 
   /* App Background & Card Surfaces */
-  --bg-app: #f3f6fb;
-  --bg-card: #ffffff;
-  --bg-card-subtle: #f6f8fc;
-  --bg-card-hover: #ebf0fa;
-  --bg-input: #ffffff;
+  --bg-app: #FFFFFF;
+  --bg-card: #FFFFFF;
+  --bg-card-subtle: #F3F7F4;
+  --bg-card-hover: #E6F0E9;
+  --bg-input: #FFFFFF;
 
   /* Neutral Surfaces & Tokens */
-  --bg-dark-hero: #f1f5fb;
-  --border-dark-hero: #dbe4f0;
-  --bg-dark-panel: #ffffff;
-  --border-dark-panel: #e2e8f0;
-  --bg-dark-control: #f1f5fb;
-  --border-dark-control: #dbe4f0;
-  --bg-dark-card: #ffffff;
-  --border-dark-card: #e2e8f0;
-  --bg-app-subtle: #edf2f9;
+  --bg-dark-hero: #EDF3EE;
+  --border-dark-hero: #CFE0D4;
+  --bg-dark-panel: #FFFFFF;
+  --border-dark-panel: #DCE7DF;
+  --bg-dark-control: #F3F7F4;
+  --border-dark-control: #DCE7DF;
+  --bg-dark-card: #FFFFFF;
+  --border-dark-card: #DCE7DF;
+  --bg-app-subtle: #EDF3EE;
 
   /* Typography Colors */
-  --text-main: #0f172a;
-  --text-muted: #475569;
-  --text-subtle: #64748b;
-  --text-inverse: #ffffff;
+  --text-main: #102F27;
+  --text-muted: #4F6A5C;
+  --text-subtle: #647F71;
+  --text-inverse: #FFFFFF;
 
   /* Borders & Dividers */
-  --border-default: #e2e8f0;
-  --border-subtle: #eef2f7;
-  --border-hover: #cbd5e1;
+  --border-default: #DCE7DF;
+  --border-subtle: #EAF1EC;
+  --border-hover: #C2D6C8;
 
   /* Semantic Status Colors (Minimal and Blending) */
-  --success: #166534;
-  --success-subtle: rgba(16, 185, 129, 0.08);
+  --success: #1D563B;
+  --success-subtle: rgba(29, 86, 59, 0.1);
   --warning: #854d0e;
-  --warning-subtle: rgba(245, 158, 11, 0.08);
+  --warning-subtle: rgba(245, 158, 11, 0.1);
   --danger: #7f1d1d;
   --danger-subtle: rgba(239, 68, 68, 0.1);
-  --info: #1e40af;
-  --info-subtle: #eff6ff;
+  --info: #1D563B;
+  --info-subtle: #E3EDE6;
 
   /* Shape & Geometry (Corner Roundness) */
   --radius-card: 1rem;       /* 16px - Cards & large panels */
@@ -71,8 +80,7 @@
 /* Base Body Styles */
 body {
   color: var(--text-main);
-  background: linear-gradient(160deg, #eff4fc 0%, #f5f7fc 48%, #eef2f9 100%);
-  background-attachment: fixed;
+  background: var(--bg-app);
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
 }

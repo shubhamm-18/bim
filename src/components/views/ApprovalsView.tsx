@@ -4,16 +4,34 @@ import React from 'react';
 import { useWorkspaceStore } from '@/store/workspace-store';
 import { Check, X, MessageSquare, Video, FileText } from 'lucide-react';
 import { formatDate } from '@/lib/utils';
+import { isClientScopedRole } from '@/lib/permissions';
 import { Card } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
 import { Badge } from '@/components/ui/Badge';
 import { ApprovalsIcon, AdvertisingIcon } from '@/components/ui';
 
 export function ApprovalsView() {
-  const { approvalItems, updateApprovalStatus } = useWorkspaceStore();
+  const {
+    approvalItems,
+    updateApprovalStatus,
+    currentRole,
+    scopedDeveloperClient,
+    projects,
+  } = useWorkspaceStore();
 
-  const pendingItems = approvalItems.filter((i) => i.status === 'Pending');
-  const pastItems = approvalItems.filter((i) => i.status !== 'Pending');
+  const clientScoped = isClientScopedRole(currentRole);
+  const allowedProjectNames = clientScoped
+    ? projects
+        .filter((p) => p.clientName === scopedDeveloperClient)
+        .map((p) => p.name)
+    : null;
+
+  const scopedItems = allowedProjectNames
+    ? approvalItems.filter((i) => allowedProjectNames.includes(i.projectName))
+    : approvalItems;
+
+  const pendingItems = scopedItems.filter((i) => i.status === 'Pending');
+  const pastItems = scopedItems.filter((i) => i.status !== 'Pending');
 
   const getKindIcon = (kind: string) => {
     switch (kind) {

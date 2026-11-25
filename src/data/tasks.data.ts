@@ -53,7 +53,7 @@ export const initialTasks: Task[] = [
     due: '2026-11-19',
     status: 'Open',
     priority: 'Medium',
-    role: 'Video',
+    role: 'Content & Video',
     recurrence: 'None',
   },
   {
@@ -64,7 +64,7 @@ export const initialTasks: Task[] = [
     due: '2026-11-23',
     status: 'Open',
     priority: 'Medium',
-    role: 'Content',
+    role: 'Content & Video',
     recurrence: 'None',
   },
   {

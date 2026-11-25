@@ -1,4 +1,5 @@
 export * from './OverviewView';
+export * from './FinanceView';
 export * from './ProjectsView';
 export * from './CalendarView';
 export * from './ApprovalsView';
@@ -6,6 +7,7 @@ export * from './ContentStudioView';
 export * from './AdvertisingView';
 export * from './CrmView';
 export * from './GruhnestView';
+export * from './TeamMembersView';
 export * from './CompareView';
 export * from './PaymentsView';
 export * from './TemplatesView';

@@ -12,7 +12,7 @@ const ROLE_ROUTE_POLICIES: Record<RoleView, RoleRoutePolicy> = {
     defaultView: 'overview',
     allowedViews: [
       'overview',
-      'analytics',
+      'finance',
       'projects',
       'calendar',
       'approvals',
@@ -20,6 +20,7 @@ const ROLE_ROUTE_POLICIES: Record<RoleView, RoleRoutePolicy> = {
       'advertising',
       'crm',
       'gruhnest',
+      'team',
       'compare',
       'payments',
       'templates',
@@ -28,7 +29,7 @@ const ROLE_ROUTE_POLICIES: Record<RoleView, RoleRoutePolicy> = {
   Accountant: {
     defaultHref: '/payments',
     defaultView: 'payments',
-    allowedViews: ['payments', 'projects', 'overview'],
+    allowedViews: ['payments'],
   },
   'Project Management': {
     defaultHref: '/projects',
@@ -42,34 +43,30 @@ const ROLE_ROUTE_POLICIES: Record<RoleView, RoleRoutePolicy> = {
       'advertising',
       'crm',
       'gruhnest',
+      'team',
       'compare',
       'templates',
     ],
   },
-  Content: {
+  'Content & Video': {
     defaultHref: '/content',
     defaultView: 'content',
-    allowedViews: ['overview', 'content', 'calendar', 'approvals', 'gruhnest'],
-  },
-  Video: {
-    defaultHref: '/content',
-    defaultView: 'content',
-    allowedViews: ['overview', 'content', 'calendar', 'approvals', 'gruhnest'],
+    allowedViews: ['calendar', 'approvals', 'content', 'gruhnest'],
   },
   'Ads/Performance': {
     defaultHref: '/advertising',
     defaultView: 'advertising',
-    allowedViews: ['overview', 'advertising', 'analytics', 'gruhnest', 'crm'],
+    allowedViews: ['advertising', 'crm', 'gruhnest'],
   },
   Sales: {
     defaultHref: '/crm',
     defaultView: 'crm',
-    allowedViews: ['overview', 'crm', 'calendar', 'gruhnest'],
+    allowedViews: ['crm', 'calendar', 'gruhnest'],
   },
   Developer: {
-    defaultHref: '/payments',
-    defaultView: 'payments',
-    allowedViews: ['payments', 'projects', 'approvals'],
+    defaultHref: '/projects',
+    defaultView: 'projects',
+    allowedViews: ['projects', 'approvals', 'payments'],
   },
 };
 
@@ -106,8 +103,7 @@ export function canViewCampaignSpend(role: RoleView): boolean {
     role === 'Accountant' ||
     role === 'Ads/Performance' ||
     role === 'Project Management' ||
-    role === 'Content' ||
-    role === 'Video'
+    role === 'Content & Video'
   );
 }
 
@@ -126,13 +122,16 @@ export function getRoleAccessSummary(role: RoleView): string {
     return 'Full access: all projects, owner finance dashboard, 0.4% commission, collections & permissions';
   }
   if (role === 'Accountant') {
-    return 'Billing workspace: invoices, receipts/partial payments, commission verification & dues reconciliation';
+    return 'Payments only: invoices, receipts/partial payments, credits & Client Meta ad fund';
   }
   if (role === 'Developer') {
-    return 'Client portal: restricted to authorized booking updates for your assigned client account only';
+    return 'Client portal: restricted to your project scope, approvals & authorized booking updates';
   }
   if (role === 'Ads/Performance') {
-    return 'Ads & Delivery: campaign spend/CPL visible; client fees, property deal values, commissions & invoices private';
+    return 'Ads & GuruNest: Advertising, GuruNest & GuruNest Pro access only';
+  }
+  if (role === 'Content & Video') {
+    return 'Content & Video: Tasks & Calendar, Approval Board, Content Studio & GuruNest Pro';
   }
   return 'Team workspace: assigned work & delivery metrics visible; client fees, deal value & finance private';
 }

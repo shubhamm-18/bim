@@ -13,6 +13,7 @@ export interface FinanceRecord {
   dueDate: string;
   billedAmount: number;
   receivedAmount: number;
+  receivedDate?: string;
   status: 'Paid' | 'Part-Paid' | 'Pending' | 'Overdue' | 'Unbilled';
 }
 
@@ -121,6 +122,7 @@ export const financeRecords: FinanceRecord[] = [
     dueDate: '10 Nov 2026',
     billedAmount: 180000,
     receivedAmount: 180000,
+    receivedDate: '09 Nov 2026',
     status: 'Paid',
   },
   {
@@ -134,6 +136,7 @@ export const financeRecords: FinanceRecord[] = [
     dueDate: '15 Nov 2026',
     billedAmount: 150000,
     receivedAmount: 90000,
+    receivedDate: '14 Nov 2026',
     status: 'Overdue',
   },
   {
@@ -147,6 +150,7 @@ export const financeRecords: FinanceRecord[] = [
     dueDate: '28 Nov 2026',
     billedAmount: 65000,
     receivedAmount: 0,
+    receivedDate: '—',
     status: 'Pending',
   },
   {
@@ -160,6 +164,7 @@ export const financeRecords: FinanceRecord[] = [
     dueDate: '21 Nov 2026',
     billedAmount: 20000,
     receivedAmount: 8000,
+    receivedDate: '20 Nov 2026',
     status: 'Overdue',
   },
   {
@@ -173,6 +178,7 @@ export const financeRecords: FinanceRecord[] = [
     dueDate: '—',
     billedAmount: 32000,
     receivedAmount: 0,
+    receivedDate: '—',
     status: 'Unbilled',
   },
 ];

@@ -66,8 +66,7 @@ export function CalendarView() {
             <option value="All">All Roles</option>
             <option value="Founder">Founder</option>
             <option value="Project Management">Project Management</option>
-            <option value="Content">Content</option>
-            <option value="Video">Video</option>
+            <option value="Content & Video">Content &amp; Video</option>
             <option value="Ads/Performance">Ads/Performance</option>
             <option value="Developer">Developer</option>
             <option value="Sales">Sales</option>

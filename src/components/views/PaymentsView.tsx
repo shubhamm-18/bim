@@ -1,9 +1,17 @@
 'use client';
 
-import React, { useState } from 'react';
-import { Lock, Plus, RefreshCw, ShieldAlert, ShieldCheck, Wallet } from 'lucide-react';
+import React, { useMemo, useState } from 'react';
+import {
+  Calendar,
+  CheckCircle2,
+  Lock,
+  Plus,
+  ShieldAlert,
+  ShieldCheck,
+  Wallet,
+} from 'lucide-react';
 import { useWorkspaceStore } from '@/store/workspace-store';
-import { formatCurrency, formatDate } from '@/lib/utils';
+import { formatCurrency } from '@/lib/utils';
 import { canViewFinance, isClientScopedRole } from '@/lib/permissions';
 import { Card } from '@/components/ui/Card';
 import { Badge } from '@/components/ui/Badge';
@@ -12,81 +20,230 @@ import { Input } from '@/components/ui/Input';
 import { Select } from '@/components/ui/Select';
 import { PaymentsIcon } from '@/components/ui';
 
+export type IncomeSourceType =
+  | 'BIM Retainer / Campaign Fee'
+  | 'GruhNest Onboarding / Content Fee'
+  | 'Sales Commission'
+  | 'GruhNest Pro Setup & Monthly Fee';
+
+const INCOME_SOURCES: IncomeSourceType[] = [
+  'BIM Retainer / Campaign Fee',
+  'GruhNest Onboarding / Content Fee',
+  'Sales Commission',
+  'GruhNest Pro Setup & Monthly Fee',
+];
+
+interface AccountingLedgerRow {
+  id: string;
+  client: string;
+  project: string;
+  incomeSource: IncomeSourceType;
+  billNo: string;
+  earnedDate: string;
+  invoiceDate: string;
+  dueDate: string;
+  receiptDate: string;
+  amount: number;
+  receivedAmount: number;
+  creditAmount: number;
+}
+
+const initialAccountingRows: AccountingLedgerRow[] = [
+  {
+    id: 'acc-1',
+    client: 'Shakti Group',
+    project: 'Shakti Skyline',
+    incomeSource: 'BIM Retainer / Campaign Fee',
+    billNo: 'INV-2026-104',
+    earnedDate: '2026-11-01',
+    invoiceDate: '2026-11-01',
+    dueDate: '2026-11-10',
+    receiptDate: '2026-11-09',
+    amount: 180000,
+    receivedAmount: 180000,
+    creditAmount: 0,
+  },
+  {
+    id: 'acc-2',
+    client: 'Sun Creators',
+    project: 'Sun Imperia',
+    incomeSource: 'GruhNest Onboarding / Content Fee',
+    billNo: 'INV-2026-108',
+    earnedDate: '2026-11-04',
+    invoiceDate: '2026-11-05',
+    dueDate: '2026-11-15',
+    receiptDate: '2026-11-14',
+    amount: 150000,
+    receivedAmount: 90000,
+    creditAmount: 10000,
+  },
+  {
+    id: 'acc-3',
+    client: 'Shakti Group',
+    project: 'Shakti Skyline',
+    incomeSource: 'Sales Commission',
+    billNo: 'INV-2026-115',
+    earnedDate: '2026-11-12',
+    invoiceDate: '2026-11-14',
+    dueDate: '2026-11-21',
+    receiptDate: '2026-11-20',
+    amount: 20000,
+    receivedAmount: 8000,
+    creditAmount: 0,
+  },
+  {
+    id: 'acc-4',
+    client: 'Sun Creators',
+    project: 'Sun Centrica',
+    incomeSource: 'GruhNest Pro Setup & Monthly Fee',
+    billNo: 'INV-2026-112',
+    earnedDate: '2026-11-10',
+    invoiceDate: '2026-11-12',
+    dueDate: '2026-11-28',
+    receiptDate: '—',
+    amount: 65000,
+    receivedAmount: 0,
+    creditAmount: 0,
+  },
+  {
+    id: 'acc-5',
+    client: 'Sun Creators',
+    project: 'Sun Residency 4',
+    incomeSource: 'Sales Commission',
+    billNo: 'UNBILLED',
+    earnedDate: '2026-11-19',
+    invoiceDate: '—',
+    dueDate: '—',
+    receiptDate: '—',
+    amount: 32000,
+    receivedAmount: 0,
+    creditAmount: 0,
+  },
+];
+
 export function PaymentsView() {
   const {
     currentRole,
     scopedDeveloperClient,
-    payments,
-    commissionBookings,
     metaAdFunds,
-    financeAuditLogs,
     projects,
     syncCommissionBooking,
-    recordCommissionReceipt,
-    recordPaymentReceipt,
   } = useWorkspaceStore();
 
-  const [showBookingForm, setShowBookingForm] = useState(false);
-  const [syncMessage, setSyncMessage] = useState<string | null>(null);
-  const [receiptTargetId, setReceiptTargetId] = useState<string | null>(null);
-  const [receiptAmount, setReceiptAmount] = useState<string>('8000');
+  const isAuthorizedFinance = canViewFinance(currentRole);
+  const isClientPortal = isClientScopedRole(currentRole);
 
-  // Booking sync form state
+  const [asOfDate, setAsOfDate] = useState<string>('2026-11-25');
+  const [sourceFilter, setSourceFilter] = useState<'All' | IncomeSourceType>('All');
+  const [rows, setRows] = useState<AccountingLedgerRow[]>(initialAccountingRows);
+  const [adjustTargetId, setAdjustTargetId] = useState<string | null>(null);
+  const [adjustMode, setAdjustMode] = useState<'receipt' | 'credit'>('receipt');
+  const [adjustAmount, setAdjustAmount] = useState<string>('5000');
+
+  // Client / Developer portal booking form state
   const [selectedProjectName, setSelectedProjectName] = useState('Shakti Skyline');
   const [bookingId, setBookingId] = useState('BK-SKY-501');
   const [leadRef, setLeadRef] = useState('GN-LEAD-9201');
   const [unit, setUnit] = useState('Tower B - 902');
   const [dealValue, setDealValue] = useState('5000000');
-  const [dueDate, setDueDate] = useState('21 Nov 2026');
+  const [syncMessage, setSyncMessage] = useState<string | null>(null);
 
-  const isAuthorizedFinance = canViewFinance(currentRole);
-  const isClientPortal = isClientScopedRole(currentRole);
+  const filteredRows = useMemo(() => {
+    return rows.filter((r) => sourceFilter === 'All' || r.incomeSource === sourceFilter);
+  }, [rows, sourceFilter]);
 
-  const handleBookingSync = (e: React.FormEvent) => {
+  const accountingSummary = useMemo(() => {
+    let earnedRevenue = 0;
+    let billed = 0;
+    let collections = 0;
+    let outstanding = 0;
+    let overdue = 0;
+    let creditsApplied = 0;
+
+    for (const r of filteredRows) {
+      if (r.earnedDate !== '—' && r.earnedDate <= asOfDate) {
+        earnedRevenue += r.amount;
+      }
+      const isBilledAsOf = r.invoiceDate !== '—' && r.invoiceDate <= asOfDate;
+      if (isBilledAsOf) {
+        billed += r.amount;
+      }
+      const receivedAsOf =
+        r.receiptDate !== '—' && r.receiptDate <= asOfDate ? r.receivedAmount : 0;
+      collections += receivedAsOf;
+      creditsApplied += r.creditAmount;
+
+      if (isBilledAsOf) {
+        const unpaid = Math.max(0, r.amount - receivedAsOf - r.creditAmount);
+        outstanding += unpaid;
+        if (r.dueDate !== '—' && r.dueDate < asOfDate && unpaid > 0) {
+          overdue += unpaid;
+        }
+      }
+    }
+
+    return { earnedRevenue, billed, collections, outstanding, overdue, creditsApplied };
+  }, [filteredRows, asOfDate]);
+
+  const handleApplyAdjustment = (id: string) => {
+    const val = Number(adjustAmount) || 0;
+    if (val <= 0) return;
+
+    setRows((prev) =>
+      prev.map((row) => {
+        if (row.id !== id) return row;
+        const maxRemaining = Math.max(0, row.amount - row.receivedAmount - row.creditAmount);
+        const applied = Math.min(val, maxRemaining);
+        if (adjustMode === 'receipt') {
+          return {
+            ...row,
+            receivedAmount: row.receivedAmount + applied,
+            receiptDate: asOfDate,
+          };
+        }
+        return {
+          ...row,
+          creditAmount: row.creditAmount + applied,
+        };
+      })
+    );
+    setAdjustTargetId(null);
+  };
+
+  const handleClientBookingSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    const matchedProj = projects.find((p) => p.name === selectedProjectName);
-    const clientName = isClientPortal
-      ? scopedDeveloperClient
-      : matchedProj?.clientName || 'Shakti Group';
-
-    const result = syncCommissionBooking({
-      client: clientName,
+    const res = syncCommissionBooking({
+      client: scopedDeveloperClient,
       project: selectedProjectName,
       bookingId,
       leadRef,
       unit,
       dealValue: Number(dealValue) || 0,
-      dueDate,
+      dueDate: '28 Nov 2026',
     });
-
-    if (result.deduplicated) {
-      setSyncMessage(
-        `Deduplicated: ${selectedProjectName} + ${bookingId} already exists — commission preserved at 1x without double counting.`
-      );
-    } else {
-      setSyncMessage(
-        `Synced: Eligible deal ${formatCurrency(Number(dealValue) || 0)} × 0.004 = ${formatCurrency(Math.round((Number(dealValue) || 0) * 0.004))} earned.`
-      );
-    }
-    setShowBookingForm(false);
+    setSyncMessage(
+      res.deduplicated
+        ? `Duplicate sync ignored for ${selectedProjectName} · ${bookingId}.`
+        : `Authorized booking update submitted for ${selectedProjectName} · ${bookingId}.`
+    );
   };
 
-  // Restricted Portal for Client / Developer (Page 2 Access Spec)
+  // Restricted Developer / Client View
   if (isClientPortal) {
     const allowedProjects = projects.filter((p) => p.clientName === scopedDeveloperClient);
     return (
       <div className="space-y-6 pb-12">
         <div className="flex items-center justify-between gap-4">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-surface-subtle border border-border text-text-muted flex items-center justify-center shrink-0">
+            <div className="w-10 h-10 rounded-xl bg-[#E3EDE6] border border-[#CFE0D4] text-[#1D563B] flex items-center justify-center shrink-0">
               <PaymentsIcon className="w-6 h-6" />
             </div>
             <div>
               <h1 className="text-2xl font-bold text-text-main">
-                Developer Booking Update Portal ({scopedDeveloperClient})
+                Booking Updates ({scopedDeveloperClient})
               </h1>
-              <p className="text-xs text-text-subtle">
-                Restricted client sheet access: submit/update bookings only for your authorized projects. Agency invoices &amp; commissions remain private.
+              <p className="text-xs text-text-muted">
+                Restricted client portal: submit authorized project booking updates only. Agency fees &amp; accounting remain private.
               </p>
             </div>
           </div>
@@ -94,20 +251,13 @@ export function PaymentsView() {
         </div>
 
         <Card className="p-5 space-y-4">
-          <div className="flex items-center justify-between">
-            <h3 className="text-sm font-bold text-text-main">Submit Authorized Project Booking</h3>
-            <span className="text-[11px] text-text-subtle">
-              Other developer accounts (e.g. Client B) cannot be accessed from this login
-            </span>
-          </div>
-
+          <h3 className="text-sm font-bold text-text-main">Submit Authorized Booking Update</h3>
           {syncMessage && (
             <div className="p-3 rounded-btn bg-surface-subtle border border-border text-xs font-medium text-text-main">
               {syncMessage}
             </div>
           )}
-
-          <form onSubmit={handleBookingSync} className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+          <form onSubmit={handleClientBookingSubmit} className="grid grid-cols-1 sm:grid-cols-3 gap-3">
             <Select
               value={allowedProjects[0]?.name || selectedProjectName}
               onChange={(e) => setSelectedProjectName(e.target.value)}
@@ -118,33 +268,13 @@ export function PaymentsView() {
                 </option>
               ))}
             </Select>
-            <Input
-              required
-              placeholder="Booking ID (e.g. BK-SKY-501)"
-              value={bookingId}
-              onChange={(e) => setBookingId(e.target.value)}
-            />
-            <Input
-              required
-              placeholder="Lead Reference"
-              value={leadRef}
-              onChange={(e) => setLeadRef(e.target.value)}
-            />
-            <Input
-              required
-              placeholder="Unit (e.g. Tower B - 902)"
-              value={unit}
-              onChange={(e) => setUnit(e.target.value)}
-            />
-            <Input
-              required
-              type="number"
-              placeholder="Agreed Deal Value (INR)"
-              value={dealValue}
-              onChange={(e) => setDealValue(e.target.value)}
-            />
+            <Input required value={bookingId} onChange={(e) => setBookingId(e.target.value)} placeholder="Booking ID" />
+            <Input required value={leadRef} onChange={(e) => setLeadRef(e.target.value)} placeholder="Lead Ref" />
+            <Input required value={unit} onChange={(e) => setUnit(e.target.value)} placeholder="Unit" />
+            <Input required type="number" value={dealValue} onChange={(e) => setDealValue(e.target.value)} placeholder="Deal Value" />
             <Button type="submit" variant="brand" size="md">
-              Submit Authorized Booking Update
+              <Plus className="w-4 h-4" />
+              <span>Submit Update</span>
             </Button>
           </form>
         </Card>
@@ -152,471 +282,309 @@ export function PaymentsView() {
     );
   }
 
-  // Strict Security Wall for PM / Team / Ads / Sales Roles (Page 2 Spec)
+  // Strict Security Guard for Non-Finance Roles
   if (!isAuthorizedFinance) {
     return (
       <div className="space-y-6 pb-12">
-        <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-xl bg-surface-subtle border border-border text-text-muted flex items-center justify-center shrink-0">
+        <Card className="p-8 text-center max-w-xl mx-auto space-y-3 border-2 border-border mt-8">
+          <div className="w-12 h-12 rounded-full bg-surface-subtle border border-border flex items-center justify-center mx-auto text-text-main">
             <Lock className="w-5 h-5" />
           </div>
-          <div>
-            <h1 className="text-2xl font-bold text-text-main">Payments &amp; Finance</h1>
-            <p className="text-xs text-text-subtle">Role-based finance access enforcement</p>
-          </div>
-        </div>
-
-        <Card className="p-8 text-center max-w-xl mx-auto space-y-3 border-2 border-border">
-          <div className="w-12 h-12 rounded-full bg-surface-subtle border border-border flex items-center justify-center mx-auto text-text-main">
-            <ShieldAlert className="w-6 h-6" />
-          </div>
           <h2 className="text-lg font-bold text-text-main">
-            Access Restricted for {currentRole}
+            Payment Accounting Restricted for {currentRole}
           </h2>
           <p className="text-xs text-text-muted leading-relaxed">
-            Security policy: Client fees, property deal values, 0.4% commissions, invoices, and collections are private to <strong>Founder</strong> and <strong>Accountant</strong> roles only.
-          </p>
-          <p className="text-[11px] text-text-subtle">
-            Switch to <strong>Founder view</strong> or <strong>Accountant view</strong> in the top bar to manage billing and 0.4% commission recovery.
+            Client fees, income sources, sales commissions, invoices, and collections are private to <strong>Founder</strong> and <strong>Accountant</strong> roles only.
           </p>
         </Card>
       </div>
     );
   }
 
-  const totalBilledInvoices = payments.reduce((acc, p) => acc + p.amount, 0);
-  const totalPaidInvoices = payments.reduce((acc, p) => acc + p.paidAmount, 0);
-  const totalCommissionEarned = commissionBookings.reduce((acc, c) => acc + c.commissionAmount, 0);
-  const totalCommissionCollected = commissionBookings.reduce((acc, c) => acc + c.receiptEntered, 0);
-
-  const combinedEarnedRevenue = totalBilledInvoices + totalCommissionEarned;
-  const combinedCollection = totalPaidInvoices + totalCommissionCollected;
-  const combinedOutstanding = combinedEarnedRevenue - combinedCollection;
-  const combinedOverdue =
-    payments
-      .filter((p) => p.status === 'Overdue')
-      .reduce((acc, p) => acc + (p.amount - p.paidAmount), 0) +
-    commissionBookings
-      .filter((c) => c.stage === 'Overdue')
-      .reduce((acc, c) => acc + c.pendingAmount, 0);
-  const unbilledCommission = commissionBookings
-    .filter((c) => c.stage === 'Verified / Earned' || c.stage === 'Reported')
-    .reduce((acc, c) => acc + c.pendingAmount, 0);
-
   return (
-    <div className="space-y-6 pb-12">
-      {/* Header */}
+    <div className="space-y-6 pb-12 animate-fade-in">
+      {/* Header & As-Of Date Selector */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-        <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-xl bg-surface-subtle border border-border text-text-muted flex items-center justify-center shrink-0">
+        <div className="flex items-center gap-3.5">
+          <div className="w-11 h-11 rounded-2xl bg-[#E3EDE6] border border-[#CFE0D4] text-[#1D563B] flex items-center justify-center shrink-0">
             <PaymentsIcon className="w-6 h-6" />
           </div>
           <div>
-            <div className="flex items-center gap-2">
-              <h1 className="text-2xl font-bold text-text-main">
-                Finance, Billing &amp; 0.4% Commission
-              </h1>
+            <div className="flex flex-wrap items-center gap-2">
+              <h1 className="text-2xl font-bold text-text-main">Payment Accounting</h1>
               <Badge variant="outline">
                 <ShieldCheck className="w-3 h-3" /> {currentRole} Authorized
               </Badge>
             </div>
-            <p className="text-xs text-text-subtle">
-              BIM retainers, GruhNest onboarding &amp; 0.4% sale commission recovery, GruhNest Pro fees, and separate Client Meta Ad funds.
+            <p className="text-xs text-text-muted mt-0.5">
+              Revenue on earned date, billing on invoice date, collections on actual receipt date. Client Meta ad fund tracked separately.
             </p>
           </div>
         </div>
 
-        <Button
-          variant="brand"
-          size="md"
-          onClick={() => setShowBookingForm(!showBookingForm)}
-        >
-          <Plus className="w-4 h-4" />
-          <span>Sync / Log Booking (0.4%)</span>
-        </Button>
+        <div className="flex items-center gap-2 bg-white border border-border rounded-btn px-3 py-1.5 shadow-2xs shrink-0">
+          <Calendar className="w-4 h-4 text-[#1D563B]" />
+          <span className="text-xs font-semibold text-text-muted">As of Date:</span>
+          <input
+            type="date"
+            value={asOfDate}
+            onChange={(e) => setAsOfDate(e.target.value)}
+            className="text-xs font-bold text-text-main bg-transparent outline-none cursor-pointer"
+          />
+        </div>
       </div>
 
-      {syncMessage && (
-        <div className="p-3.5 rounded-card bg-surface-subtle border border-border text-xs font-semibold text-text-main flex items-center justify-between">
-          <span>{syncMessage}</span>
-          <button
-            onClick={() => setSyncMessage(null)}
-            className="text-text-subtle hover:text-text-main text-[11px] underline ml-4"
-          >
-            Dismiss
-          </button>
-        </div>
-      )}
-
-      {/* Owner / Accountant Finance Summary Strip (6 PDF KPIs) */}
+      {/* Period & Balance Summary Strip (6 Cards) */}
       <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
         <Card className="p-4">
-          <span className="text-[11px] font-semibold text-text-subtle">Earned Revenue</span>
-          <div className="text-xl font-extrabold text-text-main mt-1">
-            {formatCurrency(combinedEarnedRevenue)}
+          <span className="text-[11px] font-semibold text-text-muted">Earned Revenue</span>
+          <div className="text-xl font-extrabold text-text-main mt-1 tabular-nums">
+            {formatCurrency(accountingSummary.earnedRevenue)}
           </div>
+          <span className="text-[10px] text-text-subtle">On earned date (fees + comm.)</span>
         </Card>
         <Card className="p-4">
-          <span className="text-[11px] font-semibold text-text-subtle">Billed (Invoices)</span>
-          <div className="text-xl font-extrabold text-text-main mt-1">
-            {formatCurrency(totalBilledInvoices)}
+          <span className="text-[11px] font-semibold text-text-muted">Billed</span>
+          <div className="text-xl font-extrabold text-text-main mt-1 tabular-nums">
+            {formatCurrency(accountingSummary.billed)}
           </div>
+          <span className="text-[10px] text-text-subtle">On invoice date</span>
         </Card>
         <Card className="p-4">
-          <span className="text-[11px] font-semibold text-text-subtle">Collection Received</span>
-          <div className="text-xl font-extrabold text-text-main mt-1">
-            {formatCurrency(combinedCollection)}
+          <span className="text-[11px] font-semibold text-text-muted">Collections</span>
+          <div className="text-xl font-extrabold text-[#1D563B] mt-1 tabular-nums">
+            {formatCurrency(accountingSummary.collections)}
           </div>
+          <span className="text-[10px] text-text-subtle">On actual receipt date</span>
         </Card>
         <Card className="p-4">
-          <span className="text-[11px] font-semibold text-text-subtle">Total Outstanding</span>
-          <div className="text-xl font-extrabold text-text-main mt-1">
-            {formatCurrency(combinedOutstanding)}
+          <span className="text-[11px] font-semibold text-text-muted">Outstanding</span>
+          <div className="text-xl font-extrabold text-text-main mt-1 tabular-nums">
+            {formatCurrency(accountingSummary.outstanding)}
           </div>
+          <span className="text-[10px] text-text-subtle">Unpaid invoice balance</span>
         </Card>
         <Card className="p-4">
-          <span className="text-[11px] font-semibold text-text-subtle">Overdue Balance</span>
-          <div className="text-xl font-extrabold text-text-main mt-1">
-            {formatCurrency(combinedOverdue)}
+          <span className="text-[11px] font-semibold text-text-muted">Overdue</span>
+          <div className="text-xl font-extrabold text-text-main mt-1 tabular-nums">
+            {formatCurrency(accountingSummary.overdue)}
           </div>
-          {combinedOverdue > 0 && (
-            <Badge variant="urgent" className="mt-1">Overdue</Badge>
+          {accountingSummary.overdue > 0 && (
+            <Badge variant="urgent" className="mt-1 text-[9px]">Past Due Date</Badge>
           )}
         </Card>
         <Card className="p-4">
-          <span className="text-[11px] font-semibold text-text-subtle">Earned-Unbilled Comm.</span>
-          <div className="text-xl font-extrabold text-text-main mt-1">
-            {formatCurrency(unbilledCommission)}
+          <span className="text-[11px] font-semibold text-text-muted">Credits Adjusted</span>
+          <div className="text-xl font-extrabold text-text-main mt-1 tabular-nums">
+            {formatCurrency(accountingSummary.creditsApplied)}
           </div>
+          <span className="text-[10px] text-text-subtle">Partial receipts &amp; credits</span>
         </Card>
       </div>
 
-      {/* Sync / Log Booking Form (Tests Deduplication & 0.4% Rule) */}
-      {showBookingForm && (
-        <Card className="p-5 space-y-4 border-2 border-border">
-          <div className="flex items-center justify-between">
-            <div>
-              <h3 className="text-sm font-bold text-text-main">
-                Step 1–3: Booking Sync &amp; 0.4% Commission Calculator
-              </h3>
-              <p className="text-[11px] text-text-subtle">
-                Duplicate safety: syncing the same Project + Booking ID twice counts 0.4% commission only once.
-              </p>
-            </div>
-            <Badge variant="outline">Deal Value × 0.004</Badge>
-          </div>
+      {/* Income Source Filter Pills */}
+      <Card className="p-3.5 flex flex-wrap items-center gap-2">
+        <span className="text-xs font-bold text-text-muted mr-1">Income Sources:</span>
+        {(['All', ...INCOME_SOURCES] as const).map((src) => (
+          <button
+            key={src}
+            onClick={() => setSourceFilter(src)}
+            className={`px-3 py-1 rounded-btn text-xs font-semibold transition-colors ${
+              sourceFilter === src
+                ? 'bg-[#E3EDE6] text-[#1D563B]'
+                : 'text-text-muted hover:bg-surface-hover'
+            }`}
+          >
+            {src}
+          </button>
+        ))}
+      </Card>
 
-          <form onSubmit={handleBookingSync} className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-            <div>
-              <label className="text-[10px] font-bold uppercase text-text-subtle block mb-1">Project</label>
-              <Select
-                value={selectedProjectName}
-                onChange={(e) => setSelectedProjectName(e.target.value)}
-              >
-                {projects.map((p) => (
-                  <option key={p.id} value={p.name}>
-                    {p.name} ({p.clientName})
-                  </option>
-                ))}
-              </Select>
-            </div>
-            <div>
-              <label className="text-[10px] font-bold uppercase text-text-subtle block mb-1">Booking ID (Dedup Key)</label>
-              <Input
-                required
-                value={bookingId}
-                onChange={(e) => setBookingId(e.target.value)}
-                placeholder="e.g. BK-SKY-402"
-              />
-            </div>
-            <div>
-              <label className="text-[10px] font-bold uppercase text-text-subtle block mb-1">Deal Value (INR)</label>
-              <Input
-                required
-                type="number"
-                value={dealValue}
-                onChange={(e) => setDealValue(e.target.value)}
-                placeholder="5000000"
-              />
-            </div>
-            <div>
-              <label className="text-[10px] font-bold uppercase text-text-subtle block mb-1">GruhNest Lead Ref</label>
-              <Input value={leadRef} onChange={(e) => setLeadRef(e.target.value)} />
-            </div>
-            <div>
-              <label className="text-[10px] font-bold uppercase text-text-subtle block mb-1">Unit</label>
-              <Input value={unit} onChange={(e) => setUnit(e.target.value)} />
-            </div>
-            <div>
-              <label className="text-[10px] font-bold uppercase text-text-subtle block mb-1">Due Date</label>
-              <Input value={dueDate} onChange={(e) => setDueDate(e.target.value)} />
-            </div>
-
-            <div className="sm:col-span-3 flex items-center justify-between pt-2">
-              <span className="text-xs font-semibold text-text-muted">
-                Preview Commission: {formatCurrency(Math.round((Number(dealValue) || 0) * 0.004))}
-              </span>
-              <div className="flex gap-2">
-                <Button type="button" variant="outline" size="sm" onClick={() => setShowBookingForm(false)}>
-                  Cancel
-                </Button>
-                <Button type="submit" variant="brand" size="sm">
-                  <RefreshCw className="w-3.5 h-3.5" />
-                  <span>Verify &amp; Sync Booking</span>
-                </Button>
-              </div>
-            </div>
-          </form>
-        </Card>
-      )}
-
-      {/* GruhNest 0.4% Commission Ledger */}
+      {/* Main Period & Balance Ledger */}
       <Card className="p-0 overflow-hidden">
         <div className="p-5 border-b border-border-subtle flex flex-wrap items-center justify-between gap-2">
           <div>
-            <h3 className="text-base font-bold text-text-main">
-              GruhNest 0.4% Sale Commission Ledger
-            </h3>
-            <p className="text-[11px] text-text-subtle">
-              Stages: Reported → Verified/Earned → Invoiced → Part-Paid / Paid (or Overdue after due date)
+            <h2 className="text-base font-bold text-text-main">
+              Income Sources, Dates &amp; Balance Adjustment Ledger
+            </h2>
+            <p className="text-[11px] text-text-muted">
+              Tracks earned date, invoice date, due date, actual receipt date, partial receipts &amp; credit adjustments as of <strong>{asOfDate}</strong>
             </p>
           </div>
-          <span className="text-xs text-text-subtle font-medium">
-            {commissionBookings.length} verified bookings
-          </span>
+          <span className="text-xs font-medium text-text-subtle">{filteredRows.length} entries</span>
         </div>
 
         <div className="overflow-x-auto">
           <table className="w-full text-left text-xs">
             <thead>
               <tr className="border-b border-border-subtle text-text-subtle font-semibold uppercase tracking-wider text-[10px] bg-surface-subtle">
-                <th className="py-3 px-4">Project &amp; Booking ID</th>
-                <th className="py-3 px-4">Deal Value</th>
-                <th className="py-3 px-4">0.4% Comm.</th>
-                <th className="py-3 px-4">Receipt Entered</th>
-                <th className="py-3 px-4">Pending Balance</th>
-                <th className="py-3 px-4">Due Date</th>
-                <th className="py-3 px-4">Stage &amp; Sync</th>
-                <th className="py-3 px-4 text-right">Recovery</th>
+                <th className="py-3 px-4">Client &amp; Project</th>
+                <th className="py-3 px-4">Income Source &amp; Bill #</th>
+                <th className="py-3 px-4">Earned / Invoice Date</th>
+                <th className="py-3 px-4">Due / Receipt Date</th>
+                <th className="py-3 px-4">Amount</th>
+                <th className="py-3 px-4">Receipts &amp; Credits</th>
+                <th className="py-3 px-4">Outstanding / Overdue</th>
+                <th className="py-3 px-4 text-right">Adjust</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-border-subtle">
-              {commissionBookings.map((com) => (
-                <tr key={com.id} className="hover:bg-surface-subtle transition-colors">
-                  <td className="py-3.5 px-4">
-                    <div className="font-bold text-text-main">
-                      {com.project} · {com.bookingId}
-                    </div>
-                    <div className="text-[11px] text-text-subtle">
-                      {com.client} • {com.unit} • Ref: {com.leadRef}
-                    </div>
-                  </td>
-                  <td className="py-3.5 px-4 font-semibold text-text-main">
-                    {formatCurrency(com.dealValue)}
-                  </td>
-                  <td className="py-3.5 px-4 font-bold text-text-main">
-                    {formatCurrency(com.commissionAmount)}
-                  </td>
-                  <td className="py-3.5 px-4 font-semibold text-text-main">
-                    {formatCurrency(com.receiptEntered)}
-                  </td>
-                  <td className="py-3.5 px-4 font-bold text-text-main">
-                    {formatCurrency(com.pendingAmount)}
-                  </td>
-                  <td className="py-3.5 px-4 text-text-subtle">{com.dueDate}</td>
-                  <td className="py-3.5 px-4">
-                    <div className="flex flex-wrap items-center gap-1.5">
-                      <Badge
-                        variant={
-                          com.stage === 'Paid'
-                            ? 'completed'
-                            : com.stage === 'Overdue'
-                            ? 'urgent'
-                            : 'pending'
-                        }
-                      >
-                        {com.stage}
-                      </Badge>
-                      {com.syncCount > 1 && (
-                        <span className="text-[10px] text-text-subtle border border-border px-1.5 py-0.5 rounded-full">
-                          Synced {com.syncCount}x (1x counted)
-                        </span>
+              {filteredRows.map((row) => {
+                const isBilledAsOf = row.invoiceDate !== '—' && row.invoiceDate <= asOfDate;
+                const receivedAsOf =
+                  row.receiptDate !== '—' && row.receiptDate <= asOfDate ? row.receivedAmount : 0;
+                const unpaid = isBilledAsOf
+                  ? Math.max(0, row.amount - receivedAsOf - row.creditAmount)
+                  : 0;
+                const isOverdue = isBilledAsOf && row.dueDate !== '—' && row.dueDate < asOfDate && unpaid > 0;
+
+                return (
+                  <tr key={row.id} className="hover:bg-surface-subtle/70 transition-colors">
+                    <td className="py-3.5 px-4">
+                      <div className="font-bold text-text-main">{row.project}</div>
+                      <div className="text-[11px] text-text-muted">{row.client}</div>
+                    </td>
+                    <td className="py-3.5 px-4">
+                      <div className="font-semibold text-text-main">{row.incomeSource}</div>
+                      <div className="text-[11px] font-mono text-text-subtle">{row.billNo}</div>
+                    </td>
+                    <td className="py-3.5 px-4 whitespace-nowrap text-text-muted">
+                      <div>Earned: <strong className="text-text-main">{row.earnedDate}</strong></div>
+                      <div>Invoice: <strong className="text-text-main">{row.invoiceDate}</strong></div>
+                    </td>
+                    <td className="py-3.5 px-4 whitespace-nowrap text-text-muted">
+                      <div>Due: <strong className="text-text-main">{row.dueDate}</strong></div>
+                      <div>Receipt: <strong className="text-text-main">{row.receiptDate}</strong></div>
+                    </td>
+                    <td className="py-3.5 px-4 font-bold text-text-main tabular-nums">
+                      {formatCurrency(row.amount)}
+                    </td>
+                    <td className="py-3.5 px-4 whitespace-nowrap">
+                      <div className="font-semibold text-[#1D563B] tabular-nums">
+                        Paid: {formatCurrency(receivedAsOf)}
+                      </div>
+                      <div className="text-[11px] text-text-subtle tabular-nums">
+                        Credit: {formatCurrency(row.creditAmount)}
+                      </div>
+                    </td>
+                    <td className="py-3.5 px-4">
+                      <div className="font-bold text-text-main tabular-nums">
+                        {isBilledAsOf ? formatCurrency(unpaid) : 'Unbilled'}
+                      </div>
+                      {isOverdue ? (
+                        <Badge variant="urgent" className="mt-1 text-[9px]">
+                          Overdue: {formatCurrency(unpaid)}
+                        </Badge>
+                      ) : isBilledAsOf && unpaid === 0 ? (
+                        <Badge variant="completed" className="mt-1 text-[9px]">
+                          <CheckCircle2 className="w-3 h-3" /> Settled
+                        </Badge>
+                      ) : (
+                        <Badge variant="pending" className="mt-1 text-[9px]">
+                          {isBilledAsOf ? 'Open' : 'Earned Unbilled'}
+                        </Badge>
                       )}
-                    </div>
-                  </td>
-                  <td className="py-3.5 px-4 text-right">
-                    {com.pendingAmount > 0 && (
-                      receiptTargetId === com.id ? (
-                        <div className="inline-flex items-center gap-1">
-                          <input
-                            type="number"
-                            value={receiptAmount}
-                            onChange={(e) => setReceiptAmount(e.target.value)}
-                            className="w-20 px-2 py-1 text-xs border border-border rounded-btn bg-white"
-                          />
+                    </td>
+                    <td className="py-3.5 px-4 text-right">
+                      {unpaid > 0 && (
+                        adjustTargetId === row.id ? (
+                          <div className="inline-flex items-center gap-1">
+                            <select
+                              value={adjustMode}
+                              onChange={(e) => setAdjustMode(e.target.value as 'receipt' | 'credit')}
+                              className="text-[10px] border border-border rounded px-1 py-1 bg-white"
+                            >
+                              <option value="receipt">Receipt</option>
+                              <option value="credit">Credit</option>
+                            </select>
+                            <input
+                              type="number"
+                              value={adjustAmount}
+                              onChange={(e) => setAdjustAmount(e.target.value)}
+                              className="w-20 px-1.5 py-1 text-xs border border-border rounded bg-white"
+                            />
+                            <Button
+                              size="sm"
+                              variant="brand"
+                              onClick={() => handleApplyAdjustment(row.id)}
+                            >
+                              Save
+                            </Button>
+                          </div>
+                        ) : (
                           <Button
                             size="sm"
-                            variant="brand"
+                            variant="outline"
                             onClick={() => {
-                              recordCommissionReceipt(com.id, Number(receiptAmount) || 0, currentRole);
-                              setReceiptTargetId(null);
+                              setAdjustTargetId(row.id);
+                              setAdjustMode('receipt');
+                              setAdjustAmount(String(Math.min(10000, unpaid)));
                             }}
                           >
-                            Save
+                            + Receipt / Credit
                           </Button>
-                        </div>
-                      ) : (
-                        <Button
-                          size="sm"
-                          variant="outline"
-                          onClick={() => {
-                            setReceiptTargetId(com.id);
-                            setReceiptAmount(String(Math.min(8000, com.pendingAmount)));
-                          }}
-                        >
-                          + Receipt
-                        </Button>
-                      )
-                    )}
-                  </td>
-                </tr>
-              ))}
+                        )
+                      )}
+                    </td>
+                  </tr>
+                );
+              })}
             </tbody>
           </table>
         </div>
       </Card>
 
-      {/* Invoices Table */}
+      {/* Separate Client Meta Ad Fund Tracker */}
       <Card className="p-0 overflow-hidden">
-        <div className="p-5 border-b border-border-subtle flex items-center justify-between">
-          <div>
-            <h3 className="text-base font-bold text-text-main">
-              Agency Invoices &amp; Retainer Billing Register
-            </h3>
-            <p className="text-[11px] text-text-subtle">
-              BIM retainers, GruhNest onboarding/content fees &amp; GruhNest Pro setup/monthly billing
-            </p>
+        <div className="p-5 border-b border-border-subtle flex flex-wrap items-center justify-between gap-2">
+          <div className="flex items-center gap-2">
+            <Wallet className="w-4 h-4 text-[#1D563B]" />
+            <div>
+              <h3 className="text-base font-bold text-text-main">
+                Client Meta Ad Fund (Tracked Separately)
+              </h3>
+              <p className="text-[11px] text-text-muted">
+                Pass-through client media budgets kept strictly separate from agency fees &amp; earned revenue
+              </p>
+            </div>
           </div>
-          <span className="text-xs text-text-subtle font-medium">{payments.length} invoices recorded</span>
+          <Badge variant="outline">Excluded from Agency Revenue</Badge>
         </div>
 
         <div className="overflow-x-auto">
           <table className="w-full text-left text-xs">
             <thead>
               <tr className="border-b border-border-subtle text-text-subtle font-semibold uppercase tracking-wider text-[10px] bg-surface-subtle">
-                <th className="py-3 px-4">Invoice #</th>
-                <th className="py-3 px-4">Project</th>
-                <th className="py-3 px-4">Income Source / Description</th>
-                <th className="py-3 px-4">Amount</th>
-                <th className="py-3 px-4">Paid</th>
-                <th className="py-3 px-4">Due Date</th>
-                <th className="py-3 px-4">Status</th>
-                <th className="py-3 px-4 text-right">Action</th>
+                <th className="py-3 px-4">Client &amp; Project</th>
+                <th className="py-3 px-4">Fund Deposited</th>
+                <th className="py-3 px-4">Meta Spend Utilized</th>
+                <th className="py-3 px-4">Unspent Ad Fund Balance</th>
+                <th className="py-3 px-4">Last Top-Up Date</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-border-subtle">
-              {payments.map((pay) => (
-                <tr key={pay.id} className="hover:bg-surface-subtle transition-colors">
-                  <td className="py-3.5 px-4 font-mono font-bold text-text-main">{pay.invoiceNo}</td>
-                  <td className="py-3.5 px-4 font-bold text-text-main">{pay.projectName}</td>
-                  <td className="py-3.5 px-4 text-text-muted">{pay.description}</td>
-                  <td className="py-3.5 px-4 font-bold text-text-main">{formatCurrency(pay.amount)}</td>
-                  <td className="py-3.5 px-4 font-bold text-text-main">{formatCurrency(pay.paidAmount)}</td>
-                  <td className="py-3.5 px-4 text-text-subtle">{formatDate(pay.dueDate)}</td>
-                  <td className="py-3.5 px-4">
-                    <Badge
-                      variant={
-                        pay.status === 'Paid'
-                          ? 'completed'
-                          : pay.status === 'Part paid' || pay.status === 'Pending'
-                          ? 'pending'
-                          : 'urgent'
-                      }
-                    >
-                      {pay.status}
-                    </Badge>
+              {metaAdFunds.map((f) => (
+                <tr key={f.id} className="hover:bg-surface-subtle/70 transition-colors">
+                  <td className="py-3 px-4">
+                    <div className="font-bold text-text-main">{f.project}</div>
+                    <div className="text-[11px] text-text-muted">{f.client}</div>
                   </td>
-                  <td className="py-3.5 px-4 text-right">
-                    {pay.amount > pay.paidAmount && (
-                      <Button
-                        size="sm"
-                        variant="outline"
-                        onClick={() => recordPaymentReceipt(pay.id, pay.amount - pay.paidAmount, currentRole)}
-                      >
-                        Mark Paid
-                      </Button>
-                    )}
+                  <td className="py-3 px-4 font-semibold text-text-main tabular-nums">
+                    {formatCurrency(f.fundDeposited)}
                   </td>
+                  <td className="py-3 px-4 text-text-muted tabular-nums">
+                    {formatCurrency(f.metaSpendUtilized)}
+                  </td>
+                  <td className="py-3 px-4 font-bold text-[#1D563B] tabular-nums">
+                    {formatCurrency(f.unspentBalance)}
+                  </td>
+                  <td className="py-3 px-4 text-text-subtle">{f.lastTopUpDate}</td>
                 </tr>
               ))}
             </tbody>
           </table>
         </div>
       </Card>
-
-      {/* Separate Client Meta Ad Fund Tracker + Finance Audit Log */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-5">
-        <Card className="lg:col-span-6 p-0 overflow-hidden">
-          <div className="p-4 border-b border-border-subtle flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <Wallet className="w-4 h-4 text-text-main" />
-              <h3 className="text-sm font-bold text-text-main">
-                Client Meta Ad Fund (Tracked Separately)
-              </h3>
-            </div>
-            <Badge variant="outline">Non-Revenue Pass-Through</Badge>
-          </div>
-          <div className="overflow-x-auto">
-            <table className="w-full text-left text-xs">
-              <thead>
-                <tr className="border-b border-border-subtle text-text-subtle uppercase text-[10px] bg-surface-subtle">
-                  <th className="py-2.5 px-4">Project</th>
-                  <th className="py-2.5 px-4">Deposited</th>
-                  <th className="py-2.5 px-4">Meta Utilized</th>
-                  <th className="py-2.5 px-4">Balance</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-border-subtle">
-                {metaAdFunds.map((f) => (
-                  <tr key={f.id}>
-                    <td className="py-2.5 px-4">
-                      <div className="font-bold text-text-main">{f.project}</div>
-                      <div className="text-[10px] text-text-subtle">Top-up: {f.lastTopUpDate}</div>
-                    </td>
-                    <td className="py-2.5 px-4">{formatCurrency(f.fundDeposited)}</td>
-                    <td className="py-2.5 px-4">{formatCurrency(f.metaSpendUtilized)}</td>
-                    <td className="py-2.5 px-4 font-bold text-text-main">{formatCurrency(f.unspentBalance)}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </Card>
-
-        <Card className="lg:col-span-6 p-0 overflow-hidden">
-          <div className="p-4 border-b border-border-subtle flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <ShieldCheck className="w-4 h-4 text-text-main" />
-              <h3 className="text-sm font-bold text-text-main">Finance Edit &amp; Sync Audit Log</h3>
-            </div>
-            <span className="text-[11px] text-text-subtle">{financeAuditLogs.length} entries</span>
-          </div>
-          <div className="divide-y divide-border-subtle max-h-64 overflow-y-auto">
-            {financeAuditLogs.map((log) => (
-              <div key={log.id} className="p-3.5 text-xs space-y-0.5">
-                <div className="flex items-center justify-between">
-                  <span className="font-bold text-text-main">{log.action}</span>
-                  <span className="text-[10px] text-text-subtle">{log.timestamp}</span>
-                </div>
-                <div className="text-[11px] font-semibold text-text-muted">
-                  {log.target} • By {log.actor}
-                </div>
-                <div className="text-[11px] text-text-subtle">{log.details}</div>
-              </div>
-            ))}
-          </div>
-        </Card>
-      </div>
     </div>
   );
 }

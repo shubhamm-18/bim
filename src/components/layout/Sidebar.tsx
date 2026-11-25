@@ -21,10 +21,11 @@ import {
   Layers,
   TrendingUp,
   Lock,
+  Users,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { getRoleRoutePolicy, isRouteAllowedForRole } from '@/lib/permissions';
-import { Badge, GruhnestIcon, AnalyticsIcon, ApprovalsIcon, CalendarIcon, ProjectsIcon, ContentIcon, AdvertisingIcon, CrmIcon, CompareIcon, PaymentsIcon, TemplatesIcon, OverviewIcon } from '@/components/ui';
+import { Badge, GruhnestIcon, AnalyticsIcon, ApprovalsIcon, CalendarIcon, ProjectsIcon, ContentIcon, AdvertisingIcon, CrmIcon, CompareIcon, PaymentsIcon, FinanceIcon, TemplatesIcon, OverviewIcon } from '@/components/ui';
 
 const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
   LayoutDashboard,
@@ -75,17 +76,17 @@ export function Sidebar({ onItemClick, className }: SidebarProps) {
   return (
     <aside
       className={cn(
-        'w-sidebar bg-surface-card border-r border-border flex flex-col select-none transition-all h-screen',
+        'w-sidebar bg-gradient-to-b from-[#0E1F16] via-[#10241A] to-[#0A1811] border-r border-[#1F3A2B] flex flex-col select-none transition-all h-screen text-[#D9E5DD]',
         className
       )}
     >
       {/* Brand Header */}
-      <div className="h-topbar px-4 sm:px-5 flex items-center border-b border-border-subtle shrink-0">
+      <div className="h-topbar px-4 sm:px-5 flex items-center border-b border-[#1E3829] shrink-0">
         <Link href={rolePolicy.defaultHref} className="flex items-center w-full">
           <img
-            src="/images/beyond-imagine-logo.png"
+            src="/images/beyond-imagine-logo-dark.png"
             alt="Beyond Imagine Media Solutions"
-            className="w-full h-auto max-h-[78px] object-contain object-left"
+            className="w-full h-auto max-h-[76px] object-contain object-left"
           />
         </Link>
       </div>
@@ -100,7 +101,7 @@ export function Sidebar({ onItemClick, className }: SidebarProps) {
 
           return (
           <div key={group.id}>
-            <div className="px-3 mb-2 text-[10px] font-bold uppercase tracking-wider text-text-subtle">
+            <div className="px-3 mb-2 text-[10px] font-bold uppercase tracking-wider text-[#7E9A8A]">
               {group.title}
             </div>
             <div className="space-y-0.5">
@@ -114,6 +115,8 @@ export function Sidebar({ onItemClick, className }: SidebarProps) {
                 const IconComponent =
                   item.id === 'overview' || item.id === 'dashboard'
                     ? OverviewIcon
+                    : item.id === 'finance'
+                    ? FinanceIcon
                     : item.id === 'gruhnest'
                     ? GruhnestIcon
                     : item.id === 'analytics'
@@ -129,9 +132,11 @@ export function Sidebar({ onItemClick, className }: SidebarProps) {
                     : item.id === 'advertising'
                     ? AdvertisingIcon
                     : item.id === 'crm'
-                    ? CrmIcon
+                    ? GruhnestIcon
                     : item.id === 'compare'
                     ? CompareIcon
+                    : item.id === 'team'
+                    ? Users
                     : item.id === 'payments'
                     ? PaymentsIcon
                     : item.id === 'templates'
@@ -153,23 +158,28 @@ export function Sidebar({ onItemClick, className }: SidebarProps) {
                     className={cn(
                       'w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-sm font-semibold transition-all group',
                       isActive
-                        ? 'bg-brand-subtle text-brand border border-brand/20 font-bold shadow-xs'
-                        : 'text-text-muted hover:bg-surface-hover hover:text-text-main border border-transparent'
+                        ? 'bg-gradient-to-r from-[#2D5E43] via-[#1E442F] to-[#12291D] text-white border border-[#3E7B59]/60 font-bold shadow-xs'
+                        : 'text-[#C8D8CE] hover:bg-[#173023] hover:text-white border border-transparent'
                     )}
                   >
                     <div className="flex items-center gap-3.5 min-w-0">
                       <IconComponent
                         className={cn(
                           'w-5 h-5 shrink-0 transition-colors',
-                          isActive ? 'text-brand' : 'text-text-subtle group-hover:text-brand'
+                          isActive ? 'text-white' : 'text-[#89A896] group-hover:text-white'
                         )}
                       />
                       <span className="truncate">{displayLabel}</span>
                     </div>
+                    {item.id === 'gruhnest' && (
+                      <span className="px-1.5 py-0.5 rounded text-[9px] font-extrabold uppercase tracking-wider bg-[#2C553E] text-[#D9E5DD] border border-[#3E7B59]/70">
+                        PRO
+                      </span>
+                    )}
                     {badgeCount !== undefined && badgeCount > 0 && (
-                      <Badge variant={isActive ? 'brand' : 'neutral'}>
+                      <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-[#3B6B50] text-white">
                         {badgeCount}
-                      </Badge>
+                      </span>
                     )}
                   </Link>
                 );
@@ -181,13 +191,15 @@ export function Sidebar({ onItemClick, className }: SidebarProps) {
       </div>
 
       {/* User Profile Footer */}
-      <div className="p-4 border-t border-border flex items-center gap-3.5 bg-surface-card shrink-0">
-        <div className="w-10 h-10 rounded-full bg-brand-subtle text-brand font-bold text-xs flex items-center justify-center border border-border shrink-0">
-          {agencyConfig.user.initials}
-        </div>
-        <div className="flex-1 min-w-0">
-          <p className="text-sm font-bold text-text-main truncate">{agencyConfig.user.name}</p>
-          <p className="text-xs text-text-subtle truncate">{currentRole} view</p>
+      <div className="p-3 border-t border-[#1E3829] shrink-0">
+        <div className="p-2.5 rounded-xl bg-[#142A1E] border border-[#234332] flex items-center gap-3">
+          <div className="w-9 h-9 rounded-full bg-[#2C553E] text-white font-bold text-xs flex items-center justify-center border border-[#3E7B59] shrink-0">
+            {agencyConfig.user.initials}
+          </div>
+          <div className="flex-1 min-w-0">
+            <p className="text-sm font-bold text-white truncate">{agencyConfig.user.name}</p>
+            <p className="text-[11px] text-[#89A896] truncate">{currentRole} view</p>
+          </div>
         </div>
       </div>
     </aside>

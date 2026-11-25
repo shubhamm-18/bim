@@ -4,6 +4,7 @@ export type RoleView = (typeof agencyConfig.roles)[number];
 
 export type NavView =
   | 'overview'
+  | 'finance'
   | 'analytics'
   | 'projects'
   | 'calendar'
@@ -12,6 +13,7 @@ export type NavView =
   | 'advertising'
   | 'crm'
   | 'gruhnest'
+  | 'team'
   | 'compare'
   | 'payments'
   | 'templates';

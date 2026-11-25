@@ -42,8 +42,8 @@ export function AppShell({ children }: { children: React.ReactNode }) {
         onClose={() => setMobileNavOpen(false)}
       />
 
-      {/* Main Content Area */}
-      <div className="md:ml-sidebar flex-1 flex flex-col min-w-0 transition-all">
+      {/* Main Content Area (Right-side sage mist canvas matching reference) */}
+      <div className="md:ml-sidebar flex-1 flex flex-col min-w-0 transition-all bg-gradient-to-br from-[#F3F7F4] via-[#EAF2EC] to-[#DFECE3] min-h-screen">
         <Topbar onOpenMobileNav={() => setMobileNavOpen(true)} />
         <main className="flex-1 p-6 sm:p-8 lg:p-10 max-w-workspace w-full mx-auto">
           {isAuthorizedRoute ? (

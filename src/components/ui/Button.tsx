@@ -11,9 +11,9 @@ export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElemen
 export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   ({ className, variant = 'brand', size = 'md', children, ...props }, ref) => {
     const variantStyles = {
-      brand: 'bg-surface-subtle hover:bg-surface-hover text-text-main border border-border font-semibold shadow-xs',
+      brand: 'bg-gradient-to-r from-[#2D6A4F] to-[#1B4332] hover:from-[#367B5C] hover:to-[#22523D] text-white border border-[#1B4332] font-semibold shadow-sm',
       secondary: 'bg-surface-subtle hover:bg-surface-hover text-text-main border border-border font-semibold',
-      outline: 'bg-transparent hover:bg-surface-hover text-text-main border border-border hover:border-zinc-400 font-semibold',
+      outline: 'bg-white hover:bg-surface-hover text-text-main border border-border hover:border-border-hover font-semibold',
       ghost: 'bg-transparent hover:bg-surface-hover text-text-muted hover:text-text-main font-medium',
       danger: 'bg-red-800 hover:bg-red-900 text-white font-semibold transition-colors',
       success: 'bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border border-emerald-300 font-semibold transition-colors',
@@ -30,7 +30,7 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       <button
         ref={ref}
         className={cn(
-          'inline-flex items-center justify-center transition-all select-none disabled:opacity-50 disabled:pointer-events-none active:scale-[0.98]',
+          'inline-flex items-center justify-center transition-all duration-150 select-none disabled:opacity-50 disabled:pointer-events-none active:scale-[0.97] cursor-pointer',
           variantStyles[variant],
           sizeStyles[size],
           className
