@@ -247,10 +247,12 @@ export function FounderCommandBoard() {
       </Card>
 
       {/* 1. FINANCE · OWNER ONLY */}
-      <Card className="p-5">
+      <Card className="p-5 bg-gradient-to-br from-white via-white to-emerald-50/40 border-emerald-200/60">
         <div className="flex flex-wrap items-center justify-between gap-2 mb-3.5">
           <div className="flex items-center gap-2">
-            <DollarSign className="w-4 h-4 text-text-main" />
+            <span className="w-7 h-7 rounded-lg bg-emerald-50 border border-emerald-200/80 text-emerald-700 flex items-center justify-center">
+              <DollarSign className="w-4 h-4" />
+            </span>
             <h2 className="text-sm font-bold text-text-main">Finance · Owner Only</h2>
             <span className="text-[10px] font-medium text-text-subtle">
               Click any counter for payer, project, service, bill &amp; receipt records
@@ -315,11 +317,13 @@ export function FounderCommandBoard() {
       {/* 2 & 3. DELIVERY AUR TEAM + GRUHNEST */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-5">
         {/* Delivery & Team */}
-        <Card className="lg:col-span-5 p-5 flex flex-col justify-between">
+        <Card className="lg:col-span-5 p-5 flex flex-col justify-between bg-gradient-to-br from-white via-white to-indigo-50/45 border-indigo-200/60">
           <div>
             <div className="flex items-center justify-between mb-3.5">
               <div className="flex items-center gap-2">
-                <Users className="w-4 h-4 text-text-main" />
+                <span className="w-7 h-7 rounded-lg bg-indigo-50 border border-indigo-200/80 text-indigo-700 flex items-center justify-center">
+                  <Users className="w-4 h-4" />
+                </span>
                 <h2 className="text-sm font-bold text-text-main">Delivery aur Team</h2>
               </div>
               <button
@@ -385,10 +389,12 @@ export function FounderCommandBoard() {
         </Card>
 
         {/* GruhNest */}
-        <Card className="lg:col-span-7 p-5">
+        <Card className="lg:col-span-7 p-5 bg-gradient-to-br from-white via-white to-sky-50/50 border-sky-200/60">
           <div className="flex flex-wrap items-center justify-between gap-2 mb-3.5">
             <div className="flex items-center gap-2">
-              <Megaphone className="w-4 h-4 text-text-main" />
+              <span className="w-7 h-7 rounded-lg bg-sky-50 border border-sky-200/80 text-sky-700 flex items-center justify-center">
+                <Megaphone className="w-4 h-4" />
+              </span>
               <h2 className="text-sm font-bold text-text-main">GruhNest — Videos &amp; Meta Funnel</h2>
             </div>
             {showSpend && adTotals.wasted > 0 && (
@@ -458,10 +464,12 @@ export function FounderCommandBoard() {
 
       {/* 4 & 5. GRUHNEST PRO + AAJ ACTION CHAHIYE */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-5">
-        <Card className="lg:col-span-5 p-5">
+        <Card className="lg:col-span-5 p-5 bg-gradient-to-br from-white via-white to-violet-50/45 border-violet-200/60">
           <div className="flex items-center justify-between mb-3.5">
             <div className="flex items-center gap-2">
-              <PhoneCall className="w-4 h-4 text-text-main" />
+              <span className="w-7 h-7 rounded-lg bg-violet-50 border border-violet-200/80 text-violet-700 flex items-center justify-center">
+                <PhoneCall className="w-4 h-4" />
+              </span>
               <h2 className="text-sm font-bold text-text-main">GruhNest Pro</h2>
             </div>
             <span className="text-[10px] font-medium text-text-subtle flex items-center gap-1">
@@ -511,10 +519,12 @@ export function FounderCommandBoard() {
           </div>
         </Card>
 
-        <Card className="lg:col-span-7 p-5">
+        <Card className="lg:col-span-7 p-5 bg-gradient-to-br from-white via-white to-amber-50/45 border-amber-200/60">
           <div className="flex flex-wrap items-center justify-between gap-2 mb-3.5">
             <div className="flex items-center gap-2">
-              <AlertTriangle className="w-4 h-4 text-text-main" />
+              <span className="w-7 h-7 rounded-lg bg-amber-50 border border-amber-200/80 text-amber-700 flex items-center justify-center">
+                <AlertTriangle className="w-4 h-4" />
+              </span>
               <h2 className="text-sm font-bold text-text-main">
                 Aaj Action Chahiye ({filteredAlerts.length})
               </h2>

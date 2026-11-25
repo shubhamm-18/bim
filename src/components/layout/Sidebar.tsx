@@ -23,7 +23,7 @@ import {
   Lock,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import { canViewFinance, isClientScopedRole } from '@/lib/permissions';
+import { getRoleRoutePolicy, isRouteAllowedForRole } from '@/lib/permissions';
 import { Badge, GruhnestIcon, AnalyticsIcon, ApprovalsIcon, CalendarIcon, ProjectsIcon, ContentIcon, AdvertisingIcon, CrmIcon, CompareIcon, PaymentsIcon, TemplatesIcon, OverviewIcon } from '@/components/ui';
 
 const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
@@ -61,7 +61,7 @@ interface SidebarProps {
 export function Sidebar({ onItemClick, className }: SidebarProps) {
   const pathname = usePathname();
   const { currentView, setCurrentView, approvalItems, currentRole } = useWorkspaceStore();
-  const financeLocked = !canViewFinance(currentRole) && !isClientScopedRole(currentRole);
+  const rolePolicy = getRoleRoutePolicy(currentRole);
 
   const pendingApprovalsCount = approvalItems.filter((i) => i.status === 'Pending').length;
 
@@ -81,7 +81,7 @@ export function Sidebar({ onItemClick, className }: SidebarProps) {
     >
       {/* Brand Header */}
       <div className="h-topbar px-4 sm:px-5 flex items-center border-b border-border-subtle shrink-0">
-        <Link href="/" className="flex items-center w-full">
+        <Link href={rolePolicy.defaultHref} className="flex items-center w-full">
           <img
             src="/images/beyond-imagine-logo.png"
             alt="Beyond Imagine Media Solutions"
@@ -90,15 +90,27 @@ export function Sidebar({ onItemClick, className }: SidebarProps) {
         </Link>
       </div>
 
-      {/* Navigation Scroll Area */}
+      {/* Navigation Scroll Area (Filtered by Role Policy) */}
       <div className="flex-1 overflow-y-auto px-3 py-4 space-y-6">
-        {navigationConfig.groups.map((group) => (
+        {navigationConfig.groups.map((group) => {
+          const visibleItems = group.items.filter((item) =>
+            isRouteAllowedForRole(currentRole, item.id as NavView)
+          );
+          if (visibleItems.length === 0) return null;
+
+          return (
           <div key={group.id}>
             <div className="px-3 mb-2 text-[10px] font-bold uppercase tracking-wider text-text-subtle">
               {group.title}
             </div>
             <div className="space-y-0.5">
-              {group.items.map((item) => {
+              {visibleItems.map((item) => {
+                const displayLabel =
+                  item.id === 'payments' && currentRole === 'Accountant'
+                    ? 'Billing & Commission'
+                    : item.id === 'payments' && currentRole === 'Developer'
+                    ? 'Booking Updates'
+                    : item.label;
                 const IconComponent =
                   item.id === 'overview' || item.id === 'dashboard'
                     ? OverviewIcon
@@ -141,7 +153,7 @@ export function Sidebar({ onItemClick, className }: SidebarProps) {
                     className={cn(
                       'w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-sm font-semibold transition-all group',
                       isActive
-                        ? 'bg-surface-subtle text-text-main border border-border font-bold shadow-xs'
+                        ? 'bg-brand-subtle text-brand border border-brand/20 font-bold shadow-xs'
                         : 'text-text-muted hover:bg-surface-hover hover:text-text-main border border-transparent'
                     )}
                   >
@@ -149,25 +161,23 @@ export function Sidebar({ onItemClick, className }: SidebarProps) {
                       <IconComponent
                         className={cn(
                           'w-5 h-5 shrink-0 transition-colors',
-                          isActive ? 'text-text-main' : 'text-text-subtle group-hover:text-text-main'
+                          isActive ? 'text-brand' : 'text-text-subtle group-hover:text-brand'
                         )}
                       />
-                      <span className="truncate">{item.label}</span>
+                      <span className="truncate">{displayLabel}</span>
                     </div>
                     {badgeCount !== undefined && badgeCount > 0 && (
                       <Badge variant={isActive ? 'brand' : 'neutral'}>
                         {badgeCount}
                       </Badge>
                     )}
-                    {item.id === 'payments' && financeLocked && (
-                      <Lock className="w-3.5 h-3.5 text-text-subtle shrink-0" />
-                    )}
                   </Link>
                 );
               })}
             </div>
           </div>
-        ))}
+          );
+        })}
       </div>
 
       {/* User Profile Footer */}
@@ -177,7 +187,7 @@ export function Sidebar({ onItemClick, className }: SidebarProps) {
         </div>
         <div className="flex-1 min-w-0">
           <p className="text-sm font-bold text-text-main truncate">{agencyConfig.user.name}</p>
-          <p className="text-xs text-text-subtle truncate">{agencyConfig.user.role}</p>
+          <p className="text-xs text-text-subtle truncate">{currentRole} view</p>
         </div>
       </div>
     </aside>

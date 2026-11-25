@@ -1,12 +1,12 @@
 'use client';
 
 import React from 'react';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { useWorkspaceStore } from '@/store/workspace-store';
 import { RoleView } from '@/types';
 import { agencyConfig } from '@/config/agency.config';
 import { navigationConfig } from '@/config/navigation.config';
-import { isClientScopedRole } from '@/lib/permissions';
+import { getRoleRoutePolicy, isClientScopedRole } from '@/lib/permissions';
 import {
   Search,
   Filter,
@@ -54,8 +54,10 @@ interface TopbarProps {
 
 export function Topbar({ onOpenMobileNav }: TopbarProps) {
   const pathname = usePathname();
+  const router = useRouter();
   const {
     currentView,
+    setCurrentView,
     currentRole,
     setCurrentRole,
     scopedDeveloperClient,
@@ -67,6 +69,15 @@ export function Topbar({ onOpenMobileNav }: TopbarProps) {
     selectedClientFilter,
   } = useWorkspaceStore();
 
+  const handleRoleSwitch = (nextRole: RoleView) => {
+    setCurrentRole(nextRole);
+    const policy = getRoleRoutePolicy(nextRole);
+    setCurrentView(policy.defaultView);
+    if (pathname !== policy.defaultHref) {
+      router.push(policy.defaultHref);
+    }
+  };
+
   const currentRoute =
     navigationConfig.allRoutes.find(
       (r) => r.href === pathname || (r.href !== '/' && pathname?.startsWith(r.href))
@@ -77,7 +88,7 @@ export function Topbar({ onOpenMobileNav }: TopbarProps) {
   const RouteIcon = routeIconMap[activeRouteId] || OverviewIcon;
 
   return (
-    <header className="sticky top-0 z-20 h-topbar bg-surface-card border-b border-border px-4 sm:px-8 flex items-center justify-between gap-4">
+    <header className="sticky top-0 z-20 h-topbar bg-white/90 backdrop-blur-md border-b border-border px-4 sm:px-8 flex items-center justify-between gap-4">
       {/* Left: Mobile Menu & Breadcrumb */}
       <div className="flex items-center gap-3 min-w-0">
         {onOpenMobileNav && (
@@ -131,12 +142,13 @@ export function Topbar({ onOpenMobileNav }: TopbarProps) {
           {selectedClientFilter && <span className="w-1.5 h-1.5 rounded-full bg-current"></span>}
         </Button>
         
-        {/* Universal Role Switcher */}
-        <div className="hidden md:flex items-center gap-1.5 px-2.5 py-1 text-xs border border-border rounded-btn bg-surface-card">
-          <UserCheck className="w-3.5 h-3.5 text-brand" />
+        {/* Universal Role Switcher (shifts pages & enforces PDF role permissions) */}
+        <div className="flex items-center gap-1.5 px-2.5 py-1 text-xs border border-border rounded-btn bg-surface-card">
+          <UserCheck className="w-3.5 h-3.5 text-brand shrink-0" />
           <select
             value={currentRole}
-            onChange={(e) => setCurrentRole(e.target.value as RoleView)}
+            onChange={(e) => handleRoleSwitch(e.target.value as RoleView)}
+            aria-label="Switch workspace role"
             className="text-xs font-semibold text-text-main bg-transparent outline-none cursor-pointer pr-1"
           >
             {agencyConfig.roles.map((role) => (

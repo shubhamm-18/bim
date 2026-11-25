@@ -1,4 +1,85 @@
-import { RoleView } from '@/types';
+import { NavView, RoleView } from '@/types';
+
+export interface RoleRoutePolicy {
+  defaultHref: string;
+  defaultView: NavView;
+  allowedViews: NavView[];
+}
+
+const ROLE_ROUTE_POLICIES: Record<RoleView, RoleRoutePolicy> = {
+  Founder: {
+    defaultHref: '/',
+    defaultView: 'overview',
+    allowedViews: [
+      'overview',
+      'analytics',
+      'projects',
+      'calendar',
+      'approvals',
+      'content',
+      'advertising',
+      'crm',
+      'gruhnest',
+      'compare',
+      'payments',
+      'templates',
+    ],
+  },
+  Accountant: {
+    defaultHref: '/payments',
+    defaultView: 'payments',
+    allowedViews: ['payments', 'projects', 'overview'],
+  },
+  'Project Management': {
+    defaultHref: '/projects',
+    defaultView: 'projects',
+    allowedViews: [
+      'overview',
+      'projects',
+      'calendar',
+      'approvals',
+      'content',
+      'advertising',
+      'crm',
+      'gruhnest',
+      'compare',
+      'templates',
+    ],
+  },
+  Content: {
+    defaultHref: '/content',
+    defaultView: 'content',
+    allowedViews: ['overview', 'content', 'calendar', 'approvals', 'gruhnest'],
+  },
+  Video: {
+    defaultHref: '/content',
+    defaultView: 'content',
+    allowedViews: ['overview', 'content', 'calendar', 'approvals', 'gruhnest'],
+  },
+  'Ads/Performance': {
+    defaultHref: '/advertising',
+    defaultView: 'advertising',
+    allowedViews: ['overview', 'advertising', 'analytics', 'gruhnest', 'crm'],
+  },
+  Sales: {
+    defaultHref: '/crm',
+    defaultView: 'crm',
+    allowedViews: ['overview', 'crm', 'calendar', 'gruhnest'],
+  },
+  Developer: {
+    defaultHref: '/payments',
+    defaultView: 'payments',
+    allowedViews: ['payments', 'projects', 'approvals'],
+  },
+};
+
+export function getRoleRoutePolicy(role: RoleView): RoleRoutePolicy {
+  return ROLE_ROUTE_POLICIES[role] || ROLE_ROUTE_POLICIES.Founder;
+}
+
+export function isRouteAllowedForRole(role: RoleView, viewId: NavView): boolean {
+  return getRoleRoutePolicy(role).allowedViews.includes(viewId);
+}
 
 /**
  * Checks whether the active workspace role is authorized to view or manage
