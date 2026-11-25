@@ -30,6 +30,7 @@ export const agencyConfig = {
   // System Constants & Options
   roles: [
     'Founder',
+    'Accountant',
     'Project Management',
     'Content',
     'Video',
@@ -37,6 +38,9 @@ export const agencyConfig = {
     'Developer',
     'Sales',
   ] as const,
+
+  businessLines: ['BIM', 'GruhNest', 'GruhNest Pro'] as const,
+  periods: ['This month', 'Last month', 'This quarter', 'YTD'] as const,
 
   projectStatuses: ['Active', 'Planning', 'On hold', 'Completed'] as const,
   infoStatuses: ['Verified', 'Tentative', 'Missing'] as const,

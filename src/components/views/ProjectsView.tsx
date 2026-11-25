@@ -7,21 +7,33 @@ import { Card } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
 import { EmptyState } from '@/components/ui/EmptyState';
 import { ProjectsIcon } from '@/components/ui';
-import { ProjectCard, ClientAccountCard } from '@/components/features/projects';
+import { ProjectCard, ClientAccountCard, ClientDetailModal } from '@/components/features/projects';
 import { ProjectsAnalytics } from '@/components/features/analytics';
+import { canViewFinance, isClientScopedRole } from '@/lib/permissions';
 
 export function ProjectsView() {
   const {
     projects,
     clients,
+    currentRole,
+    scopedDeveloperClient,
     setIsNewProjectModalOpen,
     selectedClientFilter,
   } = useWorkspaceStore();
 
   const [search, setSearch] = useState('');
   const [statusFilter, setStatusFilter] = useState<string>('All');
+  const [detailClientName, setDetailClientName] = useState<string | null>(null);
+
+  const clientScoped = isClientScopedRole(currentRole);
+  const showFinance = canViewFinance(currentRole);
+
+  const visibleClients = clientScoped
+    ? clients.filter((c) => c.name === scopedDeveloperClient)
+    : clients;
 
   const filtered = projects.filter((p) => {
+    if (clientScoped && p.clientName !== scopedDeveloperClient) return false;
     const matchClient = selectedClientFilter ? p.clientName === selectedClientFilter : true;
     const matchSearch =
       p.name.toLowerCase().includes(search.toLowerCase()) ||
@@ -56,18 +68,26 @@ export function ProjectsView() {
         </Button>
       </div>
 
-      {/* Developer Accounts Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        {clients.map((c) => {
-          const clientProjects = projects.filter((p) => p.clientId === c.id);
-          return (
-            <ClientAccountCard
-              key={c.id}
-              client={c}
-              projectsCount={clientProjects.length}
-            />
-          );
-        })}
+      {/* Developer Accounts Cards (Click to open 4-tab client view) */}
+      <div>
+        <div className="flex items-center justify-between mb-2">
+          <span className="text-xs font-semibold text-text-muted">
+            Click a client card to open BIM Social Media, GruhNest Ads, Pro Usage &amp; Team Reporting
+          </span>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          {visibleClients.map((c) => {
+            const clientProjects = projects.filter((p) => p.clientId === c.id);
+            return (
+              <ClientAccountCard
+                key={c.id}
+                client={c}
+                projectsCount={clientProjects.length}
+                onSelectClient={(name) => setDetailClientName(name)}
+              />
+            );
+          })}
+        </div>
       </div>
 
       {/* Filter and Search Bar */}
@@ -116,13 +136,24 @@ export function ProjectsView() {
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
           {filtered.map((proj) => (
-            <ProjectCard key={proj.id} project={proj} />
+            <ProjectCard
+              key={proj.id}
+              project={proj}
+              showFinance={showFinance}
+              onViewDetails={(p) => setDetailClientName(p.clientName)}
+            />
           ))}
         </div>
       )}
 
       {/* Embedded Portfolio Budget & Health Analytics */}
       <ProjectsAnalytics />
+
+      {/* 4-Tab Unified Client Record Modal */}
+      <ClientDetailModal
+        clientName={detailClientName}
+        onClose={() => setDetailClientName(null)}
+      />
     </div>
   );
 }

@@ -7,7 +7,7 @@ import { OverviewIcon } from '@/components/ui/OverviewIcon';
 import { useWorkspaceStore } from '@/store/workspace-store';
 import { agencyConfig } from '@/config/agency.config';
 import {
-  OverviewMetrics,
+  FounderCommandBoard,
   TaskPrioritySection,
   ServiceModulesSection,
   ProjectsSummaryTable,
@@ -41,8 +41,8 @@ export function OverviewView() {
         </Button>
       </div>
 
-      {/* Core KPI Metric Cards */}
-      <OverviewMetrics />
+      {/* Founder Homepage Command Sections (PDF Tech Brief Live Integration) */}
+      <FounderCommandBoard />
 
       {/* Priority Tasks & 360° Service Modules */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">

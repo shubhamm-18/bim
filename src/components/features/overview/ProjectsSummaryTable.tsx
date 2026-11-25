@@ -9,13 +9,21 @@ import { Button } from '@/components/ui/Button';
 import { GruhnestIcon, ProjectsIcon, TemplatesIcon, AdvertisingIcon } from '@/components/ui';
 import { useWorkspaceStore } from '@/store/workspace-store';
 import { formatCurrency } from '@/lib/utils';
+import { canViewFinance, canViewCampaignSpend, isClientScopedRole } from '@/lib/permissions';
 
 export function ProjectsSummaryTable() {
-  const { projects, selectedClientFilter, setCurrentView } = useWorkspaceStore();
+  const { projects, selectedClientFilter, setCurrentView, currentRole, scopedDeveloperClient } =
+    useWorkspaceStore();
 
-  const filteredProjects = selectedClientFilter
-    ? projects.filter((p) => p.clientName === selectedClientFilter)
-    : projects;
+  const showFinance = canViewFinance(currentRole);
+  const showSpend = canViewCampaignSpend(currentRole);
+  const clientScoped = isClientScopedRole(currentRole);
+
+  const filteredProjects = projects.filter((p) => {
+    if (clientScoped && p.clientName !== scopedDeveloperClient) return false;
+    if (selectedClientFilter && p.clientName !== selectedClientFilter) return false;
+    return true;
+  });
 
   return (
     <Card>
@@ -88,10 +96,10 @@ export function ProjectsSummaryTable() {
                 </td>
                 <td className="py-3 px-3">
                   <div className="font-semibold text-text-main">
-                    {formatCurrency(proj.budget || 0)}
+                    {showFinance ? formatCurrency(proj.budget || 0) : 'Fees Private'}
                   </div>
                   <div className="text-[10px] text-brand font-medium">
-                    Spend: {formatCurrency(proj.spend || 0)}
+                    {showSpend ? `Spend: ${formatCurrency(proj.spend || 0)}` : 'Scoped View'}
                   </div>
                 </td>
                 <td className="py-3 px-3 text-right">

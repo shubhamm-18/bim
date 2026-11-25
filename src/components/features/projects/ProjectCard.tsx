@@ -8,10 +8,11 @@ import { formatCurrency } from '@/lib/utils';
 
 export interface ProjectCardProps {
   project: Project;
+  showFinance?: boolean;
   onViewDetails?: (project: Project) => void;
 }
 
-export function ProjectCard({ project, onViewDetails }: ProjectCardProps) {
+export function ProjectCard({ project, showFinance = true, onViewDetails }: ProjectCardProps) {
   const percentSpent = Math.min(
     100,
     Math.round(((project.spend || 0) / (project.budget || 1)) * 100)
@@ -56,9 +57,11 @@ export function ProjectCard({ project, onViewDetails }: ProjectCardProps) {
         {/* Budget & Spend Progress */}
         <div className="my-4 p-3 bg-surface-subtle rounded-btn space-y-1.5">
           <div className="flex justify-between text-xs">
-            <span className="text-text-muted">Budget & Spend</span>
+            <span className="text-text-muted">{showFinance ? 'Budget & Spend' : 'Ad Spend'}</span>
             <span className="font-bold text-text-main">
-              {formatCurrency(project.spend || 0)} / {formatCurrency(project.budget || 0)}
+              {showFinance
+                ? `${formatCurrency(project.spend || 0)} / ${formatCurrency(project.budget || 0)}`
+                : `${formatCurrency(project.spend || 0)} (Fees Private)`}
             </span>
           </div>
           <div className="w-full h-1.5 bg-border rounded-full overflow-hidden">

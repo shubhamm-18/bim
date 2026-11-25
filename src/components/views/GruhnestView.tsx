@@ -2,15 +2,19 @@
 
 import React from 'react';
 import { useWorkspaceStore } from '@/store/workspace-store';
-import { Video, FileText } from 'lucide-react';
+import { Video, FileText, Lock, Megaphone } from 'lucide-react';
 import { formatCurrency } from '@/lib/utils';
+import { canViewFinance, canViewCampaignSpend } from '@/lib/permissions';
+import { gruhNestAdRecords } from '@/data';
 import { Card } from '@/components/ui/Card';
 import { Badge } from '@/components/ui/Badge';
 import { GruhnestIcon } from '@/components/ui';
 import { GruhnestAnalytics } from '@/components/features/analytics';
 
 export function GruhnestView() {
-  const { propertyProfiles } = useWorkspaceStore();
+  const { propertyProfiles, currentRole } = useWorkspaceStore();
+  const showFinance = canViewFinance(currentRole);
+  const showSpend = canViewCampaignSpend(currentRole);
 
   return (
     <div className="space-y-6 pb-12">
@@ -92,24 +96,105 @@ export function GruhnestView() {
                 </div>
               </div>
 
-              {/* Commission Calculator Footer */}
+              {/* Commission Calculator Footer (Private to Founder & Accountant) */}
               <div className="pt-4 mt-4 border-t border-border-subtle flex items-center justify-between">
-                <div>
-                  <span className="text-[10px] text-text-subtle block">
-                    Commission ({prop.commissionRatePercent}%)
-                  </span>
-                  <strong className="text-xs font-bold text-text-main">
-                    {formatCurrency(estimatedCommission)} / deal
-                  </strong>
-                </div>
-                <button className="text-xs font-semibold text-text-main hover:underline">
-                  View Media Assets →
-                </button>
+                {showFinance ? (
+                  <div>
+                    <span className="text-[10px] text-text-subtle block">
+                      Commission ({prop.commissionRatePercent}%)
+                    </span>
+                    <strong className="text-xs font-bold text-text-main">
+                      {formatCurrency(estimatedCommission)} / deal
+                    </strong>
+                  </div>
+                ) : (
+                  <div className="flex items-center gap-1.5 text-[11px] text-text-subtle">
+                    <Lock className="w-3.5 h-3.5" />
+                    <span>Deal value &amp; 0.4% comm. private</span>
+                  </div>
+                )}
+                <span className="text-xs font-semibold text-text-muted">
+                  Meta Ad Mapped
+                </span>
               </div>
             </Card>
           );
         })}
       </div>
+
+      {/* GruhNest Video-Wise Meta Ad ID Attribution & Alert Rules */}
+      <Card className="p-0 overflow-hidden">
+        <div className="p-5 border-b border-border-subtle flex flex-wrap items-center justify-between gap-2">
+          <div className="flex items-center gap-2">
+            <Megaphone className="w-4 h-4 text-text-main" />
+            <div>
+              <h3 className="text-base font-bold text-text-main">
+                Video-to-Meta Ad ID Attribution &amp; Ad Alert Rules
+              </h3>
+              <p className="text-[11px] text-text-subtle">
+                Every live video mapped to Meta Ad ID(s) with test spend threshold &amp; qualification pending alerts
+              </p>
+            </div>
+          </div>
+          <Badge variant="outline">Unmatched Leads: 4 Separate</Badge>
+        </div>
+
+        <div className="overflow-x-auto">
+          <table className="w-full text-left text-xs">
+            <thead>
+              <tr className="border-b border-border-subtle text-text-subtle font-semibold uppercase tracking-wider text-[10px] bg-surface-subtle">
+                <th className="py-3 px-4">Video Asset &amp; Meta Ad ID</th>
+                <th className="py-3 px-4">Project</th>
+                {showSpend && <th className="py-3 px-4">Spend / Min Test</th>}
+                <th className="py-3 px-4">Leads {showSpend ? '(CPL)' : ''}</th>
+                <th className="py-3 px-4">Qualified / Visits / Booked</th>
+                <th className="py-3 px-4">Ad Alert Rule</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-border-subtle">
+              {gruhNestAdRecords.map((ad) => (
+                <tr key={ad.id} className="hover:bg-surface-subtle transition-colors">
+                  <td className="py-3 px-4">
+                    <div className="font-bold text-text-main">{ad.videoTitle}</div>
+                    <div className="text-[11px] font-mono text-text-subtle">
+                      {ad.metaAdId} · {ad.plannedVsLive}
+                    </div>
+                  </td>
+                  <td className="py-3 px-4 font-semibold text-text-main">{ad.project}</td>
+                  {showSpend && (
+                    <td className="py-3 px-4 text-text-main">
+                      <span className="font-bold">{formatCurrency(ad.spend)}</span>
+                      <span className="text-text-subtle"> / {formatCurrency(ad.minTestSpend)} min</span>
+                    </td>
+                  )}
+                  <td className="py-3 px-4 text-text-main">
+                    {ad.leads}
+                    {showSpend && ad.leads > 0
+                      ? ` (${formatCurrency(Math.round(ad.spend / ad.leads))})`
+                      : ''}
+                  </td>
+                  <td className="py-3 px-4 text-text-main">
+                    {ad.qualifiedLeads} qual · {ad.visitsCompleted} visits · {ad.confirmedBookings} booked
+                  </td>
+                  <td className="py-3 px-4">
+                    <Badge
+                      variant={
+                        ad.adAlert === 'Wasted Spend'
+                          ? 'urgent'
+                          : ad.adAlert === 'Healthy'
+                          ? 'completed'
+                          : 'pending'
+                      }
+                    >
+                      {ad.adAlert}
+                    </Badge>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </Card>
 
       {/* Embedded Property Media & Inventory Analytics */}
       <GruhnestAnalytics />

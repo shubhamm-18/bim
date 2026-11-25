@@ -20,8 +20,10 @@ import {
   CreditCard,
   Layers,
   TrendingUp,
+  Lock,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { canViewFinance, isClientScopedRole } from '@/lib/permissions';
 import { Badge, GruhnestIcon, AnalyticsIcon, ApprovalsIcon, CalendarIcon, ProjectsIcon, ContentIcon, AdvertisingIcon, CrmIcon, CompareIcon, PaymentsIcon, TemplatesIcon, OverviewIcon } from '@/components/ui';
 
 const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
@@ -58,7 +60,8 @@ interface SidebarProps {
 
 export function Sidebar({ onItemClick, className }: SidebarProps) {
   const pathname = usePathname();
-  const { currentView, setCurrentView, approvalItems } = useWorkspaceStore();
+  const { currentView, setCurrentView, approvalItems, currentRole } = useWorkspaceStore();
+  const financeLocked = !canViewFinance(currentRole) && !isClientScopedRole(currentRole);
 
   const pendingApprovalsCount = approvalItems.filter((i) => i.status === 'Pending').length;
 
@@ -155,6 +158,9 @@ export function Sidebar({ onItemClick, className }: SidebarProps) {
                       <Badge variant={isActive ? 'brand' : 'neutral'}>
                         {badgeCount}
                       </Badge>
+                    )}
+                    {item.id === 'payments' && financeLocked && (
+                      <Lock className="w-3.5 h-3.5 text-text-subtle shrink-0" />
                     )}
                   </Link>
                 );

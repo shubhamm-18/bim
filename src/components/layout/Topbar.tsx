@@ -6,6 +6,7 @@ import { useWorkspaceStore } from '@/store/workspace-store';
 import { RoleView } from '@/types';
 import { agencyConfig } from '@/config/agency.config';
 import { navigationConfig } from '@/config/navigation.config';
+import { isClientScopedRole } from '@/lib/permissions';
 import {
   Search,
   Filter,
@@ -57,6 +58,9 @@ export function Topbar({ onOpenMobileNav }: TopbarProps) {
     currentView,
     currentRole,
     setCurrentRole,
+    scopedDeveloperClient,
+    setScopedDeveloperClient,
+    clients,
     setIsSearchOpen,
     isFilterOpen,
     setIsFilterOpen,
@@ -142,6 +146,24 @@ export function Topbar({ onOpenMobileNav }: TopbarProps) {
             ))}
           </select>
         </div>
+
+        {/* Client Scope Selector when Developer / Client login is active */}
+        {isClientScopedRole(currentRole) && (
+          <div className="hidden lg:flex items-center gap-1 px-2 py-1 text-xs border border-border rounded-btn bg-surface-subtle">
+            <span className="text-[10px] font-bold text-text-subtle uppercase">Scope:</span>
+            <select
+              value={scopedDeveloperClient}
+              onChange={(e) => setScopedDeveloperClient(e.target.value)}
+              className="text-xs font-semibold text-text-main bg-transparent outline-none cursor-pointer"
+            >
+              {clients.map((c) => (
+                <option key={c.id} value={c.name}>
+                  {c.name}
+                </option>
+              ))}
+            </select>
+          </div>
+        )}
 
         {/* Notification Bell */}
         <button

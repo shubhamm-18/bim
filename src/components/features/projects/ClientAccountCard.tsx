@@ -7,13 +7,17 @@ import { GruhnestIcon } from '@/components/ui';
 export interface ClientAccountCardProps {
   client: Client;
   projectsCount: number;
+  onSelectClient?: (clientName: string) => void;
 }
 
-export function ClientAccountCard({ client, projectsCount }: ClientAccountCardProps) {
+export function ClientAccountCard({ client, projectsCount, onSelectClient }: ClientAccountCardProps) {
   const isGruhnest = client.name.toLowerCase().includes('gruhnest');
 
   return (
-    <Card className="flex flex-col justify-between">
+    <Card
+      onClick={() => onSelectClient?.(client.name)}
+      className={`flex flex-col justify-between ${onSelectClient ? 'cursor-pointer hover:border-border-hover hover:shadow-cardHover transition-all' : ''}`}
+    >
       <div>
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2.5">

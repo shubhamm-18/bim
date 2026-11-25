@@ -18,3 +18,4 @@ export * from './properties.data';
 export * from './templates.data';
 export * from './services.data';
 export * from './analytics.data';
+export * from './founder-brief.data';

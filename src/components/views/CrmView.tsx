@@ -2,9 +2,11 @@
 
 import React from 'react';
 import { useWorkspaceStore } from '@/store/workspace-store';
-import { Plus, Phone } from 'lucide-react';
+import { Plus, Phone, PhoneCall, RefreshCw } from 'lucide-react';
 import { LeadStage } from '@/types';
 import { formatCurrency } from '@/lib/utils';
+import { canViewFinance } from '@/lib/permissions';
+import { gruhNestProRecords } from '@/data';
 import { Card } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
 import { Badge } from '@/components/ui/Badge';
@@ -21,7 +23,8 @@ const leadStages: LeadStage[] = [
 ];
 
 export function CrmView() {
-  const { leads, setIsNewLeadModalOpen, updateLeadStage } = useWorkspaceStore();
+  const { leads, currentRole, setIsNewLeadModalOpen, updateLeadStage } = useWorkspaceStore();
+  const showFinance = canViewFinance(currentRole);
 
   return (
     <div className="space-y-6 pb-12">
@@ -93,7 +96,11 @@ export function CrmView() {
 
                     <div className="pt-2 mt-2 border-t border-border-subtle flex items-center justify-between">
                       <span className="text-[10px] font-bold text-text-main">
-                        {lead.expectedValue ? formatCurrency(lead.expectedValue) : '—'}
+                        {showFinance
+                          ? lead.expectedValue
+                            ? formatCurrency(lead.expectedValue)
+                            : '—'
+                          : 'Value Private'}
                       </span>
                       <select
                         value={lead.stage}
@@ -114,6 +121,70 @@ export function CrmView() {
           );
         })}
       </div>
+
+      {/* GruhNest Pro AI Calling & Human CRM Usage Health */}
+      <Card className="p-0 overflow-hidden">
+        <div className="p-4 border-b border-border-subtle flex flex-wrap items-center justify-between gap-2">
+          <div className="flex items-center gap-2">
+            <PhoneCall className="w-4 h-4 text-text-main" />
+            <div>
+              <h3 className="text-sm font-bold text-text-main">
+                GruhNest Pro — AI Calling &amp; Human CRM Update Monitor
+              </h3>
+              <p className="text-[11px] text-text-subtle">
+                Separate tracking of Last Login vs Last Human CRM Update, AI calls &amp; pending handoffs
+              </p>
+            </div>
+          </div>
+          <span className="text-[11px] text-text-subtle flex items-center gap-1">
+            <RefreshCw className="w-3 h-3" /> Last successful sync: 25 Nov, 03:45 PM
+          </span>
+        </div>
+        <div className="overflow-x-auto">
+          <table className="w-full text-left text-xs">
+            <thead>
+              <tr className="border-b border-border-subtle text-text-subtle uppercase text-[10px] bg-surface-subtle">
+                <th className="py-2.5 px-4">Project &amp; Status</th>
+                <th className="py-2.5 px-4">Active Sales Users</th>
+                <th className="py-2.5 px-4">Last Login</th>
+                <th className="py-2.5 px-4">Last Human CRM Update</th>
+                <th className="py-2.5 px-4">Leads vs AI Attempted</th>
+                <th className="py-2.5 px-4">Connected / Visits / Pending Handoffs</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-border-subtle">
+              {gruhNestProRecords.map((pro) => (
+                <tr key={pro.id}>
+                  <td className="py-2.5 px-4">
+                    <div className="font-bold text-text-main">{pro.project}</div>
+                    <Badge
+                      variant={
+                        pro.status === 'Live'
+                          ? 'completed'
+                          : pro.status === 'Sync Issue'
+                          ? 'urgent'
+                          : 'pending'
+                      }
+                    >
+                      {pro.status}
+                    </Badge>
+                  </td>
+                  <td className="py-2.5 px-4">{pro.activeSalesUsers} users</td>
+                  <td className="py-2.5 px-4 text-text-muted">{pro.lastLogin}</td>
+                  <td className="py-2.5 px-4 font-semibold text-text-main">{pro.lastHumanCrmUpdate}</td>
+                  <td className="py-2.5 px-4">
+                    {pro.leadsReceived} leads / {pro.aiCallsAttempted} AI calls
+                  </td>
+                  <td className="py-2.5 px-4">
+                    {pro.connectedCalls} connected · {pro.visitsBooked} visits ·{' '}
+                    <strong>{pro.pendingHandoffs} handoffs</strong>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </Card>
 
       {/* Embedded Funnel & Lead Velocity Analytics */}
       <CrmAnalytics />

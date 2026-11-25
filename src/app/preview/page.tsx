@@ -27,6 +27,7 @@ import { useWorkspaceStore } from '@/store/workspace-store';
 import { agencyConfig } from '@/config/agency.config';
 import { getTodayFormatted, getHeroDateFormatted } from '@/lib/utils';
 import { initialServiceModules } from '@/data/services.data';
+import { FounderBriefPreview } from '@/components/features/preview/FounderBriefPreview';
 
 const previewServiceIconMap: Record<string, React.ComponentType<{ className?: string }>> = {
   content: ContentIcon,
@@ -36,6 +37,7 @@ const previewServiceIconMap: Record<string, React.ComponentType<{ className?: st
 };
 
 export default function PreviewPage() {
+  const [previewMode, setPreviewMode] = useState<'founder-brief' | 'scale-layout'>('founder-brief');
   const {
     projects,
     tasks,
@@ -108,7 +110,29 @@ export default function PreviewPage() {
           </span>
         </div>
 
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 flex-wrap">
+          {/* Preview Mode Switcher */}
+          <div className="flex items-center bg-surface-subtle p-1 rounded-lg border border-border text-xs">
+            <button
+              onClick={() => setPreviewMode('founder-brief')}
+              className={`px-3 py-1 rounded-md font-semibold transition-all ${
+                previewMode === 'founder-brief' ? 'bg-white text-text-main font-bold shadow-xs border border-border' : 'text-text-muted hover:text-text-main'
+              }`}
+            >
+              Founder Brief Preview (PDF)
+            </button>
+            <button
+              onClick={() => setPreviewMode('scale-layout')}
+              className={`px-3 py-1 rounded-md font-semibold transition-all ${
+                previewMode === 'scale-layout' ? 'bg-white text-text-main font-bold shadow-xs border border-border' : 'text-text-muted hover:text-text-main'
+              }`}
+            >
+              Layout Preview
+            </button>
+          </div>
+
+          {previewMode === 'scale-layout' && (
+          <>
           {/* Eyebrow Logo Switcher */}
           <div className="flex items-center bg-surface-subtle p-1 rounded-lg border border-border text-xs">
             <button
@@ -176,6 +200,8 @@ export default function PreviewPage() {
               Compare with Reference
             </button>
           </div>
+          </>
+          )}
 
           <Link
             href="/"
@@ -186,7 +212,11 @@ export default function PreviewPage() {
         </div>
       </div>
 
-      {scaleMode === 'split' ? (
+      {previewMode === 'founder-brief' ? (
+        <div className="max-w-7xl mx-auto p-4 sm:p-6 lg:p-8">
+          <FounderBriefPreview />
+        </div>
+      ) : scaleMode === 'split' ? (
         <div className="grid grid-cols-1 xl:grid-cols-2 gap-6 p-6">
           {/* Reference Screenshot */}
           <div className="bg-white rounded-2xl p-4 shadow-md border border-gray-200">

@@ -3,3 +3,4 @@ export * from './OverviewMetrics';
 export * from './TaskPrioritySection';
 export * from './ServiceModulesSection';
 export * from './ProjectsSummaryTable';
+export * from './FounderCommandBoard';
